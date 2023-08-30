@@ -1,0 +1,27 @@
+{
+  "name": "foundry_generated_types",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.mjs",
+  "types": "index.d.ts",
+  "scripts": {
+    "clean": "rm -rf .foundryvtt",
+    "generate": "node ./index.mjs"
+  },
+  "keywords": [
+    "types",
+    "foundry_vtt"
+  ],
+  "author": "Kavec (Tyler Gibbons)",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@types/css-font-loading-module": "^0.0.8",
+    "@types/jquery": "^3.5.17",
+    "@types/node": "^20.5.7",
+    "decompress": "^4.2.1",
+    "glob": "^10.3.3",
+    "pixi.js": "^7.2.4",
+    "prompts": "^2.4.2",
+    "typescript": "^5.2.2"
+  }
+}
