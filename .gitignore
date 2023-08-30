@@ -1,3 +1,6 @@
+# Copied foundry js artifact
+.foundry_vtt
+
 # Logs
 logs
 *.log
