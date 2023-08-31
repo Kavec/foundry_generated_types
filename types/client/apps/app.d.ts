@@ -77,9 +77,9 @@ declare class Application {
     appId: number;
     /**
      * An internal reference to the HTML element this application renders
-     * @type {jQuery}
+     * @type {JQuery<HTMLElement>}
      */
-    _element: JQueryStatic;
+    _element: JQuery<HTMLElement>;
     /**
      * Track the current position and dimensions of the Application UI
      * @type {object}
@@ -150,9 +150,9 @@ declare class Application {
     get id(): string;
     /**
      * Return the active application element, if it currently exists in the DOM
-     * @type {jQuery}
+     * @type {JQuery<HTMLElement>}
      */
-    get element(): JQueryStatic;
+    get element(): JQuery<HTMLElement>;
     /**
      * The path to the HTML template file which should be used to render the inner content of the app
      * @type {string}
@@ -230,42 +230,42 @@ declare class Application {
     protected _render(force?: boolean, options?: object): Promise<void>;
     /**
      * Persist the scroll positions of containers within the app before re-rendering the content
-     * @param {jQuery} html           The HTML object being traversed
+     * @param {JQuery<HTMLElement>} html           The HTML object being traversed
      * @protected
      */
-    protected _saveScrollPositions(html: JQueryStatic): void;
+    protected _saveScrollPositions(html: JQuery<HTMLElement>): void;
     /**
      * Restore the scroll positions of containers within the app after re-rendering the content
-     * @param {jQuery} html           The HTML object being traversed
+     * @param {JQuery<HTMLElement>} html           The HTML object being traversed
      * @protected
      */
-    protected _restoreScrollPositions(html: JQueryStatic): void;
+    protected _restoreScrollPositions(html: JQuery<HTMLElement>): void;
     /**
      * Render the outer application wrapper
-     * @returns {Promise<jQuery>}   A promise resolving to the constructed jQuery object
+     * @returns {Promise<JQuery<HTMLElement>>}   A promise resolving to the constructed jQuery object
      * @protected
      */
-    protected _renderOuter(): Promise<JQueryStatic>;
+    protected _renderOuter(): Promise<JQuery<HTMLElement>>;
     /**
      * Render the inner application content
      * @param {object} data         The data used to render the inner template
-     * @returns {Promise<jQuery>}   A promise resolving to the constructed jQuery object
+     * @returns {Promise<JQuery<HTMLElement>>}   A promise resolving to the constructed jQuery object
      * @protected
      */
-    protected _renderInner(data: object): Promise<JQueryStatic>;
+    protected _renderInner(data: object): Promise<JQuery<HTMLElement>>;
     /**
      * Customize how inner HTML is replaced when the application is refreshed
-     * @param {jQuery} element      The original HTML processed as a jQuery object
-     * @param {jQuery} html         New updated HTML as a jQuery object
+     * @param {JQuery<HTMLElement>} element      The original HTML processed as a jQuery object
+     * @param {JQuery<HTMLElement>} html         New updated HTML as a jQuery object
      * @protected
      */
-    protected _replaceHTML(element: JQueryStatic, html: JQueryStatic): void;
+    protected _replaceHTML(element: JQuery<HTMLElement>, html: JQuery<HTMLElement>): void;
     /**
      * Customize how a new HTML Application is added and first appears in the DOM
-     * @param {jQuery} html       The HTML element which is ready to be added to the DOM
+     * @param {JQuery<HTMLElement>} html       The HTML element which is ready to be added to the DOM
      * @protected
      */
-    protected _injectHTML(html: JQueryStatic): void;
+    protected _injectHTML(html: JQuery<HTMLElement>): void;
     /**
      * Specify the set of config buttons which should appear in the Application header.
      * Buttons should be returned as an Array of objects.
@@ -277,17 +277,17 @@ declare class Application {
     protected _getHeaderButtons(): ApplicationHeaderButton[];
     /**
      * Create a {@link ContextMenu} for this Application.
-     * @param {jQuery} html  The Application's HTML.
+     * @param {JQuery<HTMLElement>} html  The Application's HTML.
      * @protected
      */
-    protected _contextMenu(html: JQueryStatic): void;
+    protected _contextMenu(html: JQuery<HTMLElement>): void;
     /**
      * Activate required listeners which must be enabled on every Application.
      * These are internal interactions which should not be overridden by downstream subclasses.
-     * @param {jQuery} html
+     * @param {JQuery<HTMLElement>} html
      * @protected
      */
-    protected _activateCoreListeners(html: JQueryStatic): void;
+    protected _activateCoreListeners(html: JQuery<HTMLElement>): void;
     /**
      * After rendering, activate event listeners which provide interactivity for the Application.
      * This is where user-defined Application subclasses should attach their event-handling logic.

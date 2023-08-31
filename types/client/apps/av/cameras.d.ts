@@ -149,10 +149,10 @@ declare class CameraViews extends Application {
      * which allows us to have elements with display:flex which can be hidden then shown without
      * breaking their display style.
      * This will show/hide the toggle buttons, volume controls and overlay sidebars
-     * @param {jQuery} container    The container for which to show/hide control elements
+     * @param {JQuery<HTMLElement>} container    The container for which to show/hide control elements
      * @param {boolean} show        Whether to show or hide the controls
      * @param {string} selector     Override selector to specify which controls to show or hide
      * @protected
      */
-    protected _toggleControlVisibility(container: JQueryStatic, show: boolean, selector: string): void;
+    protected _toggleControlVisibility(container: JQuery<HTMLElement>, show: boolean, selector: string): void;
 }

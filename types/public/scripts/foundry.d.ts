@@ -1448,10 +1448,10 @@ declare class NewUserExperience {
     /**
      * Add event listeners to the chat card links.
      * @param {ChatMessage} msg  The ChatMessage being rendered.
-     * @param {jQuery} html      The HTML content of the message.
+     * @param {JQuery<HTMLElement>} html      The HTML content of the message.
      * @protected
      */
-    protected _activateListeners(msg: ChatMessage, html: JQueryStatic): void;
+    protected _activateListeners(msg: ChatMessage, html: JQuery<HTMLElement>): void;
     /**
      * Perform some special action triggered by clicking on a link in a NUE chat card.
      * @param {TriggeredEvent} event  The click event.
@@ -2492,9 +2492,9 @@ declare class Application {
     appId: number;
     /**
      * An internal reference to the HTML element this application renders
-     * @type {jQuery}
+     * @type {JQuery<HTMLElement>}
      */
-    _element: JQueryStatic;
+    _element: JQuery<HTMLElement>;
     /**
      * Track the current position and dimensions of the Application UI
      * @type {object}
@@ -2565,9 +2565,9 @@ declare class Application {
     get id(): string;
     /**
      * Return the active application element, if it currently exists in the DOM
-     * @type {jQuery}
+     * @type {JQuery<HTMLElement>}
      */
-    get element(): JQueryStatic;
+    get element(): JQuery<HTMLElement>;
     /**
      * The path to the HTML template file which should be used to render the inner content of the app
      * @type {string}
@@ -2645,42 +2645,42 @@ declare class Application {
     protected _render(force?: boolean, options?: object): Promise<void>;
     /**
      * Persist the scroll positions of containers within the app before re-rendering the content
-     * @param {jQuery} html           The HTML object being traversed
+     * @param {JQuery<HTMLElement>} html           The HTML object being traversed
      * @protected
      */
-    protected _saveScrollPositions(html: JQueryStatic): void;
+    protected _saveScrollPositions(html: JQuery<HTMLElement>): void;
     /**
      * Restore the scroll positions of containers within the app after re-rendering the content
-     * @param {jQuery} html           The HTML object being traversed
+     * @param {JQuery<HTMLElement>} html           The HTML object being traversed
      * @protected
      */
-    protected _restoreScrollPositions(html: JQueryStatic): void;
+    protected _restoreScrollPositions(html: JQuery<HTMLElement>): void;
     /**
      * Render the outer application wrapper
-     * @returns {Promise<jQuery>}   A promise resolving to the constructed jQuery object
+     * @returns {Promise<JQuery<HTMLElement>>}   A promise resolving to the constructed jQuery object
      * @protected
      */
-    protected _renderOuter(): Promise<JQueryStatic>;
+    protected _renderOuter(): Promise<JQuery<HTMLElement>>;
     /**
      * Render the inner application content
      * @param {object} data         The data used to render the inner template
-     * @returns {Promise<jQuery>}   A promise resolving to the constructed jQuery object
+     * @returns {Promise<JQuery<HTMLElement>>}   A promise resolving to the constructed jQuery object
      * @protected
      */
-    protected _renderInner(data: object): Promise<JQueryStatic>;
+    protected _renderInner(data: object): Promise<JQuery<HTMLElement>>;
     /**
      * Customize how inner HTML is replaced when the application is refreshed
-     * @param {jQuery} element      The original HTML processed as a jQuery object
-     * @param {jQuery} html         New updated HTML as a jQuery object
+     * @param {JQuery<HTMLElement>} element      The original HTML processed as a jQuery object
+     * @param {JQuery<HTMLElement>} html         New updated HTML as a jQuery object
      * @protected
      */
-    protected _replaceHTML(element: JQueryStatic, html: JQueryStatic): void;
+    protected _replaceHTML(element: JQuery<HTMLElement>, html: JQuery<HTMLElement>): void;
     /**
      * Customize how a new HTML Application is added and first appears in the DOM
-     * @param {jQuery} html       The HTML element which is ready to be added to the DOM
+     * @param {JQuery<HTMLElement>} html       The HTML element which is ready to be added to the DOM
      * @protected
      */
-    protected _injectHTML(html: JQueryStatic): void;
+    protected _injectHTML(html: JQuery<HTMLElement>): void;
     /**
      * Specify the set of config buttons which should appear in the Application header.
      * Buttons should be returned as an Array of objects.
@@ -2692,17 +2692,17 @@ declare class Application {
     protected _getHeaderButtons(): ApplicationHeaderButton[];
     /**
      * Create a {@link ContextMenu} for this Application.
-     * @param {jQuery} html  The Application's HTML.
+     * @param {JQuery<HTMLElement>} html  The Application's HTML.
      * @protected
      */
-    protected _contextMenu(html: JQueryStatic): void;
+    protected _contextMenu(html: JQuery<HTMLElement>): void;
     /**
      * Activate required listeners which must be enabled on every Application.
      * These are internal interactions which should not be overridden by downstream subclasses.
-     * @param {jQuery} html
+     * @param {JQuery<HTMLElement>} html
      * @protected
      */
-    protected _activateCoreListeners(html: JQueryStatic): void;
+    protected _activateCoreListeners(html: JQuery<HTMLElement>): void;
     /**
      * After rendering, activate event listeners which provide interactivity for the Application.
      * This is where user-defined Application subclasses should attach their event-handling logic.
@@ -2903,7 +2903,7 @@ declare class FormApplication extends Application {
     /** @inheritdoc */
     _render(force: any, options: any): Promise<void>;
     /** @inheritdoc */
-    _renderInner(...args: any[]): Promise<JQueryStatic>;
+    _renderInner(...args: any[]): Promise<JQuery<HTMLElement>>;
     /** @inheritdoc */
     _activateCoreListeners(html: any): void;
     /** @inheritdoc */
@@ -3072,10 +3072,10 @@ declare class DocumentSheet extends FormApplication {
     render(force?: boolean, options?: {}): any;
     /**
      * Create an ID link button in the document sheet header which displays the document ID and copies to clipboard
-     * @param {jQuery} html
+     * @param {JQuery<HTMLElement>} html
      * @protected
      */
-    protected _createDocumentIdLink(html: JQueryStatic): void;
+    protected _createDocumentIdLink(html: JQuery<HTMLElement>): void;
     /**
      * Test whether a certain User has permission to view this Document Sheet.
      * @param {User} user     The user requesting to render the sheet
@@ -7595,9 +7595,9 @@ declare class ChatMessage {
     getRollData(): object;
     /**
      * Render the HTML for the ChatMessage which should be added to the log
-     * @returns {Promise<jQuery>}
+     * @returns {Promise<JQuery<HTMLElement>>}
      */
-    getHTML(): Promise<JQueryStatic>;
+    getHTML(): Promise<JQuery<HTMLElement>>;
     /**
      * Render the inner HTML content for ROLL type messages.
      * @param {object} messageData      The chat message data used to render the message HTML
@@ -21574,9 +21574,9 @@ declare class OcclusionSamplerShader extends BaseSamplerShader {
  * @typedef {object} ContextMenuEntry
  * @property {string} name               The context menu label. Can be localized.
  * @property {string} icon               A string containing an HTML icon element for the menu item
- * @property {function(jQuery)} callback The function to call when the menu item is clicked. Receives the HTML element
+ * @property {function(JQuery<HTMLElement>)} callback The function to call when the menu item is clicked. Receives the HTML element
  *                                       of the entry that this context menu is for.
- * @property {function(jQuery):boolean} [condition] A function to call to determine if this item appears in the menu.
+ * @property {function(JQuery<HTMLElement>):boolean} [condition] A function to call to determine if this item appears in the menu.
  *                                                  Receives the HTML element of the entry that this context menu is
  *                                                  for.
  */
@@ -21593,14 +21593,14 @@ declare class ContextMenu {
     /**
      * Create a ContextMenu for this Application and dispatch hooks.
      * @param {Application} app                           The Application this ContextMenu belongs to.
-     * @param {jQuery} html                               The Application's rendered HTML.
+     * @param {JQuery<HTMLElement>} html                               The Application's rendered HTML.
      * @param {string} selector                           The target CSS selector which activates the menu.
      * @param {ContextMenuEntry[]} menuItems              The array of menu items being rendered.
      * @param {object} [options]                          Additional options to configure context menu initialization.
      * @param {string} [options.hookName="EntryContext"]  The name of the hook to call.
      * @returns {ContextMenu}
      */
-    static create(app: Application, html: JQueryStatic, selector: string, menuItems: ContextMenuEntry[], { hookName, ...options }?: {
+    static create(app: Application, html: JQuery<HTMLElement>, selector: string, menuItems: ContextMenuEntry[], { hookName, ...options }?: {
         hookName?: string;
     }): ContextMenu;
     /**
@@ -21608,7 +21608,7 @@ declare class ContextMenu {
      */
     static eventListeners(): void;
     /**
-     * @param {HTMLElement|jQuery} element                The containing HTML element within which the menu is positioned
+     * @param {HTMLElement|JQuery<HTMLElement>} element                The containing HTML element within which the menu is positioned
      * @param {string} selector                           A CSS selector which activates the context menu.
      * @param {ContextMenuEntry[]} menuItems              An Array of entries to display in the menu
      * @param {object} [options]                          Additional options to configure the context menu.
@@ -21617,16 +21617,16 @@ declare class ContextMenu {
      * @param {ContextMenuCallback} [options.onOpen]      A function to call when the context menu is opened.
      * @param {ContextMenuCallback} [options.onClose]     A function to call when the context menu is closed.
      */
-    constructor(element: HTMLElement | JQueryStatic, selector: string, menuItems: ContextMenuEntry[], { eventName, onOpen, onClose }?: {
+    constructor(element: HTMLElement | JQuery<HTMLElement>, selector: string, menuItems: ContextMenuEntry[], { eventName, onOpen, onClose }?: {
         eventName?: string;
         onOpen?: ContextMenuCallback;
         onClose?: ContextMenuCallback;
     });
     /**
      * The target HTMLElement being selected
-     * @type {HTMLElement|jQuery}
+     * @type {HTMLElement|JQuery<HTMLElement>}
      */
-    element: HTMLElement | JQueryStatic;
+    element: HTMLElement | JQuery<HTMLElement>;
     /**
      * The target CSS selector which activates the menu
      * @type {string}
@@ -21659,7 +21659,7 @@ declare class ContextMenu {
     _expandUp: boolean;
     /**
      * A convenience accessor to the context menu HTML object
-     * @returns {*|jQuery.fn.init|jQuery|HTMLElement}
+     * @returns {*|jQuery.fn.init|JQuery<HTMLElement>|HTMLElement}
      */
     get menu(): any;
     /**
@@ -21682,9 +21682,9 @@ declare class ContextMenu {
      * Render the Context Menu by iterating over the menuItems it contains.
      * Check the visibility of each menu item, and only render ones which are allowed by the item's logical condition.
      * Attach a click handler to each item which is rendered.
-     * @param {jQuery} target     The target element to which the context menu is attached
+     * @param {JQuery<HTMLElement>} target     The target element to which the context menu is attached
      */
-    render(target: JQueryStatic): Promise<any>;
+    render(target: JQuery<HTMLElement>): Promise<any>;
     /**
      * Set the position of the context menu, taking into consideration whether the menu should expand upward or downward
      * @protected
@@ -21692,9 +21692,9 @@ declare class ContextMenu {
     protected _setPosition(html: any, target: any): void;
     /**
      * Local listeners which apply to each ContextMenu instance which is created.
-     * @param {jQuery} html
+     * @param {JQuery<HTMLElement>} html
      */
-    activateListeners(html: JQueryStatic): void;
+    activateListeners(html: JQuery<HTMLElement>): void;
     #private;
 }
 /**
@@ -21708,7 +21708,7 @@ declare class ContextMenu {
  * @property {string} icon                  A Font Awesome icon for the button
  * @property {string} label                 The label for the button
  * @property {boolean} disabled             Whether the button is disabled
- * @property {function(jQuery)} [callback]  A callback function that fires when the button is clicked
+ * @property {function(JQuery<HTMLElement>)} [callback]  A callback function that fires when the button is clicked
  */
 /**
  * @typedef {object} DialogData
@@ -21716,8 +21716,8 @@ declare class ContextMenu {
  * @property {string} content               HTML content for the dialog form
  * @property {Object<DialogButton>} buttons The buttons which are displayed as action choices for the dialog
  * @property {string} [default]             The name of the default button which should be triggered on Enter keypress
- * @property {function(jQuery)} [render]    A callback function invoked when the dialog is rendered
- * @property {function(jQuery)} [close]     Common callback operations to perform when the dialog is closed
+ * @property {function(JQuery<HTMLElement>)} [render]    A callback function invoked when the dialog is rendered
+ * @property {function(JQuery<HTMLElement>)} [close]     Common callback operations to perform when the dialog is closed
  */
 /**
  * Create a dialog window displaying a title, a message, and a set of buttons which trigger callback functions.
@@ -21830,7 +21830,7 @@ declare class Dialog extends Application {
 /**
  * A UI utility to make an element draggable.
  * @param {Application} app             The Application that is being made draggable.
- * @param {jQuery} element              A JQuery reference to the Application's outer-most element.
+ * @param {JQuery<HTMLElement>} element              A JQuery reference to the Application's outer-most element.
  * @param {HTMLElement|boolean} handle  The element that acts as a drag handle. Supply false to disable dragging.
  * @param {boolean|object} resizable    Is the application resizable? Supply an object to configure resizing behaviour
  *                                      or true to have it automatically configured.
@@ -23691,7 +23691,7 @@ declare class SidebarTab extends Application {
     /** @override */
     override _render(force?: boolean, options?: {}): Promise<void>;
     /** @override */
-    override _renderInner(data: any): Promise<JQueryStatic>;
+    override _renderInner(data: any): Promise<JQuery<HTMLElement>>;
     /**
      * Activate this SidebarTab, switching focus to it
      */
@@ -25698,25 +25698,25 @@ declare class ChatBubbles {
     protected _panned: Function;
     /**
      * A reference to the chat bubbles HTML container in which rendered bubbles should live
-     * @returns {jQuery}
+     * @returns {JQuery<HTMLElement>}
      */
-    get container(): JQueryStatic;
+    get container(): JQuery<HTMLElement>;
     /**
      * Create a chat bubble message for a certain token which is synchronized for display across all connected clients.
      * @param {TokenDocument} token           The speaking Token Document
      * @param {string} message                The spoken message text
      * @param {ChatBubbleOptions} [options]   Options which affect the bubble appearance
-     * @returns {Promise<jQuery|null>}        A promise which resolves with the created bubble HTML, or null
+     * @returns {Promise<JQuery<HTMLElement>|null>}        A promise which resolves with the created bubble HTML, or null
      */
-    broadcast(token: TokenDocument, message: string, options?: ChatBubbleOptions): Promise<JQueryStatic | null>;
+    broadcast(token: TokenDocument, message: string, options?: ChatBubbleOptions): Promise<JQuery<HTMLElement> | null>;
     /**
      * Speak a message as a particular Token, displaying it as a chat bubble
      * @param {Token} token                   The speaking Token
      * @param {string} message                The spoken message text
      * @param {ChatBubbleOptions} [options]   Options which affect the bubble appearance
-     * @returns {Promise<jQuery|null>}        A Promise which resolves to the created bubble HTML element, or null
+     * @returns {Promise<JQuery<HTMLElement>|null>}        A Promise which resolves to the created bubble HTML element, or null
      */
-    say(token: Function, message: string, { cssClasses, requireVisible, pan }?: ChatBubbleOptions): Promise<JQueryStatic | null>;
+    say(token: Function, message: string, { cssClasses, requireVisible, pan }?: ChatBubbleOptions): Promise<JQuery<HTMLElement> | null>;
     /**
      * Clear any existing chat bubble for a certain Token
      * @param {Token} token
@@ -25750,10 +25750,10 @@ declare class ChatBubbles {
      * Research suggests that average reading speed is 200 words per minute.
      * Since these are short-form messages, we multiply reading speed by 1.5.
      * Clamp the result between 1 second (minimum) and 20 seconds (maximum)
-     * @param {jQuery} html     The HTML message
+     * @param {JQuery<HTMLElement>} html     The HTML message
      * @returns {number}        The number of milliseconds for which to display the message
      */
-    _getDuration(html: JQueryStatic): number;
+    _getDuration(html: JQuery<HTMLElement>): number;
 }
 /**
  * Render the HUD container
@@ -26366,7 +26366,7 @@ declare class AVConfig extends FormApplication {
  * This class will represent one popout feed window and handle its positioning and draggability
  * @param {CameraViews} view      The CameraViews application that this popout belongs to
  * @param {string} userId         ID of the user this popout belongs to
- * @param {jQuery} element        The div element of this specific popout window
+ * @param {JQuery<HTMLElement>} element        The div element of this specific popout window
  */
 declare class CameraPopoutAppWrapper {
     constructor(view: any, userId: any, element: any);
@@ -26536,12 +26536,12 @@ declare class CameraViews extends Application {
      * which allows us to have elements with display:flex which can be hidden then shown without
      * breaking their display style.
      * This will show/hide the toggle buttons, volume controls and overlay sidebars
-     * @param {jQuery} container    The container for which to show/hide control elements
+     * @param {JQuery<HTMLElement>} container    The container for which to show/hide control elements
      * @param {boolean} show        Whether to show or hide the controls
      * @param {string} selector     Override selector to specify which controls to show or hide
      * @protected
      */
-    protected _toggleControlVisibility(container: JQueryStatic, show: boolean, selector: string): void;
+    protected _toggleControlVisibility(container: JQuery<HTMLElement>, show: boolean, selector: string): void;
 }
 /**
  * An abstract base class designed to standardize the behavior for a multi-select UI component.
@@ -27189,7 +27189,7 @@ declare class ChatPopout extends Application {
      */
     message: ChatMessage;
     /** @inheritdoc */
-    _renderInner(data: any, options: any): Promise<JQueryStatic>;
+    _renderInner(data: any, options: any): Promise<JQuery<HTMLElement>>;
 }
 /**
  * The Application responsible for displaying and editing the client and world settings for this world.
@@ -27602,7 +27602,7 @@ declare class SupportDetails extends Application {
     /** @inheritdoc */
     _render(force?: boolean, options?: {}): Promise<void>;
     /** @inheritdoc */
-    _renderInner(data: any): Promise<JQueryStatic>;
+    _renderInner(data: any): Promise<JQuery<HTMLElement>>;
     /**
      * Handle a button click action.
      * @param {MouseEvent} event  The click event.
@@ -27832,12 +27832,12 @@ declare class ChatLog extends SidebarTab {
     _render(force: any, options: any): Promise<void>;
     /**
      * Render a batch of additional messages, prepending them to the top of the log
-     * @param {jQuery} html     The rendered jQuery HTML object
+     * @param {JQuery<HTMLElement>} html     The rendered jQuery HTML object
      * @param {number} size     The batch size to include
      * @returns {Promise<void>}
      * @protected
      */
-    protected _renderBatch(html: JQueryStatic, size: number): Promise<void>;
+    protected _renderBatch(html: JQuery<HTMLElement>, size: number): Promise<void>;
     /**
      * Delete a single message from the chat log
      * @param {string} messageId    The ChatMessage document to remove from the log
@@ -28112,10 +28112,10 @@ declare class CombatTracker extends SidebarTab {
     protected _getEntryContextOptions(): object[];
     /**
      * Display a dialog which prompts the user to enter a new initiative value for a Combatant
-     * @param {jQuery} li
+     * @param {JQuery<HTMLElement>} li
      * @protected
      */
-    protected _onConfigureCombatant(li: JQueryStatic): void;
+    protected _onConfigureCombatant(li: JQuery<HTMLElement>): void;
 }
 /**
  * A compendium of knowledge arcane and mystical!
@@ -31230,13 +31230,13 @@ type ContextMenuEntry = {
      * The function to call when the menu item is clicked. Receives the HTML element
      * of the entry that this context menu is for.
      */
-    callback: (arg0: JQueryStatic) => any;
+    callback: (arg0: JQuery<HTMLElement>) => any;
     /**
      * A function to call to determine if this item appears in the menu.
-     *  Receives the HTML element of the entry that this context menu is
-     *  for.
+     * Receives the HTML element of the entry that this context menu is
+     * for.
      */
-    condition?: (arg0: JQueryStatic) => boolean;
+    condition?: (arg0: JQuery<HTMLElement>) => boolean;
 };
 type ContextMenuCallback = (target: HTMLElement) => any;
 type DialogOptions = ApplicationOptions;
@@ -31256,7 +31256,7 @@ type DialogButton = {
     /**
      * A callback function that fires when the button is clicked
      */
-    callback?: (arg0: JQueryStatic) => any;
+    callback?: (arg0: JQuery<HTMLElement>) => any;
 };
 type DialogData = {
     /**
@@ -31278,11 +31278,11 @@ type DialogData = {
     /**
      * A callback function invoked when the dialog is rendered
      */
-    render?: (arg0: JQueryStatic) => any;
+    render?: (arg0: JQuery<HTMLElement>) => any;
     /**
      * Common callback operations to perform when the dialog is closed
      */
-    close?: (arg0: JQueryStatic) => any;
+    close?: (arg0: JQuery<HTMLElement>) => any;
 };
 type DragDropConfiguration = {
     /**

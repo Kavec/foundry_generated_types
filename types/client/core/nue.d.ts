@@ -25,10 +25,10 @@ declare class NewUserExperience {
     /**
      * Add event listeners to the chat card links.
      * @param {ChatMessage} msg  The ChatMessage being rendered.
-     * @param {jQuery} html      The HTML content of the message.
+     * @param {JQuery<HTMLElement>} html      The HTML content of the message.
      * @protected
      */
-    protected _activateListeners(msg: ChatMessage, html: JQueryStatic): void;
+    protected _activateListeners(msg: ChatMessage, html: JQuery<HTMLElement>): void;
     /**
      * Perform some special action triggered by clicking on a link in a NUE chat card.
      * @param {TriggeredEvent} event  The click event.

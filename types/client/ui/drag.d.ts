@@ -1,7 +1,7 @@
 /**
  * A UI utility to make an element draggable.
  * @param {Application} app             The Application that is being made draggable.
- * @param {jQuery} element              A JQuery reference to the Application's outer-most element.
+ * @param {JQuery<HTMLElement>} element              A JQuery reference to the Application's outer-most element.
  * @param {HTMLElement|boolean} handle  The element that acts as a drag handle. Supply false to disable dragging.
  * @param {boolean|object} resizable    Is the application resizable? Supply an object to configure resizing behaviour
  *                                      or true to have it automatically configured.

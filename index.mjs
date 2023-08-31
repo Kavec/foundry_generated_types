@@ -61,26 +61,24 @@ async function copyFoundryToCache() {
     }
 }
 
-async function replacePrivateDirectives() {
-    // By design, typescript fails to emit the type for private class members
-    // e.g., a js class with `_fieldName` that has @private in its tsdoc will
-    // be produced in the output .d.ts as `private _fieldName;` on the class..
-    // even if the actual type is recorded for _fieldName in the tsdoc comment.
-    //
-    // This is fine, mostly, because in theory you don't call private fields
-    // on classes anyway... until you're trying to do something like rework
-    // the `_injectHtml` method to support svelte et al when inheriting from
-    // a class with a private field. Private class members marked this way in
-    // javascript aren't even real anyway (you can access  a private member 
-    // by using the `className['_array_access_notation']` style at any time 
-    // you'd like) and typescript /will/ emit the types for a protected class, 
-    // so this routine goes about and substitutes all @private directives for
-    // @protected ones.
-    const allJsFiles = await glob(`${localCacheDir}/resources/app/[!node_modules]*/**/*.js`);
-    allJsFiles.forEach(fileName => {
-        const data = fs.readFileSync(fileName).toString();
-        const newData = data.replace(/\B@private\b/g, '@protected');
-        fs.writeFileSync(fileName, newData);
+// All fileModifiers are a function from string -> string that are
+// assumed to be idempotent so we can blindly slap the cached code
+// with them however often we'd like.
+const fileModifiers = []
+function addFileModifier(desc, fn /* (string) => string */) {
+    console.log(`Registered file transform: ${desc}`);
+    fileModifiers.push(fn);
+}
+
+async function runFileModifiers() {
+    await runStep(`Running ${fileModifiers.length} file modifiers on source files`, async () => {
+        const allJsFiles = await glob(`${localCacheDir}/resources/app/[!node_modules]*/**/*.js`);
+    
+        allJsFiles.forEach(fileName => {
+            let data = fs.readFileSync(fileName).toString();
+            fileModifiers.forEach(fn => data = fn(data));
+            fs.writeFileSync(fileName, data);
+        });
     });
 }
 
@@ -98,10 +96,35 @@ if (fs.existsSync(pixiPath)) {
     );
 }
 
-await runStep(
-    `Replacing '@private' type directives with '@protected'`,
-    replacePrivateDirectives
+// By design, typescript fails to emit the type for private class members
+// e.g., a js class with `_fieldName` that has @private in its tsdoc will
+// be produced in the output .d.ts as `private _fieldName;` on the class..
+// even if the actual type is recorded for _fieldName in the tsdoc comment.
+//
+// This is fine, mostly, because in theory you don't call private fields
+// on classes anyway... until you're trying to do something like rework
+// the `_injectHtml` method to support svelte et al when inheriting from
+// a class with a private field. Private class members marked this way in
+// javascript aren't even real anyway (you can access  a private member 
+// by using the `className['_array_access_notation']` style at any time 
+// you'd like) and typescript /will/ emit the types for a protected class, 
+// so this routine goes about and substitutes all @private directives for
+// @protected ones.
+addFileModifier(
+    '@private -> @protected; ensures private type declarations in output',
+    fileData => fileData.replace(/\B@private\b/g, '@protected'),
 );
+
+// Typescript wants to call `jQuery` types `JQueryStatic`, but in practice
+// those prop types are instead `JQuery`. Difference being that base JQuery
+// types can do things like `html.find` and JQuery static ones need to do
+// `html.fn.find` instead.
+addFileModifier(
+    'jQuery -> JQuery; avoid mistype of JQuery props as JQueryStatic',
+    fileData => fileData.replace(/(\*.*)(\{.*)\bjQuery\b(.*\})/g, '$1$2JQuery<HTMLElement>$3'),
+);
+
+await runFileModifiers();
 
 await runStep(
     `Generating type definitions via tsc`,

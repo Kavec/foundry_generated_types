@@ -9,7 +9,7 @@
  * @property {string} icon                  A Font Awesome icon for the button
  * @property {string} label                 The label for the button
  * @property {boolean} disabled             Whether the button is disabled
- * @property {function(jQuery)} [callback]  A callback function that fires when the button is clicked
+ * @property {function(JQuery<HTMLElement>)} [callback]  A callback function that fires when the button is clicked
  */
 /**
  * @typedef {object} DialogData
@@ -17,8 +17,8 @@
  * @property {string} content               HTML content for the dialog form
  * @property {Object<DialogButton>} buttons The buttons which are displayed as action choices for the dialog
  * @property {string} [default]             The name of the default button which should be triggered on Enter keypress
- * @property {function(jQuery)} [render]    A callback function invoked when the dialog is rendered
- * @property {function(jQuery)} [close]     Common callback operations to perform when the dialog is closed
+ * @property {function(JQuery<HTMLElement>)} [render]    A callback function invoked when the dialog is rendered
+ * @property {function(JQuery<HTMLElement>)} [close]     Common callback operations to perform when the dialog is closed
  */
 /**
  * Create a dialog window displaying a title, a message, and a set of buttons which trigger callback functions.
@@ -145,7 +145,7 @@ type DialogButton = {
     /**
      * A callback function that fires when the button is clicked
      */
-    callback?: (arg0: JQueryStatic) => any;
+    callback?: (arg0: JQuery<HTMLElement>) => any;
 };
 type DialogData = {
     /**
@@ -167,9 +167,9 @@ type DialogData = {
     /**
      * A callback function invoked when the dialog is rendered
      */
-    render?: (arg0: JQueryStatic) => any;
+    render?: (arg0: JQuery<HTMLElement>) => any;
     /**
      * Common callback operations to perform when the dialog is closed
      */
-    close?: (arg0: JQueryStatic) => any;
+    close?: (arg0: JQuery<HTMLElement>) => any;
 };

@@ -115,12 +115,12 @@ declare class ChatLog extends SidebarTab {
     _render(force: any, options: any): Promise<void>;
     /**
      * Render a batch of additional messages, prepending them to the top of the log
-     * @param {jQuery} html     The rendered jQuery HTML object
+     * @param {JQuery<HTMLElement>} html     The rendered jQuery HTML object
      * @param {number} size     The batch size to include
      * @returns {Promise<void>}
      * @protected
      */
-    protected _renderBatch(html: JQueryStatic, size: number): Promise<void>;
+    protected _renderBatch(html: JQuery<HTMLElement>, size: number): Promise<void>;
     /**
      * Delete a single message from the chat log
      * @param {string} messageId    The ChatMessage document to remove from the log

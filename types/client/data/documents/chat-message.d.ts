@@ -142,9 +142,9 @@ declare class ChatMessage {
     getRollData(): object;
     /**
      * Render the HTML for the ChatMessage which should be added to the log
-     * @returns {Promise<jQuery>}
+     * @returns {Promise<JQuery<HTMLElement>>}
      */
-    getHTML(): Promise<JQueryStatic>;
+    getHTML(): Promise<JQuery<HTMLElement>>;
     /**
      * Render the inner HTML content for ROLL type messages.
      * @param {object} messageData      The chat message data used to render the message HTML

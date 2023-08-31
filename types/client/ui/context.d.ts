@@ -2,9 +2,9 @@
  * @typedef {object} ContextMenuEntry
  * @property {string} name               The context menu label. Can be localized.
  * @property {string} icon               A string containing an HTML icon element for the menu item
- * @property {function(jQuery)} callback The function to call when the menu item is clicked. Receives the HTML element
+ * @property {function(JQuery<HTMLElement>)} callback The function to call when the menu item is clicked. Receives the HTML element
  *                                       of the entry that this context menu is for.
- * @property {function(jQuery):boolean} [condition] A function to call to determine if this item appears in the menu.
+ * @property {function(JQuery<HTMLElement>):boolean} [condition] A function to call to determine if this item appears in the menu.
  *                                                  Receives the HTML element of the entry that this context menu is
  *                                                  for.
  */
@@ -21,14 +21,14 @@ declare class ContextMenu {
     /**
      * Create a ContextMenu for this Application and dispatch hooks.
      * @param {Application} app                           The Application this ContextMenu belongs to.
-     * @param {jQuery} html                               The Application's rendered HTML.
+     * @param {JQuery<HTMLElement>} html                               The Application's rendered HTML.
      * @param {string} selector                           The target CSS selector which activates the menu.
      * @param {ContextMenuEntry[]} menuItems              The array of menu items being rendered.
      * @param {object} [options]                          Additional options to configure context menu initialization.
      * @param {string} [options.hookName="EntryContext"]  The name of the hook to call.
      * @returns {ContextMenu}
      */
-    static create(app: Application, html: JQueryStatic, selector: string, menuItems: ContextMenuEntry[], { hookName, ...options }?: {
+    static create(app: Application, html: JQuery<HTMLElement>, selector: string, menuItems: ContextMenuEntry[], { hookName, ...options }?: {
         hookName?: string;
     }): ContextMenu;
     /**
@@ -36,7 +36,7 @@ declare class ContextMenu {
      */
     static eventListeners(): void;
     /**
-     * @param {HTMLElement|jQuery} element                The containing HTML element within which the menu is positioned
+     * @param {HTMLElement|JQuery<HTMLElement>} element                The containing HTML element within which the menu is positioned
      * @param {string} selector                           A CSS selector which activates the context menu.
      * @param {ContextMenuEntry[]} menuItems              An Array of entries to display in the menu
      * @param {object} [options]                          Additional options to configure the context menu.
@@ -45,16 +45,16 @@ declare class ContextMenu {
      * @param {ContextMenuCallback} [options.onOpen]      A function to call when the context menu is opened.
      * @param {ContextMenuCallback} [options.onClose]     A function to call when the context menu is closed.
      */
-    constructor(element: HTMLElement | JQueryStatic, selector: string, menuItems: ContextMenuEntry[], { eventName, onOpen, onClose }?: {
+    constructor(element: HTMLElement | JQuery<HTMLElement>, selector: string, menuItems: ContextMenuEntry[], { eventName, onOpen, onClose }?: {
         eventName?: string;
         onOpen?: ContextMenuCallback;
         onClose?: ContextMenuCallback;
     });
     /**
      * The target HTMLElement being selected
-     * @type {HTMLElement|jQuery}
+     * @type {HTMLElement|JQuery<HTMLElement>}
      */
-    element: HTMLElement | JQueryStatic;
+    element: HTMLElement | JQuery<HTMLElement>;
     /**
      * The target CSS selector which activates the menu
      * @type {string}
@@ -87,7 +87,7 @@ declare class ContextMenu {
     _expandUp: boolean;
     /**
      * A convenience accessor to the context menu HTML object
-     * @returns {*|jQuery.fn.init|jQuery|HTMLElement}
+     * @returns {*|jQuery.fn.init|JQuery<HTMLElement>|HTMLElement}
      */
     get menu(): any;
     /**
@@ -110,9 +110,9 @@ declare class ContextMenu {
      * Render the Context Menu by iterating over the menuItems it contains.
      * Check the visibility of each menu item, and only render ones which are allowed by the item's logical condition.
      * Attach a click handler to each item which is rendered.
-     * @param {jQuery} target     The target element to which the context menu is attached
+     * @param {JQuery<HTMLElement>} target     The target element to which the context menu is attached
      */
-    render(target: JQueryStatic): Promise<any>;
+    render(target: JQuery<HTMLElement>): Promise<any>;
     /**
      * Set the position of the context menu, taking into consideration whether the menu should expand upward or downward
      * @protected
@@ -120,9 +120,9 @@ declare class ContextMenu {
     protected _setPosition(html: any, target: any): void;
     /**
      * Local listeners which apply to each ContextMenu instance which is created.
-     * @param {jQuery} html
+     * @param {JQuery<HTMLElement>} html
      */
-    activateListeners(html: JQueryStatic): void;
+    activateListeners(html: JQuery<HTMLElement>): void;
     #private;
 }
 type ContextMenuEntry = {
@@ -138,12 +138,12 @@ type ContextMenuEntry = {
      * The function to call when the menu item is clicked. Receives the HTML element
      * of the entry that this context menu is for.
      */
-    callback: (arg0: JQueryStatic) => any;
+    callback: (arg0: JQuery<HTMLElement>) => any;
     /**
      * A function to call to determine if this item appears in the menu.
-     *  Receives the HTML element of the entry that this context menu is
-     *  for.
+     * Receives the HTML element of the entry that this context menu is
+     * for.
      */
-    condition?: (arg0: JQueryStatic) => boolean;
+    condition?: (arg0: JQuery<HTMLElement>) => boolean;
 };
 type ContextMenuCallback = (target: HTMLElement) => any;

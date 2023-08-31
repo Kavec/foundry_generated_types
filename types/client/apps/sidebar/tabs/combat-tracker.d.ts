@@ -117,8 +117,8 @@ declare class CombatTracker extends SidebarTab {
     protected _getEntryContextOptions(): object[];
     /**
      * Display a dialog which prompts the user to enter a new initiative value for a Combatant
-     * @param {jQuery} li
+     * @param {JQuery<HTMLElement>} li
      * @protected
      */
-    protected _onConfigureCombatant(li: JQueryStatic): void;
+    protected _onConfigureCombatant(li: JQuery<HTMLElement>): void;
 }

@@ -65,7 +65,7 @@ declare class FormApplication extends Application {
     /** @inheritdoc */
     _render(force: any, options: any): Promise<void>;
     /** @inheritdoc */
-    _renderInner(...args: any[]): Promise<JQueryStatic>;
+    _renderInner(...args: any[]): Promise<JQuery<HTMLElement>>;
     /** @inheritdoc */
     _activateCoreListeners(html: any): void;
     /** @inheritdoc */
@@ -234,10 +234,10 @@ declare class DocumentSheet extends FormApplication {
     render(force?: boolean, options?: {}): any;
     /**
      * Create an ID link button in the document sheet header which displays the document ID and copies to clipboard
-     * @param {jQuery} html
+     * @param {JQuery<HTMLElement>} html
      * @protected
      */
-    protected _createDocumentIdLink(html: JQueryStatic): void;
+    protected _createDocumentIdLink(html: JQuery<HTMLElement>): void;
     /**
      * Test whether a certain User has permission to view this Document Sheet.
      * @param {User} user     The user requesting to render the sheet

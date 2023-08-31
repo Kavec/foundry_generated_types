@@ -31,25 +31,25 @@ declare class ChatBubbles {
     protected _panned: Function;
     /**
      * A reference to the chat bubbles HTML container in which rendered bubbles should live
-     * @returns {jQuery}
+     * @returns {JQuery<HTMLElement>}
      */
-    get container(): JQueryStatic;
+    get container(): JQuery<HTMLElement>;
     /**
      * Create a chat bubble message for a certain token which is synchronized for display across all connected clients.
      * @param {TokenDocument} token           The speaking Token Document
      * @param {string} message                The spoken message text
      * @param {ChatBubbleOptions} [options]   Options which affect the bubble appearance
-     * @returns {Promise<jQuery|null>}        A promise which resolves with the created bubble HTML, or null
+     * @returns {Promise<JQuery<HTMLElement>|null>}        A promise which resolves with the created bubble HTML, or null
      */
-    broadcast(token: TokenDocument, message: string, options?: ChatBubbleOptions): Promise<JQueryStatic | null>;
+    broadcast(token: TokenDocument, message: string, options?: ChatBubbleOptions): Promise<JQuery<HTMLElement> | null>;
     /**
      * Speak a message as a particular Token, displaying it as a chat bubble
      * @param {Token} token                   The speaking Token
      * @param {string} message                The spoken message text
      * @param {ChatBubbleOptions} [options]   Options which affect the bubble appearance
-     * @returns {Promise<jQuery|null>}        A Promise which resolves to the created bubble HTML element, or null
+     * @returns {Promise<JQuery<HTMLElement>|null>}        A Promise which resolves to the created bubble HTML element, or null
      */
-    say(token: Function, message: string, { cssClasses, requireVisible, pan }?: ChatBubbleOptions): Promise<JQueryStatic | null>;
+    say(token: Function, message: string, { cssClasses, requireVisible, pan }?: ChatBubbleOptions): Promise<JQuery<HTMLElement> | null>;
     /**
      * Clear any existing chat bubble for a certain Token
      * @param {Token} token
@@ -83,9 +83,9 @@ declare class ChatBubbles {
      * Research suggests that average reading speed is 200 words per minute.
      * Since these are short-form messages, we multiply reading speed by 1.5.
      * Clamp the result between 1 second (minimum) and 20 seconds (maximum)
-     * @param {jQuery} html     The HTML message
+     * @param {JQuery<HTMLElement>} html     The HTML message
      * @returns {number}        The number of milliseconds for which to display the message
      */
-    _getDuration(html: JQueryStatic): number;
+    _getDuration(html: JQuery<HTMLElement>): number;
 }
 type ChatBubbleOptions = new (text?: string, value?: string, defaultSelected?: boolean, selected?: boolean) => HTMLOptionElement;

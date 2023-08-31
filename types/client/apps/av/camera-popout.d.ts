@@ -3,7 +3,7 @@
  * This class will represent one popout feed window and handle its positioning and draggability
  * @param {CameraViews} view      The CameraViews application that this popout belongs to
  * @param {string} userId         ID of the user this popout belongs to
- * @param {jQuery} element        The div element of this specific popout window
+ * @param {JQuery<HTMLElement>} element        The div element of this specific popout window
  */
 declare class CameraPopoutAppWrapper {
     constructor(view: any, userId: any, element: any);

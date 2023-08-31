@@ -70,7 +70,7 @@ declare class SupportDetails extends Application {
     /** @inheritdoc */
     _render(force?: boolean, options?: {}): Promise<void>;
     /** @inheritdoc */
-    _renderInner(data: any): Promise<JQueryStatic>;
+    _renderInner(data: any): Promise<JQuery<HTMLElement>>;
     /**
      * Handle a button click action.
      * @param {MouseEvent} event  The click event.

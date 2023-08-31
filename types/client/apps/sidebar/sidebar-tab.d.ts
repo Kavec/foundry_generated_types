@@ -33,7 +33,7 @@ declare class SidebarTab extends Application {
     /** @override */
     override _render(force?: boolean, options?: {}): Promise<void>;
     /** @override */
-    override _renderInner(data: any): Promise<JQueryStatic>;
+    override _renderInner(data: any): Promise<JQuery<HTMLElement>>;
     /**
      * Activate this SidebarTab, switching focus to it
      */

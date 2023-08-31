@@ -14,5 +14,5 @@ declare class ChatPopout extends Application {
      */
     message: ChatMessage;
     /** @inheritdoc */
-    _renderInner(data: any, options: any): Promise<JQueryStatic>;
+    _renderInner(data: any, options: any): Promise<JQuery<HTMLElement>>;
 }
