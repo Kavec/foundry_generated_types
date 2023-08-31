@@ -1,5 +1,6 @@
 declare class Game {
-    // The ClientSettings field is missing from the baseline game class defs
-    // for some reason, but referenced within the api docs
+    // The Game class is missing some fields referenced in the API docs,
+    // so we manually add those back here.
+    i18n: Localization;
     settings: ClientSettings;
 }
