@@ -11,9 +11,9 @@ declare class GamepadManager {
     /**
      * The connected Gamepads
      * @type {Map<string, ConnectedGamepad>}
-     * @private
+     * @protected
      */
-    private _connectedGamepads;
+    protected _connectedGamepads: Map<string, ConnectedGamepad>;
     /**
      * Begin listening to gamepad events.
      * @internal
@@ -22,27 +22,27 @@ declare class GamepadManager {
     /**
      * Handles a Gamepad Connection event, adding its info to the poll list
      * @param {GamepadEvent} event The originating Event
-     * @private
+     * @protected
      */
-    private _onGamepadConnect;
+    protected _onGamepadConnect(event: GamepadEvent): void;
     /**
      * Handles a Gamepad Disconnect event, removing it from consideration for polling
      * @param {GamepadEvent} event The originating Event
-     * @private
+     * @protected
      */
-    private _onGamepadDisconnect;
+    protected _onGamepadDisconnect(event: GamepadEvent): void;
     /**
      * Polls all Connected Gamepads for updates. If they have been updated, checks status of Axis and Buttons,
      * firing off Keybinding Contexts as appropriate
-     * @private
+     * @protected
      */
-    private _pollGamepads;
+    protected _pollGamepads(): void;
     /**
      * Converts a Gamepad Input event into a KeyboardEvent, then fires it
      * @param {string} gamepadId  The string representation of the Gamepad Input
      * @param {boolean} up        True if the Input is pressed or active
      * @param {boolean} repeat    True if the Input is being held
-     * @private
+     * @protected
      */
-    private _handleGamepadInput;
+    protected _handleGamepadInput(gamepadId: string, up: boolean, repeat?: boolean): void;
 }

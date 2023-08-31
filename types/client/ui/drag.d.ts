@@ -48,9 +48,9 @@ declare class Draggable {
     protected _activateResizeListeners(): void;
     /**
      * Handle the initial mouse click which activates dragging behavior for the application
-     * @private
+     * @protected
      */
-    private _onDragMouseDown;
+    protected _onDragMouseDown(event: any): void;
     _initial: {
         x: any;
         y: any;
@@ -60,27 +60,27 @@ declare class Draggable {
     };
     /**
      * Move the window with the mouse, bounding the movement to ensure the window stays within bounds of the viewport
-     * @private
+     * @protected
      */
-    private _onDragMouseMove;
+    protected _onDragMouseMove(event: any): void;
     /**
      * Conclude the dragging behavior when the mouse is release, setting the final position and removing listeners
-     * @private
+     * @protected
      */
-    private _onDragMouseUp;
+    protected _onDragMouseUp(event: any): void;
     /**
      * Handle the initial mouse click which activates dragging behavior for the application
-     * @private
+     * @protected
      */
-    private _onResizeMouseDown;
+    protected _onResizeMouseDown(event: any): void;
     /**
      * Move the window with the mouse, bounding the movement to ensure the window stays within bounds of the viewport
-     * @private
+     * @protected
      */
-    private _onResizeMouseMove;
+    protected _onResizeMouseMove(event: any): void;
     /**
      * Conclude the dragging behavior when the mouse is release, setting the final position and removing listeners
-     * @private
+     * @protected
      */
-    private _onResizeMouseUp;
+    protected _onResizeMouseUp(event: any): void;
 }

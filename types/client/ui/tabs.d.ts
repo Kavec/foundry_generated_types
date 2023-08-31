@@ -87,9 +87,9 @@ declare class Tabs {
     /**
      * Handle click events on the tab navigation entries
      * @param {MouseEvent} event    A left click event
-     * @private
+     * @protected
      */
-    private _onClickNav;
+    protected _onClickNav(event: MouseEvent): void;
 }
 declare const TabsV2: typeof Tabs;
 type TabsConfiguration = {

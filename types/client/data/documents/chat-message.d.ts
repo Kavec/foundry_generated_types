@@ -40,9 +40,12 @@ declare class ChatMessage {
      * @param {TokenDocument} options.token        The TokenDocument of the speaker
      * @param {string} [options.alias]             The name of the speaker to display
      * @returns {object}                  The identified speaker data
-     * @private
+     * @protected
      */
-    private static _getSpeakerFromToken;
+    protected static _getSpeakerFromToken({ token, alias }?: {
+        token: TokenDocument;
+        alias?: string;
+    }): object;
     /**
      * A helper to prepare the speaker object based on a target Actor
      * @param {object} [options={}]       Options which affect speaker identification
@@ -50,9 +53,13 @@ declare class ChatMessage {
      * @param {Actor} [options.actor]             The Actor that is speaking
      * @param {string} [options.alias]            The name of the speaker to display
      * @returns {Object}                  The identified speaker data
-     * @private
+     * @protected
      */
-    private static _getSpeakerFromActor;
+    protected static _getSpeakerFromActor({ scene, actor, alias }?: {
+        scene?: Scene;
+        actor?: Actor;
+        alias?: string;
+    }): any;
     /**
      * A helper to prepare the speaker object based on a target User
      * @param {object} [options={}]       Options which affect speaker identification
@@ -60,9 +67,13 @@ declare class ChatMessage {
      * @param {User} [options.user]               The User who is speaking
      * @param {string} [options.alias]            The name of the speaker to display
      * @returns {Object}                  The identified speaker data
-     * @private
+     * @protected
      */
-    private static _getSpeakerFromUser;
+    protected static _getSpeakerFromUser({ scene, user, alias }?: {
+        scene?: Scene;
+        user?: User;
+        alias?: string;
+    }): any;
     /**
      * Obtain an Actor instance which represents the speaker of this message (if any)
      * @param {Object} speaker    The speaker data object
@@ -79,9 +90,9 @@ declare class ChatMessage {
     /**
      * Is the display of dice rolls in this message collapsed (false) or expanded (true)
      * @type {boolean}
-     * @private
+     * @protected
      */
-    private _rollExpanded;
+    protected _rollExpanded: boolean;
     /**
      * Is this ChatMessage currently displayed in the sidebar ChatLog?
      * @type {boolean}
@@ -138,16 +149,16 @@ declare class ChatMessage {
      * Render the inner HTML content for ROLL type messages.
      * @param {object} messageData      The chat message data used to render the message HTML
      * @returns {Promise}
-     * @private
+     * @protected
      */
-    private _renderRollContent;
+    protected _renderRollContent(messageData: object): Promise<any>;
     /**
      * Render HTML for the array of Roll objects included in this message.
      * @param {boolean} isPrivate   Is the chat message private?
      * @returns {Promise<string>}   The rendered HTML string
-     * @private
+     * @protected
      */
-    private _renderRollHTML;
+    protected _renderRollHTML(isPrivate: boolean): Promise<string>;
     /** @override */
     override _preCreate(data: any, options: any, user: any): Promise<void>;
     /** @override */

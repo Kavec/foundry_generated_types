@@ -9,7 +9,7 @@ declare class SocketInterface {
     /**
      * Handle an error returned from the database, displaying it on screen and in the console
      * @param {Error} err   The provided Error message
-     * @private
+     * @protected
      */
-    private static _handleError;
+    protected static _handleError(err: Error): Error;
 }

@@ -72,9 +72,9 @@ declare class CompendiumCollection extends DocumentCollection {
     /**
      * A debounced function which will clear the contents of the Compendium pack if it is not accessed frequently.
      * @type {Function}
-     * @private
+     * @protected
      */
-    private _flush;
+    protected _flush: Function;
     /**
      * The canonical Compendium name - comprised of the originating package and the pack name
      * @type {string}
@@ -289,9 +289,9 @@ declare class CompendiumCollection extends DocumentCollection {
     _onDeleteFolder(parentFolder: any, deleteFolderId: any, deleteContents: any): any[];
     /**
      * Follow-up actions taken when Documents within this Compendium pack are modified
-     * @private
+     * @protected
      */
-    private _onModifyContents;
+    protected _onModifyContents(documents: any, options: any, userId: any): void;
     /**
      * @deprecated since v11
      * @ignore

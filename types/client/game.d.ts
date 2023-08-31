@@ -37,9 +37,9 @@ declare class Game {
     /**
      * Support mousewheel control for range type input elements
      * @param {WheelEvent} event    A Mouse Wheel scroll event
-     * @private
+     * @protected
      */
-    private static _handleMouseWheelInputChange;
+    protected static _handleMouseWheelInputChange(event: WheelEvent): void;
     /**
      * @param {string} view         The named view which is active for this game instance.
      * @param {object} data         An object of all the World data vended by the server when the client first connects
@@ -221,74 +221,74 @@ declare class Game {
     /**
      * On left mouse clicks, check if the element is contained in a valid hyperlink and open it in a new tab.
      * @param {MouseEvent} event
-     * @private
+     * @protected
      */
-    private _onClickHyperlink;
+    protected _onClickHyperlink(event: MouseEvent): void;
     /**
      * Prevent starting a drag and drop workflow on elements within the document unless the element has the draggable
      * attribute explicitly defined or overrides the dragstart handler.
      * @param {DragEvent} event   The initiating drag start event
-     * @private
+     * @protected
      */
-    private _onPreventDragstart;
+    protected _onPreventDragstart(event: DragEvent): boolean;
     /**
      * Disallow dragging of external content onto anything but a file input element
      * @param {DragEvent} event   The requested drag event
-     * @private
+     * @protected
      */
-    private _onPreventDragover;
+    protected _onPreventDragover(event: DragEvent): void;
     /**
      * Disallow dropping of external content onto anything but a file input element
      * @param {DragEvent} event   The requested drag event
-     * @private
+     * @protected
      */
-    private _onPreventDrop;
+    protected _onPreventDrop(event: DragEvent): void;
     /**
      * On a left-click event, remove any currently displayed inline roll tooltip
      * @param {PointerEvent} event    The mousedown pointer event
-     * @private
+     * @protected
      */
-    private _onPointerDown;
+    protected _onPointerDown(event: PointerEvent): void;
     /**
      * Fallback handling for mouse-up events which aren't handled further upstream.
      * @param {PointerEvent} event    The mouseup pointer event
-     * @private
+     * @protected
      */
-    private _onPointerUp;
+    protected _onPointerUp(event: PointerEvent): void;
     /**
      * Handle resizing of the game window by adjusting the canvas and repositioning active interface applications.
      * @param {Event} event     The window resize event which has occurred
-     * @private
+     * @protected
      */
-    private _onWindowResize;
+    protected _onWindowResize(event: Event): any;
     /**
      * Handle window unload operations to clean up any data which may be pending a final save
      * @param {Event} event     The window unload event which is about to occur
-     * @private
+     * @protected
      */
-    private _onWindowBeforeUnload;
+    protected _onWindowBeforeUnload(event: Event): any;
     /**
      * Handle cases where the browser window loses focus to reset detection of currently pressed keys
      * @param {Event} event   The originating window.blur event
-     * @private
+     * @protected
      */
-    private _onWindowBlur;
+    protected _onWindowBlur(event: Event): void;
     _onWindowPopState(event: any): void;
     /**
      * Initialize elements required for the current view
-     * @private
+     * @protected
      */
-    private _initializeView;
+    protected _initializeView(): Promise<void>;
     /**
      * Initialization steps for the primary Game view
-     * @private
+     * @protected
      */
-    private _initializeGameView;
+    protected _initializeGameView(): Promise<void>;
     /**
      * Initialization steps for the Stream helper view
-     * @private
+     * @protected
      */
-    private _initializeStreamView;
+    protected _initializeStreamView(): Promise<void>;
     #private;
 }
 type HotReloadData = {

@@ -133,10 +133,10 @@ declare class Notifications extends Application {
     clear(): void;
     /**
      * Retrieve a pending notification from the queue and display it
-     * @private
+     * @protected
      * @returns {void}
      */
-    private fetch;
+    protected fetch(): void;
     #private;
 }
 type NotifyOptions = {

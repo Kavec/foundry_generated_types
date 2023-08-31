@@ -13,7 +13,7 @@ declare class PlaylistSoundConfig extends DocumentSheet {
     /**
      * Auto-populate the track name using the provided filename, if a name is not already set
      * @param {Event} event
-     * @private
+     * @protected
      */
-    private _onSourceChange;
+    protected _onSourceChange(event: Event): void;
 }

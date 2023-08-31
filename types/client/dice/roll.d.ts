@@ -118,23 +118,23 @@ declare class Roll {
      * Split a formula by identifying its outer-most parenthetical and math terms
      * @param {string} _formula      The raw formula to split
      * @returns {string[]}          An array of terms, split on parenthetical terms
-     * @private
+     * @protected
      */
-    private static _splitParentheses;
+    protected static _splitParentheses(_formula: string): string[];
     /**
      * Handle closing of a parenthetical term to create a MathTerm expression with a function and arguments
      * @param {string} expression   The expression to split
      * @returns {MathTerm[]}        An array of evaluated MathTerm instances
-     * @private
+     * @protected
      */
-    private static _splitMathArgs;
+    protected static _splitMathArgs(expression: string): MathTerm[];
     /**
      * Split a formula by identifying its outermost dice pool terms.
      * @param {string} _formula      The raw formula to split
      * @returns {string[]}          An array of terms, split on parenthetical terms
-     * @private
+     * @protected
      */
-    private static _splitPools;
+    protected static _splitPools(_formula: string): string[];
     /**
      * Split a formula by identifying its outermost groups using a certain group symbol like parentheses or brackets.
      * @param {string} _formula     The raw formula to split
@@ -145,31 +145,40 @@ declare class Roll {
      * @param {string} [options.closeSymbol]  The string symbol that closes a group
      * @param {Function} [options.onClose]    A callback function invoked when a group is closed
      * @returns {string[]}          An array of terms, split on dice pool terms
-     * @private
+     * @protected
      */
-    private static _splitGroup;
+    protected static _splitGroup(_formula: string, { openRegexp, closeRegexp, openSymbol, closeSymbol, onClose }?: {
+        openRegexp?: RegExp;
+        closeRegexp?: RegExp;
+        openSymbol?: string;
+        closeSymbol?: string;
+        onClose?: Function;
+    }): string[];
     /**
      * Split a formula by identifying arithmetic terms
      * @param {string} _formula                 The raw formula to split
      * @returns {Array<(string|OperatorTerm)>}  An array of terms, split on arithmetic operators
-     * @private
+     * @protected
      */
-    private static _splitOperators;
+    protected static _splitOperators(_formula: string): Array<(string | OperatorTerm)>;
     /**
      * Temporarily remove flavor text from a string formula allowing it to be accurately parsed.
      * @param {string} formula                        The formula to extract
      * @returns {{formula: string, flavors: object}}  The cleaned formula and extracted flavor mapping
-     * @private
+     * @protected
      */
-    private static _extractFlavors;
+    protected static _extractFlavors(formula: string): {
+        formula: string;
+        flavors: object;
+    };
     /**
      * Restore flavor text to a string term
      * @param {string} term             The string term possibly containing flavor symbols
      * @param {Object<string>} flavors  The extracted flavors object
      * @returns {string}                The restored term containing flavor text
-     * @private
+     * @protected
      */
-    private static _restoreFlavor;
+    protected static _restoreFlavor(term: string, flavors: any): string;
     /**
      * Classify a remaining string term into a recognized RollTerm class
      * @param {string} term         A remaining un-classified string
@@ -258,9 +267,9 @@ declare class Roll {
     /**
      * Cache the numeric total generated through evaluation of the Roll.
      * @type {number}
-     * @private
+     * @protected
      */
-    private _total;
+    protected _total: number;
     /**
      * Prepare the data structure used for the Roll.
      * This is factored out to allow for custom Roll classes to do special data preparation using provided input.
@@ -335,9 +344,12 @@ declare class Roll {
      * @param {boolean} [options.minimize]    Force the result to be minimized
      * @param {boolean} [options.maximize]    Force the result to be maximized
      * @returns {Promise<Roll>}
-     * @private
+     * @protected
      */
-    private _evaluate;
+    protected _evaluate({ minimize, maximize }?: {
+        minimize?: boolean;
+        maximize?: boolean;
+    }): Promise<Roll>;
     /**
      * Evaluate the roll synchronously.
      * A temporary helper method used to migrate behavior from 0.7.x (sync by default) to 0.9.x (async by default).
@@ -345,15 +357,18 @@ declare class Roll {
      * @param {boolean} [options.minimize]    Force the result to be minimized
      * @param {boolean} [options.maximize]    Force the result to be maximized
      * @returns {Roll}
-     * @private
+     * @protected
      */
-    private _evaluateSync;
+    protected _evaluateSync({ minimize, maximize }?: {
+        minimize?: boolean;
+        maximize?: boolean;
+    }): Roll;
     /**
      * Safely evaluate the final total result for the Roll using its component terms.
      * @returns {number}    The evaluated total
-     * @private
+     * @protected
      */
-    private _evaluateTotal;
+    protected _evaluateTotal(): number;
     /**
      * Alias for evaluate.
      * @param {object} options    Options passed to Roll#evaluate

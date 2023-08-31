@@ -29,9 +29,9 @@ declare class PlaylistSound {
     /**
      * Create a Sound used to play this PlaylistSound document
      * @returns {Sound|null}
-     * @private
+     * @protected
      */
-    private _createSound;
+    protected _createSound(): Sound | null;
     /**
      * The effective volume at which this playlist sound is played, incorporating the global playlist volume setting.
      * @type {number}
@@ -61,29 +61,29 @@ declare class PlaylistSound {
     playing: boolean;
     /**
      * Special handling that occurs when a PlaylistSound reaches the natural conclusion of its playback.
-     * @private
+     * @protected
      */
-    private _onEnd;
+    protected _onEnd(): Promise<any>;
     /**
      * Special handling that occurs when playback of a PlaylistSound is started.
-     * @private
+     * @protected
      */
-    private _onStart;
+    protected _onStart(): Promise<any>;
     /**
      * Special handling that occurs when a PlaylistSound is manually stopped before its natural conclusion.
-     * @private
+     * @protected
      */
-    private _onStop;
+    protected _onStop(): Promise<void>;
     /**
      * Handle fading in the volume for this sound when it begins to play (or loop)
      * @param {Sound} sound     The sound fading-in
-     * @private
+     * @protected
      */
-    private _fadeIn;
+    protected _fadeIn(sound: Sound): void;
     /**
      * Handle fading out the volume for this sound when it begins to play (or loop)
      * @param {Sound} sound     The sound fading-out
-     * @private
+     * @protected
      */
-    private _fadeOut;
+    protected _fadeOut(sound: Sound): void;
 }

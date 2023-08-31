@@ -213,20 +213,20 @@ declare class Tour {
      * Handle Tour Button clicks
      * @param {Event} event   A click event
      * @param {HTMLElement[]} buttons   The step buttons
-     * @private
+     * @protected
      */
-    private _onButtonClick;
+    protected _onButtonClick(event: Event, buttons: HTMLElement[]): void | Promise<any>;
     /**
      * Saves the current progress of the Tour to a world setting
-     * @private
+     * @protected
      */
-    private _saveProgress;
+    protected _saveProgress(): void;
     /**
      * Returns the User's current progress of this Tour
      * @returns {null|number}
-     * @private
+     * @protected
      */
-    private _loadProgress;
+    protected _loadProgress(): null | number;
     /**
      * Reloads the Tour's current step from the saved progress
      * @internal

@@ -13,15 +13,15 @@ declare class PermissionConfig extends FormApplication {
      * Prepare the permissions object used to render the configuration template
      * @param {object} current      The current permission configuration
      * @returns {object[]}          Permission data for sheet rendering
-     * @private
+     * @protected
      */
-    private _getPermissions;
+    protected _getPermissions(current: object): object[];
     /**
      * Handle button click to reset default settings
      * @param {Event} event   The initial button click event
-     * @private
+     * @protected
      */
-    private _onResetDefaults;
+    protected _onResetDefaults(event: Event): Promise<Application>;
     /** @override */
     override _onSubmit(event: any, options: any): Promise<any>;
     /** @override */

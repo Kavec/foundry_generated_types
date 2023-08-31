@@ -24,9 +24,9 @@ declare class TextEditor {
     /**
      * A list of elements that are retained when truncating HTML.
      * @type {Set<string>}
-     * @private
+     * @protected
      */
-    private static _PARAGRAPH_ELEMENTS;
+    protected static _PARAGRAPH_ELEMENTS: Set<string>;
     /**
      * Create a TinyMCE editor instance.
      * @param {object} [options]           Configuration options passed to the editor.
@@ -516,25 +516,28 @@ declare class TextEditor {
      * Recursively identify the text nodes within a parent HTML node for potential content replacement.
      * @param {HTMLElement} parent    The parent HTML Element
      * @returns {Text[]}              An array of contained Text nodes
-     * @private
+     * @protected
      */
-    private static _getTextNodes;
+    protected static _getTextNodes(parent: HTMLElement): Text[];
+    protected static _getTextNodes(parent: HTMLElement): Text[];
     /**
      * Facilitate the replacement of text node content using a matching regex rule and a provided replacement function.
      * @param {Text} text             The target text to replace
      * @param {RegExp} rgx            The provided regular expression for matching and replacement
      * @param {function(RegExpMatchArray): HTMLElement|Promise<HTMLElement>} func   The replacement function
-     * @private
+     * @protected
      */
-    private static _replaceTextContent;
+    protected static _replaceTextContent(text: Text, rgx: RegExp, func: (arg0: RegExpMatchArray) => HTMLElement | Promise<HTMLElement>): boolean | Promise<boolean>;
+    protected static _replaceTextContent(text: Text, rgx: RegExp, func: (arg0: RegExpMatchArray) => HTMLElement | Promise<HTMLElement>): boolean | Promise<boolean>;
     /**
      * Replace a matched portion of a Text node with a replacement Node
      * @param {Text} text
      * @param {RegExpMatchArray} match
      * @param {Node} replacement
-     * @private
+     * @protected
      */
-    private static _replaceTextNode;
+    protected static _replaceTextNode(text: Text, match: RegExpMatchArray, replacement: Node): void;
+    protected static _replaceTextNode(text: Text, match: RegExpMatchArray, replacement: Node): void;
     /**
      * Create a dynamic document link from a regular expression match
      * @param {RegExpMatchArray} match                          The regular expression match
@@ -563,17 +566,19 @@ declare class TextEditor {
      * @param {string} name    A customized or overridden display name for the link.
      * @param {object} data    Data containing the properties of the resulting link element.
      * @returns {boolean}      Whether the resulting link is broken or not.
-     * @private
+     * @protected
      */
-    private static _createLegacyContentLink;
+    protected static _createLegacyContentLink(type: string, target: string, name: string, data: object): boolean;
+    protected static _createLegacyContentLink(type: string, target: string, name: string, data: any): boolean;
     /**
      * Replace a hyperlink-like string with an actual HTML &lt;a> tag
      * @param {RegExpMatchArray} match  The regular expression match
      * @param {object} [options]        Additional options to configure enrichment behaviour
      * @returns {HTMLAnchorElement}     An HTML element for the document link
-     * @private
+     * @protected
      */
-    private static _createHyperlink;
+    protected static _createHyperlink(match: RegExpMatchArray, options?: object): HTMLAnchorElement;
+    protected static _createHyperlink(match: RegExpMatchArray, options?: any): HTMLAnchorElement;
     /**
      * Replace an inline roll formula with a rollable &lt;a> element or an eagerly evaluated roll result
      * @param {RegExpMatchArray} match      The regular expression match array
@@ -593,28 +598,32 @@ declare class TextEditor {
     /**
      * Handle click events on Document Links
      * @param {Event} event
-     * @private
+     * @protected
      */
-    private static _onClickContentLink;
+    protected static _onClickContentLink(event: Event): Promise<any>;
+    protected static _onClickContentLink(event: Event): Promise<any>;
     /**
      * Handle left-mouse clicks on an inline roll, dispatching the formula or displaying the tooltip
      * @param {MouseEvent} event    The initiating click event
-     * @private
+     * @protected
      */
-    private static _onClickInlineRoll;
+    protected static _onClickInlineRoll(event: MouseEvent): Promise<any>;
+    protected static _onClickInlineRoll(event: MouseEvent): Promise<any>;
     /**
      * Begin a Drag+Drop workflow for a dynamic content link
      * @param {Event} event   The originating drag event
-     * @private
+     * @protected
      */
-    private static _onDragContentLink;
+    protected static _onDragContentLink(event: Event): boolean;
+    protected static _onDragContentLink(event: Event): boolean;
     /**
      * Handle dropping of transferred data onto the active rich text editor
      * @param {DragEvent} event     The originating drop event which triggered the data transfer
      * @param {TinyMCE} editor      The TinyMCE editor instance being dropped on
-     * @private
+     * @protected
      */
-    private static _onDropEditorData;
+    protected static _onDropEditorData(event: DragEvent, editor: TinyMCE): Promise<void>;
+    protected static _onDropEditorData(event: DragEvent, editor: TinyMCE): Promise<void>;
     /**
      * Extract JSON data from a drag/drop event.
      * @param {DragEvent} event       The drag event which contains JSON data.

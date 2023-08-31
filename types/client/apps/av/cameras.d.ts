@@ -11,9 +11,9 @@ declare class CameraViews extends Application {
     /**
      * A custom sorting function that orders/arranges the user display frames
      * @return {number}
-     * @private
+     * @protected
      */
-    private static _sortUsers;
+    protected static _sortUsers(a: any, b: any): number;
     /**
      * A reference to the master AV orchestrator instance
      * @type {AVMaster}
@@ -81,29 +81,36 @@ declare class CameraViews extends Application {
     maxZ: number;
     /**
      * Prepare rendering data for a single user
-     * @private
+     * @protected
      */
-    private _getDataForUser;
+    protected _getDataForUser(userId: any, settings: any): {
+        user: any;
+        settings: any;
+        local: any;
+        charname: any;
+        volume: number;
+        cameraViewClass: any;
+    };
     /** @override */
     override activateListeners(html: any): void;
     /**
      * On hover in a camera container, show/hide the controls.
      * @event {Event} event   The original mouseover or mouseout hover event
-     * @private
+     * @protected
      */
-    private _onCameraViewHover;
+    protected _onCameraViewHover(event: any): void;
     /**
      * On clicking on a toggle, disable/enable the audio or video stream.
      * @event {MouseEvent} event   The originating click event
-     * @private
+     * @protected
      */
-    private _onClickControl;
+    protected _onClickControl(event: any): Promise<any>;
     /**
      * Change volume control for a stream
      * @param {Event} event   The originating change event from interaction with the range input
-     * @private
+     * @protected
      */
-    private _onVolumeChange;
+    protected _onVolumeChange(event: Event): void;
     /**
      * Dynamically refresh the state of a single camera view
      * @param {string} userId  The ID of the user whose view we want to refresh.
@@ -113,9 +120,9 @@ declare class CameraViews extends Application {
     /**
      * Render changes needed to the PlayerList ui.
      * Show/Hide players depending on option.
-     * @private
+     * @protected
      */
-    private _setPlayerListVisibility;
+    protected _setPlayerListVisibility(): void;
     /**
      * Get the icon class that should be used for various action buttons with different toggled states.
      * The returned icon should represent the visual status of the NEXT state (not the CURRENT state).
@@ -145,7 +152,7 @@ declare class CameraViews extends Application {
      * @param {jQuery} container    The container for which to show/hide control elements
      * @param {boolean} show        Whether to show or hide the controls
      * @param {string} selector     Override selector to specify which controls to show or hide
-     * @private
+     * @protected
      */
-    private _toggleControlVisibility;
+    protected _toggleControlVisibility(container: JQueryStatic, show: boolean, selector: string): void;
 }

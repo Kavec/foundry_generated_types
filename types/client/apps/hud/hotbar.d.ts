@@ -57,9 +57,9 @@ declare class Hotbar extends Application {
      * Get the Array of Macro (or null) values that should be displayed on a numbered page of the bar
      * @param {number} page
      * @returns {Macro[]}
-     * @private
+     * @protected
      */
-    private _getMacrosByPage;
+    protected _getMacrosByPage(page: number): Macro[];
     /**
      * Collapse the Hotbar, minimizing its display.
      * @returns {Promise}    A promise which resolves once the collapse animation completes
@@ -87,9 +87,9 @@ declare class Hotbar extends Application {
     /**
      * Get the Macro entry context options
      * @returns {object[]}  The Macro entry context options
-     * @private
+     * @protected
      */
-    private _getEntryContextOptions;
+    protected _getEntryContextOptions(): object[];
     /**
      * Handle left-click events to
      * @param {MouseEvent} event    The originating click event
@@ -99,9 +99,9 @@ declare class Hotbar extends Application {
     /**
      * Handle pagination controls
      * @param {Event} event   The originating click event
-     * @private
+     * @protected
      */
-    private _onClickPageControl;
+    protected _onClickPageControl(event: Event): void;
     /** @override */
     override _canDragStart(selector: any): boolean;
     /** @override */
@@ -114,9 +114,9 @@ declare class Hotbar extends Application {
      * Create a Macro which rolls a RollTable when executed
      * @param {Document} table    The RollTable document
      * @returns {Promise<Macro>}  A created Macro document to add to the bar
-     * @private
+     * @protected
      */
-    private _createRollTableRollMacro;
+    protected _createRollTableRollMacro(table: Document): Promise<Macro>;
     /**
      * Create a Macro document which can be used to toggle display of a Journal Entry.
      * @param {Document} doc          A Document which should be toggled
@@ -127,9 +127,9 @@ declare class Hotbar extends Application {
     /**
      * Handle click events to toggle display of the macro bar
      * @param {Event} event
-     * @private
+     * @protected
      */
-    private _onToggleBar;
+    protected _onToggleBar(event: Event): Promise<any>;
     /**
      * Toggle the hotbar's lock state.
      * @returns {Promise<Hotbar>}

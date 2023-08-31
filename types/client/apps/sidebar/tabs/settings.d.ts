@@ -11,15 +11,15 @@ declare class Settings extends SidebarTab {
     /**
      * Delegate different actions for different settings buttons
      * @param {MouseEvent} event    The originating click event
-     * @private
+     * @protected
      */
-    private _onSettingsButton;
+    protected _onSettingsButton(event: MouseEvent): any;
     /**
      * Executes with the update notification pip is clicked
      * @param {MouseEvent} event    The originating click event
-     * @private
+     * @protected
      */
-    private _onUpdateNotificationClick;
+    protected _onUpdateNotificationClick(event: MouseEvent): void;
 }
 /**
  * A simple window application which shows the built documentation pages within an iframe

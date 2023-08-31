@@ -7,9 +7,9 @@ declare class DocumentSheetConfig extends FormApplication {
     /**
      * An array of pending sheet assignments which are submitted before other elements of the framework are ready.
      * @type {object[]}
-     * @private
+     * @protected
      */
-    private static "__#34@#pending";
+    protected static "__#34@#pending": object[];
     /**
      * Marshal information on the available sheet classes for a given document type and sub-type, and format it for
      * display.
@@ -104,9 +104,9 @@ declare class DocumentSheetConfig extends FormApplication {
     static updateDefaultSheets(setting?: object): void;
     /**
      * Initialize default sheet configurations for all document types.
-     * @private
+     * @protected
      */
-    private static _registerDefaultSheets;
+    protected static _registerDefaultSheets(): void;
     /** @inheritDoc */
     getData(options?: {}): {
         isGM: any;

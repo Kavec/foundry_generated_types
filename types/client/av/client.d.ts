@@ -83,9 +83,11 @@ declare class AVClient {
      * Obtain a mapping of available device sources for a given type.
      * @param {string} kind       The type of device source being requested
      * @returns {Promise<{object}>}
-     * @private
+     * @protected
      */
-    private _getSourcesOfType;
+    protected _getSourcesOfType(kind: string): Promise<{
+        object;
+    }>;
     /**
      * Return an array of Foundry User IDs which are currently connected to A/V.
      * The current user should also be included as a connected user in addition to all peers.

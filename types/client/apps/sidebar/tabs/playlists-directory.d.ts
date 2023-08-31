@@ -18,9 +18,9 @@ declare class PlaylistDirectory extends DocumentDirectory {
     /**
      * Are the global volume controls currently expanded?
      * @type {boolean}
-     * @private
+     * @protected
      */
-    private _volumeExpanded;
+    protected _volumeExpanded: boolean;
     /**
      * Cache the set of Playlist documents that are displayed as playing when the directory is rendered
      * @type {Playlist[]}
@@ -34,9 +34,9 @@ declare class PlaylistDirectory extends DocumentDirectory {
     /**
      * Initialize the set of Playlists which should be displayed in an expanded form
      * @returns {Set<string>}
-     * @private
+     * @protected
      */
-    private _createExpandedSet;
+    protected _createExpandedSet(): Set<string>;
     /**
      * Return an Array of the Playlist documents which are currently playing
      * @type {Playlist[]}
@@ -45,57 +45,57 @@ declare class PlaylistDirectory extends DocumentDirectory {
     /**
      * Whether the 'currently playing' element is pinned to the top or bottom of the display.
      * @type {string}
-     * @private
+     * @protected
      */
-    private get _playingLocation();
+    protected get _playingLocation(): string;
     _playingSoundsData: any[];
     /**
      * Augment the tree directory structure with playlist-level data objects for rendering
      * @param {object} node   The tree leaf node being prepared
-     * @private
+     * @protected
      */
-    private _prepareTreeData;
+    protected _prepareTreeData(node: object): void;
     /**
      * Create an object of rendering data for each Playlist document being displayed
      * @param {Playlist} playlist   The playlist to display
      * @returns {object}            The data for rendering
-     * @private
+     * @protected
      */
-    private _preparePlaylistData;
+    protected _preparePlaylistData(playlist: Playlist): object;
     /**
      * Get the icon used to represent the "play/stop" icon for the PlaylistSound
      * @param {PlaylistSound} sound   The sound being rendered
      * @returns {string}              The icon that should be used
-     * @private
+     * @protected
      */
-    private _getPlayIcon;
+    protected _getPlayIcon(sound: PlaylistSound): string;
     /**
      * Get the icon used to represent the pause/loading icon for the PlaylistSound
      * @param {PlaylistSound} sound   The sound being rendered
      * @returns {string}              The icon that should be used
-     * @private
+     * @protected
      */
-    private _getPauseIcon;
+    protected _getPauseIcon(sound: PlaylistSound): string;
     /**
      * Given a constant playback mode, provide the FontAwesome icon used to display it
      * @param {number} mode
      * @returns {string}
-     * @private
+     * @protected
      */
-    private _getModeIcon;
+    protected _getModeIcon(mode: number): string;
     /**
      * Given a constant playback mode, provide the string tooltip used to describe it
      * @param {number} mode
      * @returns {string}
-     * @private
+     * @protected
      */
-    private _getModeTooltip;
+    protected _getModeTooltip(mode: number): string;
     /**
      * Handle global volume change for the playlist sidebar
      * @param {MouseEvent} event   The initial click event
-     * @private
+     * @protected
      */
-    private _onGlobalVolume;
+    protected _onGlobalVolume(event: MouseEvent): any;
     /** @inheritdoc */
     collapseAll(): void;
     /** @override */
@@ -103,83 +103,83 @@ declare class PlaylistDirectory extends DocumentDirectory {
     /**
      * Handle global volume control collapse toggle
      * @param {MouseEvent} event   The initial click event
-     * @private
+     * @protected
      */
-    private _onVolumeCollapse;
+    protected _onVolumeCollapse(event: MouseEvent): void;
     /**
      * Helper method to render the expansion or collapse of playlists
-     * @private
+     * @protected
      */
-    private _collapse;
+    protected _collapse(el: any, collapse: any, speed?: number): void;
     /**
      * Handle Playlist playback state changes
      * @param {MouseEvent} event    The initial click event
      * @param {boolean} playing     Is the playlist now playing?
-     * @private
+     * @protected
      */
-    private _onPlaylistPlay;
+    protected _onPlaylistPlay(event: MouseEvent, playing: boolean): any;
     /**
      * Handle advancing the playlist to the next (or previous) sound
      * @param {MouseEvent} event    The initial click event
      * @param {string} action       The control action requested
-     * @private
+     * @protected
      */
-    private _onPlaylistSkip;
+    protected _onPlaylistSkip(event: MouseEvent, action: string): any;
     /**
      * Handle cycling the playback mode for a Playlist
      * @param {MouseEvent} event   The initial click event
-     * @private
+     * @protected
      */
-    private _onPlaylistToggleMode;
+    protected _onPlaylistToggleMode(event: MouseEvent): any;
     /**
      * Handle Playlist track addition request
      * @param {MouseEvent} event   The initial click event
-     * @private
+     * @protected
      */
-    private _onSoundCreate;
+    protected _onSoundCreate(event: MouseEvent): void;
     /**
      * Modify the playback state of a Sound within a Playlist
      * @param {MouseEvent} event    The initial click event
      * @param {string} action       The sound control action performed
-     * @private
+     * @protected
      */
-    private _onSoundPlay;
+    protected _onSoundPlay(event: MouseEvent, action: string): any;
     /**
      * Handle volume adjustments to sounds within a Playlist
      * @param {Event} event   The initial change event
-     * @private
+     * @protected
      */
-    private _onSoundVolume;
+    protected _onSoundVolume(event: Event): void;
     /**
      * Handle changes to the sound playback mode
      * @param {Event} event   The initial click event
-     * @private
+     * @protected
      */
-    private _onSoundToggleMode;
+    protected _onSoundToggleMode(event: Event): any;
     _onPlayingPin(): any;
     /** @inheritdoc */
     _onSearchFilter(event: any, query: any, rgx: any, html: any): void;
     /**
      * Update the displayed timestamps for all currently playing audio sources.
      * Runs on an interval every 1000ms.
-     * @private
+     * @protected
      */
-    private _updateTimestamps;
+    protected _updateTimestamps(): void;
     /**
      * Format the displayed timestamp given a number of seconds as input
      * @param {number} seconds    The current playback time in seconds
      * @returns {string}          The formatted timestamp
-     * @private
+     * @protected
      */
-    private _formatTimestamp;
+    protected _formatTimestamp(seconds: number): string;
     /** @inheritdoc */
     _contextMenu(html: any): void;
     /**
      * Get context menu options for individual sound effects
      * @returns {Object}   The context options for each sound
-     * @private
+     * @protected
      */
-    private _getSoundContextOptions;
+    protected _getSoundContextOptions(): any;
     /** @inheritdoc */
     _onDragStart(event: any): void;
     /** @inheritdoc */

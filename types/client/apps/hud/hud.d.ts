@@ -51,15 +51,15 @@ declare class BasePlaceableHUD extends Application {
     /**
      * Toggle the visible state of all controlled objects in the Layer
      * @param {PointerEvent} event    The originating click event
-     * @private
+     * @protected
      */
-    private _onToggleVisibility;
+    protected _onToggleVisibility(event: PointerEvent): Promise<any>;
     /**
      * Toggle locked state of all controlled objects in the Layer
      * @param {PointerEvent} event    The originating click event
-     * @private
+     * @protected
      */
-    private _onToggleLocked;
+    protected _onToggleLocked(event: PointerEvent): Promise<any>;
     /**
      * Handle sorting the z-order of the object
      * @param {boolean} up            Move the object upwards in the vertical stack?

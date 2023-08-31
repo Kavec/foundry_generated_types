@@ -169,16 +169,16 @@ declare class DiceTerm extends RollTerm {
     /**
      * Sequentially evaluate each dice roll modifier by passing the term to its evaluation function
      * Augment or modify the results array.
-     * @private
+     * @protected
      */
-    private _evaluateModifiers;
+    protected _evaluateModifiers(): void;
     /**
      * Evaluate a single modifier command, recording it in the array of evaluated modifiers
      * @param {string} command        The parsed modifier command
      * @param {string} modifier       The full modifier request
-     * @private
+     * @protected
      */
-    private _evaluateModifier;
+    protected _evaluateModifier(command: string, modifier: string): void;
 }
 type DiceTermResult = {
     /**

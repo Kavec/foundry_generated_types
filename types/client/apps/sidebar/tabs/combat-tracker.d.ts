@@ -6,9 +6,9 @@ declare class CombatTracker extends SidebarTab {
     /**
      * Record a reference to the currently highlighted Token
      * @type {Token|null}
-     * @private
+     * @protected
      */
-    private _highlighted;
+    protected _highlighted: Function;
     /**
      * Record the currently tracked Combat encounter
      * @type {Combat|null}
@@ -48,34 +48,34 @@ declare class CombatTracker extends SidebarTab {
     /**
      * Handle new Combat creation request
      * @param {Event} event
-     * @private
+     * @protected
      */
-    private _onCombatCreate;
+    protected _onCombatCreate(event: Event): Promise<void>;
     /**
      * Handle a Combat cycle request
      * @param {Event} event
-     * @private
+     * @protected
      */
-    private _onCombatCycle;
+    protected _onCombatCycle(event: Event): Promise<void>;
     /**
      * Handle click events on Combat control buttons
-     * @private
+     * @protected
      * @param {Event} event   The originating mousedown event
      */
-    private _onCombatControl;
+    protected _onCombatControl(event: Event): Promise<void>;
     /**
      * Handle a Combatant control toggle
-     * @private
+     * @protected
      * @param {Event} event   The originating mousedown event
      */
-    private _onCombatantControl;
+    protected _onCombatantControl(event: Event): Promise<any>;
     /**
      * Handle toggling the defeated status effect on a combatant Token
      * @param {Combatant} combatant     The combatant data being modified
      * @returns {Promise}                A Promise that resolves after all operations are complete
-     * @private
+     * @protected
      */
-    private _onToggleDefeatedStatus;
+    protected _onToggleDefeatedStatus(combatant: Function): Promise<any>;
     /**
      * Handle pinging a combatant Token
      * @param {Combatant} combatant     The combatant data
@@ -87,20 +87,20 @@ declare class CombatTracker extends SidebarTab {
      * Handle mouse-down event on a combatant name in the tracker
      * @param {Event} event   The originating mousedown event
      * @returns {Promise}     A Promise that resolves once the pan is complete
-     * @private
+     * @protected
      */
-    private _onCombatantMouseDown;
+    protected _onCombatantMouseDown(event: Event): Promise<any>;
     _clickTime: number;
     /**
      * Handle mouse-hover events on a combatant in the tracker
-     * @private
+     * @protected
      */
-    private _onCombatantHoverIn;
+    protected _onCombatantHoverIn(event: any): void;
     /**
      * Handle mouse-unhover events for a combatant in the tracker
-     * @private
+     * @protected
      */
-    private _onCombatantHoverOut;
+    protected _onCombatantHoverOut(event: any): void;
     /**
      * Highlight a hovered combatant in the tracker.
      * @param {Combatant} combatant The Combatant
@@ -112,13 +112,13 @@ declare class CombatTracker extends SidebarTab {
     /**
      * Get the Combatant entry context options
      * @returns {object[]}   The Combatant entry context options
-     * @private
+     * @protected
      */
-    private _getEntryContextOptions;
+    protected _getEntryContextOptions(): object[];
     /**
      * Display a dialog which prompts the user to enter a new initiative value for a Combatant
      * @param {jQuery} li
-     * @private
+     * @protected
      */
-    private _onConfigureCombatant;
+    protected _onConfigureCombatant(li: JQueryStatic): void;
 }

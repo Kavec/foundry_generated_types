@@ -60,9 +60,9 @@ declare class Application {
     /**
      * Return the inheritance chain for this Application class up to (and including) it's base Application class.
      * @returns {Function[]}
-     * @private
+     * @protected
      */
-    private static _getInheritanceChain;
+    protected static _getInheritanceChain(): Function[];
     constructor(options?: {});
     /**
      * The options provided to this application upon initialization
@@ -128,21 +128,21 @@ declare class Application {
     /**
      * Create drag-and-drop workflow handlers for this Application
      * @returns {DragDrop[]}     An array of DragDrop handlers
-     * @private
+     * @protected
      */
-    private _createDragDropHandlers;
+    protected _createDragDropHandlers(): DragDrop[];
     /**
      * Create tabbed navigation handlers for this Application
      * @returns {Tabs[]}     An array of Tabs handlers
-     * @private
+     * @protected
      */
-    private _createTabHandlers;
+    protected _createTabHandlers(): Tabs[];
     /**
      * Create search filter handlers for this Application
      * @returns {SearchFilter[]}  An array of SearchFilter handlers
-     * @private
+     * @protected
      */
-    private _createSearchFilters;
+    protected _createSearchFilters(): SearchFilter[];
     /**
      * Return the CSS application ID which uniquely references this UI element
      * @type {string}
@@ -250,37 +250,37 @@ declare class Application {
      * Render the inner application content
      * @param {object} data         The data used to render the inner template
      * @returns {Promise<jQuery>}   A promise resolving to the constructed jQuery object
-     * @private
+     * @protected
      */
-    private _renderInner;
+    protected _renderInner(data: object): Promise<JQueryStatic>;
     /**
      * Customize how inner HTML is replaced when the application is refreshed
      * @param {jQuery} element      The original HTML processed as a jQuery object
      * @param {jQuery} html         New updated HTML as a jQuery object
-     * @private
+     * @protected
      */
-    private _replaceHTML;
+    protected _replaceHTML(element: JQueryStatic, html: JQueryStatic): void;
     /**
      * Customize how a new HTML Application is added and first appears in the DOM
      * @param {jQuery} html       The HTML element which is ready to be added to the DOM
-     * @private
+     * @protected
      */
-    private _injectHTML;
+    protected _injectHTML(html: JQueryStatic): void;
     /**
      * Specify the set of config buttons which should appear in the Application header.
      * Buttons should be returned as an Array of objects.
      * The header buttons which are added to the application can be modified by the getApplicationHeaderButtons hook.
      * @fires getApplicationHeaderButtons
      * @returns {ApplicationHeaderButton[]}
-     * @private
+     * @protected
      */
-    private _getHeaderButtons;
+    protected _getHeaderButtons(): ApplicationHeaderButton[];
     /**
      * Create a {@link ContextMenu} for this Application.
      * @param {jQuery} html  The Application's HTML.
-     * @private
+     * @protected
      */
-    private _contextMenu;
+    protected _contextMenu(html: JQueryStatic): void;
     /**
      * Activate required listeners which must be enabled on every Application.
      * These are internal interactions which should not be overridden by downstream subclasses.
@@ -405,15 +405,15 @@ declare class Application {
     /**
      * Handle application minimization behavior - collapsing content and reducing the size of the header
      * @param {Event} ev
-     * @private
+     * @protected
      */
-    private _onToggleMinimize;
+    protected _onToggleMinimize(ev: Event): void;
     /**
      * Additional actions to take when the application window is resized
      * @param {Event} event
-     * @private
+     * @protected
      */
-    private _onResize;
+    protected _onResize(event: Event): void;
     /**
      * Wait for any images present in the Application to load.
      * @returns {Promise<void>}  A Promise that resolves when all images have loaded.

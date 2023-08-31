@@ -32,9 +32,9 @@ declare class DocumentCollection {
     apps: Application[];
     /**
      * Initialize the DocumentCollection by constructing any initially provided Document instances
-     * @private
+     * @protected
      */
-    private _initialize;
+    protected _initialize(): void;
     /**
      * A reference to the Document class definition which is contained within this DocumentCollection.
      * @type {Function}
@@ -182,7 +182,12 @@ declare class DocumentCollection {
      * @param {object[]|string[]} data  An array of creation or update objects, or an array of document IDs, depending on
      *                                  the operation.
      * @returns {{action: string, documentType: string, documents: Document[], data: object[]|string[]}}
-     * @private
+     * @protected
      */
-    private _getRenderContext;
+    protected _getRenderContext(action: string, documents: Document[], data: object[] | string[]): {
+        action: string;
+        documentType: string;
+        documents: Document[];
+        data: object[] | string[];
+    };
 }

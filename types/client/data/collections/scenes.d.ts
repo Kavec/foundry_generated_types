@@ -12,9 +12,9 @@ declare class Scenes extends WorldCollection {
     /**
      * Handle requests pulling the current User to a specific Scene
      * @param {string} sceneId
-     * @private
+     * @protected
      */
-    private static _pullToScene;
+    protected static _pullToScene(sceneId: string): void;
     /**
      * Return a reference to the Scene which is currently active
      * @type {Scene}

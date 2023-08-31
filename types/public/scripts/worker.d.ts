@@ -6,7 +6,7 @@
  * @param {boolean} [options.debug]          Should the worker run in debug mode?
  * @param {boolean} [options.loadPrimitives] Should we automatically load primitives from module.mjs?
  * @param {string[]} [options.scripts]        An array of scripts to import.
- * @private
+ * @protected
  */
 declare function _handleInitializeWorker({ taskId, workerName, debug, loadPrimitives, scripts }?: {
     taskId?: number;
@@ -24,7 +24,7 @@ declare function _handleInitializeWorker({ taskId, workerName, debug, loadPrimit
  * Until then, this is a hacky workaround to parse the source script into the global namespace of the worker thread.
  * @param {string} path           The commons ES Module to load
  * @returns {Promise<void>}       A Promise that resolves once the module has been "loaded"
- * @private
+ * @protected
  */
 declare function _loadLibrary(path: string): Promise<void>;
 /**
@@ -33,7 +33,7 @@ declare function _loadLibrary(path: string): Promise<void>;
  * @param {number} [options.taskId]         The task ID being performed
  * @param {string} [options.functionName]   The name that the function should assume in the Worker global scope
  * @param {string} [options.functionBody]   The content of the function to be parsed.
- * @private
+ * @protected
  */
 declare function _handleLoadFunction({ taskId, functionName, functionBody }?: {
     taskId?: number;
@@ -48,7 +48,7 @@ declare function _handleLoadFunction({ taskId, functionName, functionBody }?: {
  * @param {number}   [options.taskId]         The task ID being performed
  * @param {string}   [options.functionName]   The name that the function should assume in the Worker global scope
  * @param {Array<*>} [options.args]           An array of arguments passed to the function
- * @private
+ * @protected
  */
 declare function _handleExecuteFunction({ taskId, functionName, args }?: {
     taskId?: number;

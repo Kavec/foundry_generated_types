@@ -11,9 +11,9 @@ declare class WorldConfig extends FormApplication {
     /**
      * The website knowledge base URL.
      * @type {string}
-     * @private
+     * @protected
      */
-    private static "__#43@#WORLD_KB_URL";
+    protected static "__#43@#WORLD_KB_URL": string;
     /**
      * A semantic alias for the World object which is being configured by this form.
      * @type {World}

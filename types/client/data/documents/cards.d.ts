@@ -125,18 +125,24 @@ declare class Cards {
      * @param {object} [options.updateData={}]           Modifications to make to each Card as part of the reset operation
      * @param {boolean} [options.chatNotification=true]  Create a ChatMessage which notifies that this action has occurred
      * @returns {Promise<Cards>}                 The Cards document after the reset operation has completed.
-     * @private
+     * @protected
      */
-    private _resetDeck;
+    protected _resetDeck({ updateData, chatNotification }?: {
+        updateData?: object;
+        chatNotification?: boolean;
+    }): Promise<Cards>;
     /**
      * Return all cards in this stack to their original decks.
      * @param {object} [options={}]              Options which modify the return operation.
      * @param {object} [options.updateData={}]          Modifications to make to each Card as part of the return operation
      * @param {boolean} [options.chatNotification=true] Create a ChatMessage which notifies that this action has occurred
      * @returns {Promise<Cards>}                 The Cards document after the return operation has completed.
-     * @private
+     * @protected
      */
-    private _resetStack;
+    protected _resetStack({ updateData, chatNotification }?: {
+        updateData?: object;
+        chatNotification?: boolean;
+    }): Promise<Cards>;
     /**
      * A sorting function that is used to determine the standard order of Card documents within an un-shuffled stack.
      * @param {Card} a     The card being sorted
@@ -168,9 +174,9 @@ declare class Cards {
      * @param {string} action       The localization key which formats the chat message notification
      * @param {object} context      Data passed to the Localization#format method for the localization key
      * @returns {ChatMessage}       A created ChatMessage document
-     * @private
+     * @protected
      */
-    private _postChatNotification;
+    protected _postChatNotification(source: Cards, action: string, context: object): ChatMessage;
     /** @override */
     override _onUpdate(data: any, options: any, userId: any): void;
     _sheet: any;

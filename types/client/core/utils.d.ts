@@ -58,7 +58,7 @@ declare function fromUuidSync(uuid: string, options?: {
  * @param {object} [options]                 Additional options to configure Embedded Document resolution.
  * @param {boolean} [options.invalid=false]  Allow retrieving an invalid Embedded Document.
  * @returns {Document}                       The resolved Embedded Document.
- * @private
+ * @protected
  */
 declare function _resolveEmbedded(parent: Document, parts: string[], { invalid }?: {
     invalid?: boolean;

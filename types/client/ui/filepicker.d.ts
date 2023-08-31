@@ -123,9 +123,9 @@ declare class FilePicker extends Application {
      * @param {object} data         Request data dispatched to the server
      * @param {object} options      Options dispatched to the server
      * @returns {Promise<object>}   The server response
-     * @private
+     * @protected
      */
-    private static _manageFiles;
+    protected static _manageFiles(data: object, options: object): Promise<object>;
     /**
      * Dispatch a POST request to the server containing a directory path and a file to upload
      * @param {string} source   The data source to which the file should be uploaded
@@ -230,9 +230,9 @@ declare class FilePicker extends Application {
      * Get the valid file extensions for a given named file picker type
      * @param {string} type
      * @returns {string[]}
-     * @private
+     * @protected
      */
-    private _getExtensions;
+    protected _getExtensions(type: string): string[];
     /** @override */
     override get title(): any;
     /**
@@ -294,9 +294,9 @@ declare class FilePicker extends Application {
     /**
      * Handle a click event to change the display mode of the File Picker
      * @param {MouseEvent} event    The triggering click event
-     * @private
+     * @protected
      */
-    private _onChangeDisplayMode;
+    protected _onChangeDisplayMode(event: MouseEvent): void;
     /** @override */
     override _onChangeTab(event: any, tabs: any, active: any): void;
     /** @override */
@@ -310,45 +310,45 @@ declare class FilePicker extends Application {
     /**
      * Handle user submission of the address bar to request an explicit target
      * @param {KeyboardEvent} event     The originating keydown event
-     * @private
+     * @protected
      */
-    private _onRequestTarget;
+    protected _onRequestTarget(event: KeyboardEvent): Promise<any>;
     /**
      * Handle user interaction with the favorites
      * @param {MouseEvent} event     The originating click event
-     * @private
+     * @protected
      */
-    private _onClickFavorite;
+    protected _onClickFavorite(event: MouseEvent): Promise<void>;
     /**
      * Handle requests from the IntersectionObserver to lazily load an image file
      * @param {...any} args
-     * @private
+     * @protected
      */
-    private _onLazyLoadImages;
+    protected _onLazyLoadImages(...args: any[]): any;
     /**
      * Handle file or folder selection within the file picker
      * @param {Event} event     The originating click event
-     * @private
+     * @protected
      */
-    private _onPick;
+    protected _onPick(event: Event): Promise<any>;
     /**
      * Handle backwards navigation of the folder structure.
      * @param {PointerEvent} event    The triggering click event
-     * @private
+     * @protected
      */
-    private _onClickDirectoryControl;
+    protected _onClickDirectoryControl(event: PointerEvent): any;
     /**
      * Present the user with a dialog to create a subdirectory within their currently browsed file storage location.
      * @param {object} source     The data source being browsed
-     * @private
+     * @protected
      */
-    private _createDirectoryDialog;
+    protected _createDirectoryDialog(source: object): Promise<any>;
     /**
      * Handle changes to the bucket selector
      * @param {Event} event     The S3 bucket select change event
-     * @private
+     * @protected
      */
-    private _onChangeBucket;
+    protected _onChangeBucket(event: Event): Promise<any>;
     /**
      * Handle changes to the tile size.
      * @param {Event} event  The triggering event.
@@ -362,9 +362,9 @@ declare class FilePicker extends Application {
     /**
      * Handle file upload
      * @param {Event} ev      The file upload event
-     * @private
+     * @protected
      */
-    private _onUpload;
+    protected _onUpload(ev: Event): Promise<any>;
 }
 type FavoriteFolder = {
     /**

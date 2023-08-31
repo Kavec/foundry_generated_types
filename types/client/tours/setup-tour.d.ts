@@ -10,13 +10,13 @@ declare class SetupTour extends Tour {
     /**
      * Handle Step setup for the Installing a System Tour
      * @returns {Promise<void>}
-     * @private
+     * @protected
      */
-    private _installingASystem;
+    protected _installingASystem(): Promise<void>;
     /**
      * Handle Step setup for the Creating a World Tour
      * @returns {Promise<void>}
-     * @private
+     * @protected
      */
-    private _creatingAWorld;
+    protected _creatingAWorld(): Promise<void>;
 }

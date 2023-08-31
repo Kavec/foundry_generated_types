@@ -27,9 +27,9 @@ declare class SimplePeerAVClient extends AVClient {
     /**
      * Has the client been successfully initialized?
      * @type {boolean}
-     * @private
+     * @protected
      */
-    private _initialized;
+    protected _initialized: boolean;
     /**
      * Is outbound broadcast of local audio enabled?
      * @type {boolean}
@@ -42,9 +42,9 @@ declare class SimplePeerAVClient extends AVClient {
     _connectionPoll: number | null;
     /**
      * Try to establish a peer connection with each user connected to the server.
-     * @private
+     * @protected
      */
-    private _connect;
+    protected _connect(): Promise<any[]>;
     /** @override */
     override getConnectedUsers(): any[];
     /** @override */
@@ -68,9 +68,12 @@ declare class SimplePeerAVClient extends AVClient {
      * Attempt to create local media streams.
      * @param {{video: object, audio: object}} params       Parameters for the getUserMedia request.
      * @returns {Promise<MediaStream|Error>}                The created MediaStream or an error.
-     * @private
+     * @protected
      */
-    private _createMediaStream;
+    protected _createMediaStream(params: {
+        video: object;
+        audio: object;
+    }): Promise<MediaStream | Error>;
     /**
      * Listen for Audio/Video updates on the av socket to broker connections between peers
      */
@@ -99,16 +102,16 @@ declare class SimplePeerAVClient extends AVClient {
      * Modules may implement more advanced connection strategies by overriding this method.
      * @param {string} userId           The Foundry user ID with whom we are connecting
      * @param {boolean} isInitiator     Is the current user initiating the connection, or responding to it?
-     * @private
+     * @protected
      */
-    private _createPeerConnection;
+    protected _createPeerConnection(userId: string, isInitiator: boolean): any;
     /**
      * Setup the custom TURN relay to be used in subsequent calls if there is one configured.
      * TURN credentials are mandatory in WebRTC.
      * @param {object} options The SimplePeer configuration object.
-     * @private
+     * @protected
      */
-    private _setupCustomTURN;
+    protected _setupCustomTURN(options: object): void;
     /**
      * Disconnect from a peer by stopping current stream tracks and destroying the SimplePeer instance
      * @param {string} userId           The Foundry user ID from whom we are disconnecting

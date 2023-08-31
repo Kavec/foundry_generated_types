@@ -73,9 +73,9 @@ declare class TokenConfig extends DocumentSheet {
     /**
      * Get an Object of image paths and filenames to display in the Token sheet
      * @returns {Promise<object>}
-     * @private
+     * @protected
      */
-    private _getAlternateTokenImages;
+    protected _getAlternateTokenImages(): Promise<object>;
     /** @inheritDoc */
     _getSubmitData(updateData?: {}): any;
     /** @inheritDoc */
@@ -94,15 +94,15 @@ declare class TokenConfig extends DocumentSheet {
     /**
      * Handle Token assignment requests to update the default prototype Token
      * @param {MouseEvent} event  The left-click event on the assign token button
-     * @private
+     * @protected
      */
-    private _onAssignToken;
+    protected _onAssignToken(event: MouseEvent): Promise<void>;
     /**
      * Handle changing the attribute bar in the drop-down selector to update the default current and max value
      * @param {Event} event  The select input change event
-     * @private
+     * @protected
      */
-    private _onBarChange;
+    protected _onBarChange(event: Event): Promise<void>;
     /**
      * Handle click events on a token configuration sheet action button
      * @param {PointerEvent} event    The originating click event
@@ -125,9 +125,9 @@ declare class TokenConfig extends DocumentSheet {
     /**
      * Disable the user's ability to edit the token image field if wildcard images are enabled and that user does not have
      * file browser permissions.
-     * @private
+     * @protected
      */
-    private _disableEditImage;
+    protected _disableEditImage(): void;
 }
 /**
  * A sheet that alters the values of the default Token configuration used when new Token documents are created.

@@ -76,8 +76,8 @@ declare class CompendiumDirectory extends SidebarTab {
     /**
      * Handle a Compendium Pack deletion request
      * @param {object} pack   The pack object requested for deletion
-     * @private
+     * @protected
      */
-    private _onDeleteCompendium;
+    protected _onDeleteCompendium(pack: object): Promise<any>;
     #private;
 }

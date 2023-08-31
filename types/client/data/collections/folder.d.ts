@@ -15,7 +15,7 @@ declare class Folders extends WorldCollection {
     override render(force: any, context: any): any;
     /**
      * Refresh the display of any active JournalSheet instances where the folder list will change.
-     * @private
+     * @protected
      */
-    private _refreshJournalEntrySheets;
+    protected _refreshJournalEntrySheets(): void;
 }

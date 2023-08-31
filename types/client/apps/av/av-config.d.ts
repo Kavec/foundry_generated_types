@@ -47,24 +47,24 @@ declare class AVConfig extends FormApplication {
      * Set a section's input to enabled or disabled
      * @param {string} selector    Selector for the section to enable or disable
      * @param {boolean} enabled    Whether to enable or disable this section
-     * @private
+     * @protected
      */
-    private _setConfigSectionEnabled;
+    protected _setConfigSectionEnabled(selector: string, enabled?: boolean): void;
     /**
      * Determine whether a given video or audio source, or audio sink has become
      * unavailable since the last time it was set.
      * @param {object} sources The available devices
      * @param {string} source  The selected device
-     * @private
+     * @protected
      */
-    private _isSourceUnavailable;
+    protected _isSourceUnavailable(sources: object, source: string): boolean;
     /**
      * Callback when the turn server type changes
      * Will enable or disable the turn section based on whether the user selected a custom turn or not
      * @param {Event} event   The event that triggered the turn server type change
-     * @private
+     * @protected
      */
-    private _onTurnTypeChanged;
+    protected _onTurnTypeChanged(event: Event): void;
     /** @override */
     override _updateObject(event: any, formData: any): Promise<void>;
 }

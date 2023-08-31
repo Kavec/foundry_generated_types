@@ -13,63 +13,63 @@ declare class RollTableConfig extends DocumentSheet {
      * @param {MouseEvent} event        The originating mouse event
      * @param {object} [resultData]     An optional object of result data to use
      * @returns {Promise}
-     * @private
+     * @protected
      */
-    private _onCreateResult;
+    protected _onCreateResult(event: MouseEvent, resultData?: object): Promise<any>;
     /**
      * Submit the entire form when a table result type is changed, in case there are other active changes
      * @param {Event} event
-     * @private
+     * @protected
      */
-    private _onChangeResultType;
+    protected _onChangeResultType(event: Event): Promise<any>;
     /**
      * Handle deleting a TableResult from the RollTable document
      * @param {MouseEvent} event        The originating click event
      * @returns {Promise<TableResult>}   The deleted TableResult document
-     * @private
+     * @protected
      */
-    private _onDeleteResult;
+    protected _onDeleteResult(event: MouseEvent): Promise<TableResult>;
     /** @inheritdoc */
     _onDrop(event: any): Promise<any>;
     /**
      * Handle changing the actor profile image by opening a FilePicker
      * @param {Event} event
-     * @private
+     * @protected
      */
-    private _onEditImage;
+    protected _onEditImage(event: Event): Promise<any>;
     /**
      * Handle a button click to re-normalize dice result ranges across all RollTable results
      * @param {Event} event
-     * @private
+     * @protected
      */
-    private _onNormalizeResults;
+    protected _onNormalizeResults(event: Event): Promise<any>;
     /**
      * Handle toggling the drawn status of the result in the table
      * @param {Event} event
-     * @private
+     * @protected
      */
-    private _onLockResult;
+    protected _onLockResult(event: Event): any;
     /**
      * Reset the Table to it's original composition with all options unlocked
      * @param {Event} event
-     * @private
+     * @protected
      */
-    private _onResetTable;
+    protected _onResetTable(event: Event): any;
     /**
      * Handle drawing a result from the RollTable
      * @param {Event} event
-     * @private
+     * @protected
      */
-    private _onRollTable;
+    protected _onRollTable(event: Event): Promise<void>;
     /**
      * Configure the update object workflow for the Roll Table configuration sheet
      * Additional logic is needed here to reconstruct the results array from the editable fields on the sheet
      * @param {Event} event            The form submission event
      * @param {Object} formData        The validated FormData translated into an Object for submission
      * @returns {Promise}
-     * @private
+     * @protected
      */
-    private _updateObject;
+    protected _updateObject(event: Event, formData: any): Promise<any>;
     /**
      * Display a roulette style animation when a Roll Table result is drawn from the sheet
      * @param {TableResult[]} results     An Array of drawn table results to highlight

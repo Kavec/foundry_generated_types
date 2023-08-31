@@ -30,9 +30,11 @@ declare class Actor extends Actor_base {
      * @param {object} [options]
      * @param {string} [options.pack]  The name of the compendium the actor is in.
      * @returns {Promise<string[]>}    The list of filenames to token images that match the wildcard search.
-     * @private
+     * @protected
      */
-    private static _requestTokenImages;
+    protected static _requestTokenImages(actorId: string, options?: {
+        pack?: string;
+    }): Promise<string[]>;
     /** @inheritdoc */
     _configure(options?: {}): void;
     /**
@@ -49,9 +51,9 @@ declare class Actor extends Actor_base {
      * A cached array of image paths which can be used for this Actor's token.
      * Null if the list has not yet been populated.
      * @type {string[]|null}
-     * @private
+     * @protected
      */
-    private _tokenImages;
+    protected _tokenImages: string[] | null;
     /**
      * Cache the last drawn wildcard token to avoid repeat draws
      * @type {string|null}

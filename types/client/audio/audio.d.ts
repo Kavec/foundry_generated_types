@@ -129,9 +129,9 @@ declare class AudioHelper {
      * Only created if necessary to listen to audio streams.
      *
      * @type {AudioContext}
-     * @private
+     * @protected
      */
-    private _audioContext;
+    protected _audioContext: AudioContext;
     /**
      * Map of all streams that we listen to for determining the decibel levels.
      * Used for analyzing audio levels of each stream.
@@ -146,25 +146,25 @@ declare class AudioHelper {
      * }
      *
      * @type {Object}
-     * @private
+     * @protected
      */
-    private _analyserStreams;
+    protected _analyserStreams: any;
     /**
      * Interval ID as returned by setInterval for analysing the volume of streams
      * When set to 0, means no timer is set.
      * @type {number}
-     * @private
+     * @protected
      */
-    private _analyserInterval;
+    protected _analyserInterval: number;
     /**
      * Fast Fourier Transform Array.
      * Used for analysing the decibel level of streams. The array is allocated only once
      * then filled by the analyser repeatedly. We only generate it when we need to listen to
      * a stream's level, so we initialize it to null.
      * @type {Float32Array}
-     * @private
+     * @protected
      */
-    private _fftArray;
+    protected _fftArray: Float32Array;
     /**
      * A Promise which resolves once the game audio API is unlocked and ready to use.
      * @type {Promise<AudioContext>}
@@ -261,35 +261,35 @@ declare class AudioHelper {
      * I don't know if it actually helps much with performance but it's expected that limiting the number of timers
      * running at the same time is good practice and with JS itself, there's a potential for a timer congestion
      * phenomenon if too many are created.
-     * @private
+     * @protected
      */
-    private _ensureAnalyserTimer;
+    protected _ensureAnalyserTimer(): void;
     /**
      * Cancel the global analyser timer
      * If the timer is running and has become unnecessary, stops it.
-     * @private
+     * @protected
      */
-    private _cancelAnalyserTimer;
+    protected _cancelAnalyserTimer(): void;
     /**
      * Capture audio level for all speakers and emit a webrtcVolumes custom event with all the volume levels
      * detected since the last emit.
      * The event's detail is in the form of {userId: decibelLevel}
-     * @private
+     * @protected
      */
-    private _emitVolumes;
+    protected _emitVolumes(): void;
     /**
      * Handle the first observed user gesture
      * @param {Event} event         The mouse-move event which enables playback
      * @param {Function} resolve    The Promise resolution function
-     * @private
+     * @protected
      */
-    private _onFirstGesture;
+    protected _onFirstGesture(event: Event, resolve: Function): any;
     /**
      * Additional standard callback events that occur whenever a global volume slider is adjusted
      * @param {string} key        The setting key
      * @param {number} volume     The new volume level
-     * @private
+     * @protected
      */
-    private _onChangeGlobalVolume;
+    protected _onChangeGlobalVolume(key: string, volume: number): void;
     #private;
 }

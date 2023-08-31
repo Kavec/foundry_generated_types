@@ -28,9 +28,9 @@ declare class ActorSheet extends DocumentSheet {
     /**
      * Handle requests to configure the Token for the Actor
      * @param {PointerEvent} event      The originating click event
-     * @private
+     * @protected
      */
-    private _onConfigureToken;
+    protected _onConfigureToken(event: PointerEvent): any;
     /** @inheritdoc */
     _canDragStart(selector: any): any;
     /** @inheritdoc */
@@ -78,14 +78,14 @@ declare class ActorSheet extends DocumentSheet {
      * This method is factored out to allow downstream classes the opportunity to override item creation behavior.
      * @param {object[]|object} itemData     The item data requested for creation
      * @returns {Promise<Item[]>}
-     * @private
+     * @protected
      */
-    private _onDropItemCreate;
+    protected _onDropItemCreate(itemData: object[] | object): Promise<Item[]>;
     /**
      * Handle a drop event for an existing embedded Item to sort that Item relative to its siblings
      * @param {Event} event
      * @param {Object} itemData
-     * @private
+     * @protected
      */
-    private _onSortItem;
+    protected _onSortItem(event: Event, itemData: any): any;
 }

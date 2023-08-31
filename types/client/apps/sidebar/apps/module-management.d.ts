@@ -61,19 +61,19 @@ declare class ModuleManagement extends FormApplication {
     protected _confirmDocumentsUnavailable(module: Module): Promise<boolean>;
     /**
      * Handle a button-click to deactivate all modules
-     * @private
+     * @protected
      */
-    private _onDeactivateAll;
+    protected _onDeactivateAll(event: any): void;
     /**
      * Handle expanding or collapsing the display of descriptive elements
-     * @private
+     * @protected
      */
-    private _onExpandCollapse;
+    protected _onExpandCollapse(event: any): void;
     /**
      * Handle switching the module list filter.
-     * @private
+     * @protected
      */
-    private _onFilterList;
+    protected _onFilterList(event: any): void;
     /** @inheritdoc */
     _onSearchFilter(event: any, query: any, rgx: any, html: any): void;
     /**

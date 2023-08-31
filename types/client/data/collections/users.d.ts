@@ -11,9 +11,80 @@ declare class Users extends WorldCollection {
      * Handle receipt of activity data from another User connected to the Game session
      * @param {string} userId               The User id who generated the activity data
      * @param {ActivityData} activityData   The object of activity data
-     * @private
+     * @protected
      */
-    private static _handleUserActivity;
+    protected static _handleUserActivity(userId: string, activityData?: {
+        /**
+         * The ID of the scene that the user is viewing.
+         */
+        sceneId?: string;
+        /**
+         * The position of the user's cursor.
+         */
+        cursor?: {
+            x: number;
+            y: number;
+        };
+        /**
+         * The state of the user's ruler, if they are currently using one.
+         */
+        ruler?: {
+            /**
+             * The ruler measurement state.
+             */
+            _state: number;
+            /**
+             * A unique name for the ruler containing the owning user's ID.
+             */
+            name: string;
+            /**
+             * The current point the ruler has been extended to.
+             */
+            destination: PIXI.Point;
+            /**
+             * The class name of this ruler instance.
+             */
+            class: string;
+            /**
+             * Additional waypoints along the ruler's length, including the starting point.
+             */
+            waypoints: PIXI.Point[];
+        };
+        /**
+         * The IDs of the tokens the user has targeted in the currently viewed
+         *               scene.
+         */
+        targets?: string[];
+        /**
+         * Whether the user has an open WS connection to the server or not.
+         */
+        active?: boolean;
+        /**
+         * Is the user emitting a ping at the cursor coordinates?
+         */
+        ping?: {
+            /**
+             * Pulls all connected clients' views to the pinged co-ordinates.
+             */
+            pull?: boolean;
+            /**
+             * The ping style, see CONFIG.Canvas.pings.
+             */
+            style: string;
+            /**
+             * The ID of the scene that was pinged.
+             */
+            scene: string;
+            /**
+             * The zoom level at which the ping was made.
+             */
+            zoom: number;
+        };
+        /**
+         * The state of the user's AV settings.
+         */
+        av?: AVSettingsData;
+    }): void;
     constructor(...args: any[]);
     /**
      * The User document of the currently connected user

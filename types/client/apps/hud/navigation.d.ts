@@ -63,15 +63,15 @@ declare class SceneNavigation extends Application {
     /**
      * Get the set of ContextMenu options which should be applied for Scenes in the menu
      * @returns {object[]}   The Array of context options passed to the ContextMenu instance
-     * @private
+     * @protected
      */
-    private _getContextMenuOptions;
+    protected _getContextMenuOptions(): object[];
     /**
      * Handle left-click events on the scenes in the navigation menu
      * @param {PointerEvent} event
-     * @private
+     * @protected
      */
-    private _onClickScene;
+    protected _onClickScene(event: PointerEvent): void;
     /** @override */
     override _onDragStart(event: any): void;
     /** @override */
@@ -79,7 +79,7 @@ declare class SceneNavigation extends Application {
     /**
      * Handle navigation menu toggle click events
      * @param {Event} event
-     * @private
+     * @protected
      */
-    private _onToggleNav;
+    protected _onToggleNav(event: Event): true | Promise<any>;
 }

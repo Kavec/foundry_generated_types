@@ -18,10 +18,10 @@ declare class Hooks {
     static get events(): any;
     /**
      * @type {Object<HookedFunction[]>}
-     * @private
+     * @protected
      * @ignore
      */
-    private static "__#49@#events";
+    protected static "__#49@#events": any;
     /**
      * A mapping of hooked functions by their assigned ID
      * @type {Map<number, HookedFunction>}
@@ -89,9 +89,9 @@ declare class Hooks {
      * Call a hooked function using provided arguments and perhaps unregister it.
      * @param {HookedFunction} entry    The hooked function entry
      * @param {any[]} args              Arguments to be passed
-     * @private
+     * @protected
      */
-    private static "__#49@#call";
+    protected static "__#49@#call"(entry: HookedFunction, args: any[]): any;
     /**
      * Notify subscribers that an error has occurred within foundry.
      * @param {string} location                The method where the error was caught.
@@ -114,10 +114,10 @@ declare class Hooks {
         notify?: string;
         data?: any;
     }): void;
-    private static "__#109@#events";
+    protected static "__#109@#events": any;
     static "__#109@#ids": Map<number, HookedFunction>;
     static "__#109@#id": number;
-    private static "__#109@#call";
+    protected static "__#109@#call"(entry: HookedFunction, args: any[]): any;
 }
 type HookedFunction = {
     hook: string;

@@ -35,12 +35,14 @@ declare class SortingHelpers {
     }): any[];
     /**
      * Given an ordered Array of siblings and a target position, return the [min,max] indices to sort before the target
-     * @private
+     * @protected
      */
-    private static _sortBefore;
+    protected static _sortBefore(siblings: any, idx: any, sortKey: any): any[];
+    protected static _sortBefore(siblings: any, idx: any, sortKey: any): any[];
     /**
      * Given an ordered Array of siblings and a target position, return the [min,max] indices to sort after the target
-     * @private
+     * @protected
      */
-    private static _sortAfter;
+    protected static _sortAfter(siblings: any, idx: any, sortKey: any): any[];
+    protected static _sortAfter(siblings: any, idx: any, sortKey: any): any[];
 }

@@ -14,7 +14,7 @@ declare class MacroConfig extends DocumentSheet {
      * Save and execute the macro using the button on the configuration sheet
      * @param {MouseEvent} event      The originating click event
      * @return {Promise<void>}
-     * @private
+     * @protected
      */
-    private _onExecute;
+    protected _onExecute(event: MouseEvent): Promise<void>;
 }

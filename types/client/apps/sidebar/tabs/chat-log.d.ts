@@ -48,9 +48,9 @@ declare class ChatLog extends SidebarTab {
     /**
      * Handle dropping of transferred data onto the chat editor
      * @param {DragEvent} event     The originating drop event which triggered the data transfer
-     * @private
+     * @protected
      */
-    private static _onDropTextAreaData;
+    protected static _onDropTextAreaData(event: DragEvent): Promise<void>;
     /**
      * Update roll mode select dropdowns when the setting is changed
      * @param {string} mode     The new roll mode setting
@@ -60,45 +60,45 @@ declare class ChatLog extends SidebarTab {
     /**
      * Track any pending text which the user has submitted in the chat log textarea
      * @type {string}
-     * @private
+     * @protected
      */
-    private _pendingText;
+    protected _pendingText: string;
     /**
      * Track the history of the past 5 sent messages which can be accessed using the arrow keys
      * @type {object[]}
-     * @private
+     * @protected
      */
-    private _sentMessages;
+    protected _sentMessages: object[];
     /**
      * Track which remembered message is being currently displayed to cycle properly
      * @type {number}
-     * @private
+     * @protected
      */
-    private _sentMessageIndex;
+    protected _sentMessageIndex: number;
     /**
      * Track the time when the last message was sent to avoid flooding notifications
      * @type {number}
-     * @private
+     * @protected
      */
-    private _lastMessageTime;
+    protected _lastMessageTime: number;
     /**
      * Track the id of the last message displayed in the log
      * @type {string|null}
-     * @private
+     * @protected
      */
-    private _lastId;
+    protected _lastId: string | null;
     /**
      * Track the last received message which included the user as a whisper recipient.
      * @type {ChatMessage|null}
-     * @private
+     * @protected
      */
-    private _lastWhisper;
+    protected _lastWhisper: ChatMessage | null;
     /**
      * A reference to the chat text entry bound key method
      * @type {Function|null}
-     * @private
+     * @protected
      */
-    private _onChatKeyDownBinding;
+    protected _onChatKeyDownBinding: Function | null;
     /**
      * Returns if the chat log is currently scrolled to the bottom
      * @returns {boolean}
@@ -118,9 +118,9 @@ declare class ChatLog extends SidebarTab {
      * @param {jQuery} html     The rendered jQuery HTML object
      * @param {number} size     The batch size to include
      * @returns {Promise<void>}
-     * @private
+     * @protected
      */
-    private _renderBatch;
+    protected _renderBatch(html: JQueryStatic, size: number): Promise<void>;
     /**
      * Delete a single message from the chat log
      * @param {string} messageId    The ChatMessage document to remove from the log
@@ -183,97 +183,97 @@ declare class ChatLog extends SidebarTab {
      * @param {RegExpMatchArray[]} matches Multi-line matched roll expressions
      * @param {Object} chatData         The initial chat data
      * @param {Object} createOptions    Options used to create the message
-     * @private
+     * @protected
      */
-    private _processDiceCommand;
+    protected _processDiceCommand(command: string, matches: RegExpMatchArray[], chatData: any, createOptions: any): Promise<void>;
     /**
      * Process messages which are posted using a chat whisper command
      * @param {string} command          The chat command type
      * @param {RegExpMatchArray} match  The matched RegExp expressions
      * @param {Object} chatData         The initial chat data
      * @param {Object} createOptions    Options used to create the message
-     * @private
+     * @protected
      */
-    private _processWhisperCommand;
+    protected _processWhisperCommand(command: string, match: RegExpMatchArray, chatData: any, createOptions: any): void;
     /**
      * Process messages which are posted using a chat whisper command
      * @param {string} command          The chat command type
      * @param {RegExpMatchArray} match  The matched RegExp expressions
      * @param {Object} chatData         The initial chat data
      * @param {Object} createOptions    Options used to create the message
-     * @private
+     * @protected
      */
-    private _processChatCommand;
+    protected _processChatCommand(command: string, match: RegExpMatchArray, chatData: any, createOptions: any): void;
     /**
      * Process messages which execute a macro.
      * @param {string} command  The chat command typed.
      * @param {RegExpMatchArray} match  The RegExp matches.
-     * @private
+     * @protected
      */
-    private _processMacroCommand;
+    protected _processMacroCommand(command: string, match: RegExpMatchArray): any;
     /**
      * Add a sent message to an array of remembered messages to be re-sent if the user pages up with the up arrow key
      * @param {string} message    The message text being remembered
-     * @private
+     * @protected
      */
-    private _remember;
+    protected _remember(message: string): void;
     /**
      * Recall a previously sent message by incrementing up (1) or down (-1) through the sent messages array
      * @param {number} direction    The direction to recall, positive for older, negative for more recent
      * @return {string}             The recalled message, or an empty string
-     * @private
+     * @protected
      */
-    private _recall;
+    protected _recall(direction: number): string;
     /** @inheritdoc */
     _contextMenu(html: any): void;
     /**
      * Get the ChatLog entry context options
      * @return {object[]}   The ChatLog entry context options
-     * @private
+     * @protected
      */
-    private _getEntryContextOptions;
+    protected _getEntryContextOptions(): object[];
     /**
      * Handle keydown events in the chat entry textarea
      * @param {KeyboardEvent} event
-     * @private
+     * @protected
      */
-    private _onChatKeyDown;
+    protected _onChatKeyDown(event: KeyboardEvent): Promise<void>;
     /**
      * Handle setting the preferred roll mode
      * @param {Event} event
-     * @private
+     * @protected
      */
-    private _onChangeRollMode;
+    protected _onChangeRollMode(event: Event): void;
     /**
      * Handle single message deletion workflow
      * @param {Event} event
-     * @private
+     * @protected
      */
-    private _onDeleteMessage;
+    protected _onDeleteMessage(event: Event): any;
     /**
      * Handle clicking of dice tooltip buttons
      * @param {Event} event
-     * @private
+     * @protected
      */
-    private _onDiceRollClick;
+    protected _onDiceRollClick(event: Event): void;
     /**
      * Handle click events to export the chat log
      * @param {Event} event
-     * @private
+     * @protected
      */
-    private _onExportLog;
+    protected _onExportLog(event: Event): void;
     /**
      * Handle click events to flush the chat log
      * @param {Event} event
-     * @private
+     * @protected
      */
-    private _onFlushLog;
+    protected _onFlushLog(event: Event): void;
     /**
      * Handle scroll events within the chat log container
      * @param {UIEvent} event   The initial scroll event
-     * @private
+     * @protected
      */
-    private _onScrollLog;
+    protected _onScrollLog(event: UIEvent): Promise<void>;
     #private;
 }
 /**

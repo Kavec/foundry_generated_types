@@ -14,14 +14,14 @@ declare class ActiveEffectConfig extends DocumentSheet {
      * Provide centralized handling of mouse clicks on control buttons.
      * Delegate responsibility out to action-specific handlers depending on the button action.
      * @param {MouseEvent} event      The originating click event
-     * @private
+     * @protected
      */
-    private _onEffectControl;
+    protected _onEffectControl(event: MouseEvent): any;
     /**
      * Handle adding a new change to the changes array.
-     * @private
+     * @protected
      */
-    private _addEffectChange;
+    protected _addEffectChange(): Promise<FormApplication>;
     /** @inheritdoc */
     _getSubmitData(updateData?: {}): any;
 }

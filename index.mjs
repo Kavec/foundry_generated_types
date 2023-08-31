@@ -61,7 +61,30 @@ async function copyFoundryToCache() {
     }
 }
 
+async function replacePrivateDirectives() {
+    // By design, typescript fails to emit the type for private class members
+    // e.g., a js class with `_fieldName` that has @private in its tsdoc will
+    // be produced in the output .d.ts as `private _fieldName;` on the class..
+    // even if the actual type is recorded for _fieldName in the tsdoc comment.
+    //
+    // This is fine, mostly, because in theory you don't call private fields
+    // on classes anyway... until you're trying to do something like rework
+    // the `_injectHtml` method to support svelte et al when inheriting from
+    // a class with a private field. Private class members marked this way in
+    // javascript aren't even real anyway (you can access  a private member 
+    // by using the `className['_array_access_notation']` style at any time 
+    // you'd like) and typescript /will/ emit the types for a protected class, 
+    // so this routine goes about and substitutes all @private directives for
+    // @protected ones.
+    const allJsFiles = await glob(`${localCacheDir}/resources/app/[!node_modules]*/**/*.js`);
+    allJsFiles.forEach(fileName => {
+        const data = fs.readFileSync(fileName).toString();
+        const newData = data.replace(/\B@private\b/g, '@protected');
+        fs.writeFileSync(fileName, newData);
+    });
+}
 
+// Main program below
 await copyFoundryToCache();
 
 // The vendored Pixi code doesn't typecheck well, so to avoid type
@@ -76,10 +99,14 @@ if (fs.existsSync(pixiPath)) {
 }
 
 await runStep(
+    `Replacing '@private' type directives with '@protected'`,
+    replacePrivateDirectives
+);
+
+await runStep(
     `Generating type definitions via tsc`,
     async () => await new Promise((r) => exec(`pnpm tsc`, r)),
 );
-
 
 await runStep(
     `Wiring up reference types declarations into index.d.ts`,
@@ -97,9 +124,7 @@ await runStep(
             '',
             ...refLines
         ].join('\n'));
-
-
     }
-)
+);
 
 console.log(`\nHave a nice day!`);

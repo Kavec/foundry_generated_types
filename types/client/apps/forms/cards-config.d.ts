@@ -47,9 +47,9 @@ declare class CardsConfig extends DocumentSheet {
      * Handle sorting a Card relative to other siblings within this document
      * @param {Event} event     The drag drop event
      * @param {Card} card       The card being dragged
-     * @private
+     * @protected
      */
-    private _onSortCard;
+    protected _onSortCard(event: Event, card: Card): any;
 }
 /**
  * A subclass of CardsConfig which provides a sheet representation for Cards documents with the "hand" type.

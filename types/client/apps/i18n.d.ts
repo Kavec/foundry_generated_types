@@ -39,31 +39,31 @@ declare class Localization {
     /**
      * Discover the available supported languages from the set of packages which are provided
      * @returns {object}         The resulting configuration of supported languages
-     * @private
+     * @protected
      */
-    private _discoverSupportedLanguages;
+    protected _discoverSupportedLanguages(): object;
     /**
      * Prepare the dictionary of translation strings for the requested language
      * @param {string} lang         The language for which to load translations
      * @returns {Promise<object>}   The retrieved translations object
-     * @private
+     * @protected
      */
-    private _getTranslations;
+    protected _getTranslations(lang: string): Promise<object>;
     /**
      * Reduce the languages array provided by a package to an array of file paths of translations to load
      * @param {object} pkg          The package data
      * @param {string} lang         The target language to filter on
      * @returns {string[]}           An array of translation file paths
-     * @private
+     * @protected
      */
-    private _filterLanguagePaths;
+    protected _filterLanguagePaths(pkg: object, lang: string): string[];
     /**
      * Load a single translation file and return its contents as processed JSON
      * @param {string} src        The translation file path to load
      * @returns {Promise<object>} The loaded translation dictionary
-     * @private
+     * @protected
      */
-    private _loadTranslationFile;
+    protected _loadTranslationFile(src: string): Promise<object>;
     /**
      * Return whether a certain string has a known translation defined.
      * @param {string} stringId     The string key being translated

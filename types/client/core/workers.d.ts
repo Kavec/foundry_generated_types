@@ -58,9 +58,9 @@ declare class AsyncWorker extends Worker {
      * @param {WorkerTask} taskData   Data to dispatch to the Worker as part of the task.
      * @param {Array<*>} transfer     An array of transferable objects which are transferred to the worker thread.
      * @returns {Promise}             A Promise which wraps the task transaction.
-     * @private
+     * @protected
      */
-    private _dispatchTask;
+    protected _dispatchTask(taskData?: WorkerTask, transfer?: Array<any>): Promise<any>;
     #private;
 }
 /**

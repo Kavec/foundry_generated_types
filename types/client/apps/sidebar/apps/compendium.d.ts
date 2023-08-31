@@ -30,9 +30,9 @@ declare class Compendium extends DocumentDirectory {
     /**
      * Handle clicks on a footer button
      * @param {PointerEvent} event    The originating pointer event
-     * @private
+     * @protected
      */
-    private _onClickFooterButton;
+    protected _onClickFooterButton(event: PointerEvent): any;
     /** @override */
     override _getDocumentDragData(documentId: any): {
         type: any;

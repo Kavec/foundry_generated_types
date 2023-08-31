@@ -88,14 +88,14 @@ declare class AVSettings {
     get verticalDock(): boolean;
     /**
      * Prepare a standardized object of user settings data for a single User
-     * @private
+     * @protected
      */
-    private _getUserSettings;
+    protected _getUserSettings(user: any): any;
     /**
      * Handle setting changes to either rctClientSettings or rtcWorldSettings.
-     * @private
+     * @protected
      */
-    private _onSettingsChanged;
+    protected _onSettingsChanged(): void;
     /**
      * Handle another connected user changing their AV settings.
      * @param {string} userId

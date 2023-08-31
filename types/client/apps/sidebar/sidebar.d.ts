@@ -93,19 +93,19 @@ declare class Sidebar extends Application {
     /**
      * Handle the special case of left-clicking a tab when the sidebar is collapsed.
      * @param {MouseEvent} event  The originating click event
-     * @private
+     * @protected
      */
-    private _onLeftClickTab;
+    protected _onLeftClickTab(event: MouseEvent): void;
     /**
      * Handle right-click events on tab controls to trigger pop-out containers for each tab
      * @param {Event} event     The originating contextmenu event
-     * @private
+     * @protected
      */
-    private _onRightClickTab;
+    protected _onRightClickTab(event: Event): void;
     /**
      * Handle toggling of the Sidebar container's collapsed or expanded state
      * @param {Event} event
-     * @private
+     * @protected
      */
-    private _onToggleCollapse;
+    protected _onToggleCollapse(event: Event): void;
 }

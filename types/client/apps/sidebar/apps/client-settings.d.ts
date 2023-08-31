@@ -22,15 +22,15 @@ declare class SettingsConfig extends PackageConfiguration {
     /**
      * Handle activating the button to configure User Role permissions
      * @param {Event} event   The initial button click event
-     * @private
+     * @protected
      */
-    private _onClickSubmenu;
+    protected _onClickSubmenu(event: Event): any;
     /**
      * Preview font scaling as the setting is changed.
      * @param {Event} event  The triggering event.
-     * @private
+     * @protected
      */
-    private _previewFontScaling;
+    protected _previewFontScaling(event: Event): void;
     /** @override */
     override _updateObject(event: any, formData: any): Promise<void>;
 }

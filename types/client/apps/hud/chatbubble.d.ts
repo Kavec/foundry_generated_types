@@ -26,9 +26,9 @@ declare class ChatBubbles {
      * Track which Token was most recently panned to highlight
      * Use this to avoid repeat panning
      * @type {Token}
-     * @private
+     * @protected
      */
-    private _panned;
+    protected _panned: Function;
     /**
      * A reference to the chat bubbles HTML container in which rendered bubbles should live
      * @returns {jQuery}
@@ -53,31 +53,31 @@ declare class ChatBubbles {
     /**
      * Clear any existing chat bubble for a certain Token
      * @param {Token} token
-     * @private
+     * @protected
      */
-    private _clearBubble;
+    protected _clearBubble(token: Function): Promise<any>;
     /**
      * Render the HTML template for the chat bubble
      * @param {object} data         Template data
      * @returns {Promise<string>}   The rendered HTML
-     * @private
+     * @protected
      */
-    private _renderHTML;
+    protected _renderHTML(data: object): Promise<string>;
     /**
      * Before displaying the chat message, determine it's constrained and unconstrained dimensions
      * @param {string} message    The message content
      * @returns {object}          The rendered message dimensions
-     * @private
+     * @protected
      */
-    private _getMessageDimensions;
+    protected _getMessageDimensions(message: string): object;
     /**
      * Assign styling parameters to the chat bubble, toggling either a left or right display (randomly)
      * @param {Token} token             The speaking Token
      * @param {JQuery} html             Chat bubble content
      * @param {Rectangle} dimensions    Positioning data
-     * @private
+     * @protected
      */
-    private _setPosition;
+    protected _setPosition(token: Function, html: JQuery, dimensions: Rectangle): void;
     /**
      * Determine the length of time for which to display a chat bubble.
      * Research suggests that average reading speed is 200 words per minute.

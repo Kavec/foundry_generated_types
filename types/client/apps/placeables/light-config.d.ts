@@ -18,9 +18,9 @@ declare class AmbientLightConfig extends DocumentSheet {
     /**
      * Reset the values of advanced attributes to their default state.
      * @param {PointerEvent} event    The originating click event
-     * @private
+     * @protected
      */
-    private _onResetForm;
+    protected _onResetForm(event: PointerEvent): void;
     /**
      * Preview changes to the AmbientLight document as if they were true document updates.
      * @param {object} [change]  A change to preview.

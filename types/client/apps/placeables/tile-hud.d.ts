@@ -16,13 +16,13 @@ declare class TileHUD extends BasePlaceableHUD {
      * Handle toggling the overhead state of the Tile.
      * @param {PointerEvent} event      The triggering click event
      * @param {boolean} overhead        Should the Tile be overhead?
-     * @private
+     * @protected
      */
-    private _onToggleOverhead;
+    protected _onToggleOverhead(event: PointerEvent, overhead: boolean): Promise<Application>;
     /**
      * Control video playback by toggling play or paused state for a video Tile.
      * @param {object} event
-     * @private
+     * @protected
      */
-    private _onControlVideo;
+    protected _onControlVideo(event: object): any;
 }

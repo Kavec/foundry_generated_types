@@ -29,9 +29,9 @@ declare class FontConfig extends FormApplication {
     /**
      * A list of fonts that were correctly loaded and are available for use.
      * @type {Set<string>}
-     * @private
+     * @protected
      */
-    private static "__#29@#available";
+    protected static "__#29@#available": Set<string>;
     /**
      * Get the list of fonts that successfully loaded.
      * @returns {string[]}
@@ -88,9 +88,9 @@ declare class FontConfig extends FormApplication {
      * @param {string} family              The font family.
      * @param {FontDefinition} definition  The font definition.
      * @returns {string}                   The formatted definition.
-     * @private
+     * @protected
      */
-    private static _formatFont;
+    protected static _formatFont(family: string, definition: FontFaceDescriptors): string;
     /**
      * An application for configuring custom world fonts.
      * @param {NewFontDefinition} [object]  The default settings for new font definition creation.

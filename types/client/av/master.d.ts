@@ -27,16 +27,16 @@ declare class AVMaster {
      * The cached connection promise.
      * This is required to prevent re-triggering a connection while one is already in progress.
      * @type {Promise<boolean>|null}
-     * @private
+     * @protected
      */
-    private _connecting;
+    protected _connecting: Promise<boolean> | null;
     /**
      * A flag to track whether the A/V system is currently in the process of reconnecting.
      * This occurs if the connection is lost or interrupted.
      * @type {boolean}
-     * @private
+     * @protected
      */
-    private _reconnecting;
+    protected _reconnecting: boolean;
     _speakingData: {
         speaking: boolean;
         volumeHistories: any[];
@@ -60,9 +60,9 @@ declare class AVMaster {
     reestablish(): Promise<void>;
     /**
      * Initialize the local broadcast state.
-     * @private
+     * @protected
      */
-    private _initialize;
+    protected _initialize(): void;
     /**
      * A user can broadcast audio if the AV mode is compatible and if they are allowed to broadcast.
      * @param {string} userId
@@ -96,9 +96,9 @@ declare class AVMaster {
     /**
      * Set up audio level listeners to handle voice activation detection workflow.
      * @param {string} mode           The currently selected voice broadcasting mode
-     * @private
+     * @protected
      */
-    private _initializeUserVoiceDetection;
+    protected _initializeUserVoiceDetection(mode: string): void;
     /**
      * Activate voice detection tracking for a userId on a provided MediaStream.
      * Currently only a MediaStream is supported because MediaStreamTrack processing is not yet supported cross-browser.
@@ -124,9 +124,9 @@ declare class AVMaster {
      * or not, in order to eliminate short bursts of audio (coughing for example).
      *
      * @param {number} dbLevel         The audio level in decibels of the user within the last 50ms
-     * @private
+     * @protected
      */
-    private _onAudioLevel;
+    protected _onAudioLevel(dbLevel: number): any;
     /**
      * Resets the speaking history of a user
      * If the user was considered speaking, then mark them as not speaking

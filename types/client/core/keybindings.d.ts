@@ -24,16 +24,16 @@ declare class ClientKeybindings {
      * A helper method that, when given a value, ensures that the returned value is a standardized Binding array
      * @param {KeybindingActionBinding[]} values  An array of keybinding assignments to be validated
      * @returns {KeybindingActionBinding[]}       An array of keybinding assignments confirmed as valid
-     * @private
+     * @protected
      */
-    private static _validateBindings;
+    protected static _validateBindings(values: KeybindingActionBinding[]): KeybindingActionBinding[];
     /**
      * Validate that assigned modifiers are allowed
      * @param {string[]} keys           An array of modifiers which may be valid
      * @returns {string[]}              An array of modifiers which are confirmed as valid
-     * @private
+     * @protected
      */
-    private static _validateModifiers;
+    protected static _validateModifiers(keys: string[]): string[];
     /**
      * Compares two Keybinding Actions based on their Order
      * @param {KeybindingAction} a   The first Keybinding Action
@@ -46,105 +46,108 @@ declare class ClientKeybindings {
      * Handle Select all action
      * @param {KeyboardEvent} event             The originating keyboard event
      * @param {KeyboardEventContext} context    The context data of the event
-     * @private
+     * @protected
      */
-    private static _onSelectAllObjects;
+    protected static _onSelectAllObjects(event: KeyboardEvent, context: KeyboardEventContext): boolean;
     /**
      * Handle Cycle View actions
      * @param {KeyboardEventContext} context    The context data of the event
-     * @private
+     * @protected
      */
-    private static _onCycleView;
+    protected static _onCycleView(context: KeyboardEventContext): boolean;
     /**
      * Handle Dismiss actions
      * @param {KeyboardEventContext} context    The context data of the event
-     * @private
+     * @protected
      */
-    private static _onDismiss;
+    protected static _onDismiss(context: KeyboardEventContext): boolean;
     /**
      * Open Character sheet for current token or controlled actor
      * @param {KeyboardEvent} event             The initiating keyboard event
      * @param {KeyboardEventContext} context    The context data of the event
-     * @private
+     * @protected
      */
-    private static _onToggleCharacterSheet;
+    protected static _onToggleCharacterSheet(event: KeyboardEvent, context: KeyboardEventContext): ActorSheet;
     /**
      * Handle action to target the currently hovered token.
      * @param {KeyboardEventContext} context    The context data of the event
-     * @private
+     * @protected
      */
-    private static _onTarget;
+    protected static _onTarget(context: KeyboardEventContext): boolean;
     /**
      * Handle DELETE Keypress Events
      * @param {KeyboardEvent} event             The originating keyboard event
      * @param {KeyboardEventContext} context    The context data of the event
-     * @private
+     * @protected
      */
-    private static _onDelete;
+    protected static _onDelete(event: KeyboardEvent, context: KeyboardEventContext): boolean;
     /**
      * Handle Measured Ruler Movement Action
      * @param {KeyboardEventContext} context    The context data of the event
-     * @private
+     * @protected
      */
-    private static _onMeasuredRulerMovement;
+    protected static _onMeasuredRulerMovement(context: KeyboardEventContext): boolean;
     /**
      * Handle Pause Action
      * @param {KeyboardEventContext} context    The context data of the event
-     * @private
+     * @protected
      */
-    private static _onPause;
+    protected static _onPause(context: KeyboardEventContext): boolean;
     /**
      * Handle Highlight action
      * @param {KeyboardEventContext} context    The context data of the event
-     * @private
+     * @protected
      */
-    private static _onHighlight;
+    protected static _onHighlight(context: KeyboardEventContext): boolean;
     /**
      * Handle Macro executions
      * @param {KeyboardEventContext} context  The context data of the event
      * @param {number} number                 The numbered macro slot to execute
-     * @private
+     * @protected
      */
-    private static _onMacroExecute;
+    protected static _onMacroExecute(context: KeyboardEventContext, number: number): boolean;
     /**
      * Handle Macro page swaps
      * @param {KeyboardEventContext} context    The context data of the event
      * @param {number} page                     The numbered macro page to activate
-     * @private
+     * @protected
      */
-    private static _onMacroPageSwap;
+    protected static _onMacroPageSwap(context: KeyboardEventContext, page: number): boolean;
     /**
      * Handle action to copy data to clipboard
      * @param {KeyboardEventContext} context    The context data of the event
-     * @private
+     * @protected
      */
-    private static _onCopy;
+    protected static _onCopy(context: KeyboardEventContext): boolean;
     /**
      * Handle Paste action
      * @param {KeyboardEventContext} context    The context data of the event
-     * @private
+     * @protected
      */
-    private static _onPaste;
+    protected static _onPaste(context: KeyboardEventContext): boolean;
     /**
      * Handle Undo action
      * @param {KeyboardEventContext} context    The context data of the event
-     * @private
+     * @protected
      */
-    private static _onUndo;
+    protected static _onUndo(context: KeyboardEventContext): boolean;
     /**
      * Handle presses to keyboard zoom keys
      * @param {KeyboardEventContext} context                    The context data of the event
      * @param {ClientKeybindings.ZOOM_DIRECTIONS} zoomDirection The direction to zoom
-     * @private
+     * @protected
      */
-    private static _onZoom;
+    protected static _onZoom(context: KeyboardEventContext, zoomDirection: {
+        IN: string;
+        OUT: string;
+    }): boolean;
     /**
      * Bring the chat window into view and focus the input
      * @param {KeyboardEventContext} context    The context data of the event
      * @returns {boolean}
-     * @private
+     * @protected
      */
-    private static _onFocusChat;
+    protected static _onFocusChat(context: KeyboardEventContext): boolean;
     /**
      * Registered Keybinding actions
      * @type {Map<string, KeybindingActionConfig>}
@@ -163,15 +166,15 @@ declare class ClientKeybindings {
     /**
      * A count of how many registered keybindings there are
      * @type {number}
-     * @private
+     * @protected
      */
-    private _registered;
+    protected _registered: number;
     /**
      * A timestamp which tracks the last time a pan operation was performed
      * @type {number}
-     * @private
+     * @protected
      */
-    private _moveTime;
+    protected _moveTime: number;
     /**
      * An alias of the movement key set tracked by the keyboard
      * @returns {Set<string>}>
@@ -256,9 +259,9 @@ declare class ClientKeybindings {
      * Handle keyboard movement once a small delay has elapsed to allow for multiple simultaneous key-presses.
      * @param {KeyboardEventContext} context        The context data of the event
      * @param {InteractionLayer} layer              The active InteractionLayer instance
-     * @private
+     * @protected
      */
-    private _handleMovement;
+    protected _handleMovement(context: KeyboardEventContext, layer: InteractionLayer): void;
     /**
      * Handle panning the canvas using CTRL + directional keys
      */
@@ -267,7 +270,7 @@ declare class ClientKeybindings {
      * Handle Pan action
      * @param {KeyboardEventContext} context          The context data of the event
      * @param {string[]} movementDirections           The Directions being panned in
-     * @private
+     * @protected
      */
-    private _onPan;
+    protected _onPan(context: KeyboardEventContext, movementDirections: string[]): boolean;
 }

@@ -17,14 +17,14 @@ declare class Messages extends WorldCollection {
     /**
      * If requested, dispatch a Chat Bubble UI for the newly created message
      * @param {ChatMessage} message     The ChatMessage document to say
-     * @private
+     * @protected
      */
-    private sayBubble;
+    protected sayBubble(message: ChatMessage): void;
     /**
      * Handle export of the chat log to a text file
-     * @private
+     * @protected
      */
-    private export;
+    protected export(): void;
     /**
      * Allow for bulk deletion of all chat messages, confirm first with a yes/no dialog.
      * @see {@link Dialog.confirm}

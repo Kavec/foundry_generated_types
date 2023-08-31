@@ -104,17 +104,17 @@ declare class ActiveEffect {
      * @param {number} turn     The turn number
      * @param {number} [nTurns] The maximum number of turns in the encounter
      * @returns {number}        The decimal representation
-     * @private
+     * @protected
      */
-    private _getCombatTime;
+    protected _getCombatTime(round: number, turn: number, nTurns?: number): number;
     /**
      * Format a number of rounds and turns into a human-readable duration label
      * @param {number} rounds   The number of rounds
      * @param {number} turns    The number of turns
      * @returns {string}        The formatted label
-     * @private
+     * @protected
      */
-    private _getDurationLabel;
+    protected _getDurationLabel(rounds: number, turns: number): string;
     /**
      * Describe whether the ActiveEffect has a temporary duration based on combat turns or rounds.
      * @type {boolean}
@@ -141,24 +141,24 @@ declare class ActiveEffect {
      * @param {string} raw      The raw string value
      * @param {string} type     The target data type that the raw value should be cast to match
      * @returns {*}             The parsed delta cast to the target data type
-     * @private
+     * @protected
      */
-    private _castDelta;
+    protected _castDelta(raw: string, type: string): any;
     /**
      * Cast a raw EffectChangeData change string to an Array of an inner type.
      * @param {string} raw      The raw string value
      * @param {string} type     The target data type of inner array elements
      * @returns {Array<*>}      The parsed delta cast as a typed array
-     * @private
+     * @protected
      */
-    private _castArray;
+    protected _castArray(raw: string, type: string): Array<any>;
     /**
      * Parse serialized JSON, or retain the raw string.
      * @param {string} raw      A raw serialized string
      * @returns {*}             The parsed value, or the original value if parsing failed
-     * @private
+     * @protected
      */
-    private _parseOrString;
+    protected _parseOrString(raw: string): any;
     /**
      * Apply an ActiveEffect that uses an ADD application mode.
      * The way that effects are added depends on the data type of the current value.
@@ -173,9 +173,9 @@ declare class ActiveEffect {
      * @param {*} current                     The current value being modified
      * @param {*} delta                       The parsed value of the change object
      * @param {object} changes                An object which accumulates changes to be applied
-     * @private
+     * @protected
      */
-    private _applyAdd;
+    protected _applyAdd(actor: Actor, change: EffectChangeData, current: any, delta: any, changes: object): void;
     /**
      * Apply an ActiveEffect that uses a MULTIPLY application mode.
      * Changes which MULTIPLY must be numeric to allow for multiplication.
@@ -184,9 +184,9 @@ declare class ActiveEffect {
      * @param {*} current                     The current value being modified
      * @param {*} delta                       The parsed value of the change object
      * @param {object} changes                An object which accumulates changes to be applied
-     * @private
+     * @protected
      */
-    private _applyMultiply;
+    protected _applyMultiply(actor: Actor, change: EffectChangeData, current: any, delta: any, changes: object): void;
     /**
      * Apply an ActiveEffect that uses an OVERRIDE application mode.
      * Numeric data is overridden by numbers, while other data types are overridden by any value
@@ -195,9 +195,9 @@ declare class ActiveEffect {
      * @param {*} current                     The current value being modified
      * @param {*} delta                       The parsed value of the change object
      * @param {object} changes                An object which accumulates changes to be applied
-     * @private
+     * @protected
      */
-    private _applyOverride;
+    protected _applyOverride(actor: Actor, change: EffectChangeData, current: any, delta: any, changes: object): any;
     /**
      * Apply an ActiveEffect that uses an UPGRADE, or DOWNGRADE application mode.
      * Changes which UPGRADE or DOWNGRADE must be numeric to allow for comparison.
@@ -206,9 +206,9 @@ declare class ActiveEffect {
      * @param {*} current                     The current value being modified
      * @param {*} delta                       The parsed value of the change object
      * @param {object} changes                An object which accumulates changes to be applied
-     * @private
+     * @protected
      */
-    private _applyUpgrade;
+    protected _applyUpgrade(actor: Actor, change: EffectChangeData, current: any, delta: any, changes: object): void;
     /**
      * Apply an ActiveEffect that uses a CUSTOM application mode.
      * @param {Actor} actor                   The Actor to whom this effect should be applied
@@ -216,9 +216,9 @@ declare class ActiveEffect {
      * @param {*} current                     The current value being modified
      * @param {*} delta                       The parsed value of the change object
      * @param {object} changes                An object which accumulates changes to be applied
-     * @private
+     * @protected
      */
-    private _applyCustom;
+    protected _applyCustom(actor: Actor, change: EffectChangeData, current: any, delta: any, changes: object): void;
     /** @inheritdoc */
     getFlag(scope: any, key: any): any;
     /** @inheritdoc */

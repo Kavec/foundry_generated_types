@@ -23637,9 +23637,12 @@ export class ProseMirrorInputRules extends ProseMirrorInputRules_base {
      * Turns a double dash anywhere into an em-dash. Does not match at the start of the line to avoid conflict with the
      * HR rule.
      * @returns {InputRule}
-     * @private
+     * @protected
      */
-    private static "__#211@#emDashRule";
+    protected static "__#211@#emDashRule"(): {
+        match: any;
+        handler: any;
+    };
     /**
      * Build input rules for node types present in the schema.
      * @returns {InputRule[]}
@@ -30548,7 +30551,7 @@ export class ProseMirrorMenu extends ProseMirrorMenu_base {
         /**
          * An HTML element that we write HTML to before injecting it into the DOM.
          * @type {HTMLTemplateElement}
-         * @private
+         * @protected
          */
         "__#214@#renderTarget": HTMLTemplateElement;
         /**

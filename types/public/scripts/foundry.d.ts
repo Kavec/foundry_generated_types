@@ -86,7 +86,7 @@ declare function _resolveEmbedded(parent: Document, parts: string[], { invalid }
  * @param {object} [options]                 Additional options to configure Embedded Document resolution.
  * @param {boolean} [options.invalid=false]  Allow retrieving an invalid Embedded Document.
  * @returns {Document}                       The resolved Embedded Document.
- * @private
+ * @protected
  */
 declare function _resolveEmbedded(parent: Document, parts: string[], { invalid }?: {
     invalid?: boolean;
@@ -589,9 +589,9 @@ declare class GamepadManager {
     /**
      * The connected Gamepads
      * @type {Map<string, ConnectedGamepad>}
-     * @private
+     * @protected
      */
-    private _connectedGamepads;
+    protected _connectedGamepads: Map<string, ConnectedGamepad>;
     /**
      * Begin listening to gamepad events.
      * @internal
@@ -600,29 +600,29 @@ declare class GamepadManager {
     /**
      * Handles a Gamepad Connection event, adding its info to the poll list
      * @param {GamepadEvent} event The originating Event
-     * @private
+     * @protected
      */
-    private _onGamepadConnect;
+    protected _onGamepadConnect(event: GamepadEvent): void;
     /**
      * Handles a Gamepad Disconnect event, removing it from consideration for polling
      * @param {GamepadEvent} event The originating Event
-     * @private
+     * @protected
      */
-    private _onGamepadDisconnect;
+    protected _onGamepadDisconnect(event: GamepadEvent): void;
     /**
      * Polls all Connected Gamepads for updates. If they have been updated, checks status of Axis and Buttons,
      * firing off Keybinding Contexts as appropriate
-     * @private
+     * @protected
      */
-    private _pollGamepads;
+    protected _pollGamepads(): void;
     /**
      * Converts a Gamepad Input event into a KeyboardEvent, then fires it
      * @param {string} gamepadId  The string representation of the Gamepad Input
      * @param {boolean} up        True if the Input is pressed or active
      * @param {boolean} repeat    True if the Input is being held
-     * @private
+     * @protected
      */
-    private _handleGamepadInput;
+    protected _handleGamepadInput(gamepadId: string, up: boolean, repeat?: boolean): void;
 }
 /**
  * @typedef {object} HookedFunction
@@ -638,7 +638,7 @@ declare class GamepadManager {
  */
 declare class Hooks {
     static get events(): any;
-    private static "__#49@#events";
+    protected static "__#49@#events": any;
     static "__#49@#ids": Map<number, HookedFunction>;
     static "__#49@#id": number;
     static on(hook: string, fn: Function, { once }?: {
@@ -694,7 +694,7 @@ declare class Hooks {
      * @returns {boolean}     Were all hooks called without execution being prevented?
      */
     static call(hook: string, ...args: any[]): boolean;
-    private static "__#49@#call";
+    protected static "__#49@#call"(entry: HookedFunction, args: any[]): any;
     static onError(location: string, error: Error, { msg, notify, log, ...data }?: {
         msg?: string;
         log?: string;
@@ -719,10 +719,10 @@ declare class Hooks {
     }): void;
     /**
      * @type {Object<HookedFunction[]>}
-     * @private
+     * @protected
      * @ignore
      */
-    private static "__#109@#events";
+    protected static "__#109@#events": any;
     /**
      * A mapping of hooked functions by their assigned ID
      * @type {Map<number, HookedFunction>}
@@ -737,9 +737,9 @@ declare class Hooks {
      * Call a hooked function using provided arguments and perhaps unregister it.
      * @param {HookedFunction} entry    The hooked function entry
      * @param {any[]} args              Arguments to be passed
-     * @private
+     * @protected
      */
-    private static "__#109@#call";
+    protected static "__#109@#call"(entry: HookedFunction, args: any[]): any;
 }
 /**
  * A helper class to provide common functionality for working with Image objects
@@ -970,16 +970,16 @@ declare class ClientKeybindings {
      * A helper method that, when given a value, ensures that the returned value is a standardized Binding array
      * @param {KeybindingActionBinding[]} values  An array of keybinding assignments to be validated
      * @returns {KeybindingActionBinding[]}       An array of keybinding assignments confirmed as valid
-     * @private
+     * @protected
      */
-    private static _validateBindings;
+    protected static _validateBindings(values: KeybindingActionBinding[]): KeybindingActionBinding[];
     /**
      * Validate that assigned modifiers are allowed
      * @param {string[]} keys           An array of modifiers which may be valid
      * @returns {string[]}              An array of modifiers which are confirmed as valid
-     * @private
+     * @protected
      */
-    private static _validateModifiers;
+    protected static _validateModifiers(keys: string[]): string[];
     /**
      * Compares two Keybinding Actions based on their Order
      * @param {KeybindingAction} a   The first Keybinding Action
@@ -992,105 +992,108 @@ declare class ClientKeybindings {
      * Handle Select all action
      * @param {KeyboardEvent} event             The originating keyboard event
      * @param {KeyboardEventContext} context    The context data of the event
-     * @private
+     * @protected
      */
-    private static _onSelectAllObjects;
+    protected static _onSelectAllObjects(event: KeyboardEvent, context: KeyboardEventContext): boolean;
     /**
      * Handle Cycle View actions
      * @param {KeyboardEventContext} context    The context data of the event
-     * @private
+     * @protected
      */
-    private static _onCycleView;
+    protected static _onCycleView(context: KeyboardEventContext): boolean;
     /**
      * Handle Dismiss actions
      * @param {KeyboardEventContext} context    The context data of the event
-     * @private
+     * @protected
      */
-    private static _onDismiss;
+    protected static _onDismiss(context: KeyboardEventContext): boolean;
     /**
      * Open Character sheet for current token or controlled actor
      * @param {KeyboardEvent} event             The initiating keyboard event
      * @param {KeyboardEventContext} context    The context data of the event
-     * @private
+     * @protected
      */
-    private static _onToggleCharacterSheet;
+    protected static _onToggleCharacterSheet(event: KeyboardEvent, context: KeyboardEventContext): ActorSheet;
     /**
      * Handle action to target the currently hovered token.
      * @param {KeyboardEventContext} context    The context data of the event
-     * @private
+     * @protected
      */
-    private static _onTarget;
+    protected static _onTarget(context: KeyboardEventContext): boolean;
     /**
      * Handle DELETE Keypress Events
      * @param {KeyboardEvent} event             The originating keyboard event
      * @param {KeyboardEventContext} context    The context data of the event
-     * @private
+     * @protected
      */
-    private static _onDelete;
+    protected static _onDelete(event: KeyboardEvent, context: KeyboardEventContext): boolean;
     /**
      * Handle Measured Ruler Movement Action
      * @param {KeyboardEventContext} context    The context data of the event
-     * @private
+     * @protected
      */
-    private static _onMeasuredRulerMovement;
+    protected static _onMeasuredRulerMovement(context: KeyboardEventContext): boolean;
     /**
      * Handle Pause Action
      * @param {KeyboardEventContext} context    The context data of the event
-     * @private
+     * @protected
      */
-    private static _onPause;
+    protected static _onPause(context: KeyboardEventContext): boolean;
     /**
      * Handle Highlight action
      * @param {KeyboardEventContext} context    The context data of the event
-     * @private
+     * @protected
      */
-    private static _onHighlight;
+    protected static _onHighlight(context: KeyboardEventContext): boolean;
     /**
      * Handle Macro executions
      * @param {KeyboardEventContext} context  The context data of the event
      * @param {number} number                 The numbered macro slot to execute
-     * @private
+     * @protected
      */
-    private static _onMacroExecute;
+    protected static _onMacroExecute(context: KeyboardEventContext, number: number): boolean;
     /**
      * Handle Macro page swaps
      * @param {KeyboardEventContext} context    The context data of the event
      * @param {number} page                     The numbered macro page to activate
-     * @private
+     * @protected
      */
-    private static _onMacroPageSwap;
+    protected static _onMacroPageSwap(context: KeyboardEventContext, page: number): boolean;
     /**
      * Handle action to copy data to clipboard
      * @param {KeyboardEventContext} context    The context data of the event
-     * @private
+     * @protected
      */
-    private static _onCopy;
+    protected static _onCopy(context: KeyboardEventContext): boolean;
     /**
      * Handle Paste action
      * @param {KeyboardEventContext} context    The context data of the event
-     * @private
+     * @protected
      */
-    private static _onPaste;
+    protected static _onPaste(context: KeyboardEventContext): boolean;
     /**
      * Handle Undo action
      * @param {KeyboardEventContext} context    The context data of the event
-     * @private
+     * @protected
      */
-    private static _onUndo;
+    protected static _onUndo(context: KeyboardEventContext): boolean;
     /**
      * Handle presses to keyboard zoom keys
      * @param {KeyboardEventContext} context                    The context data of the event
      * @param {ClientKeybindings.ZOOM_DIRECTIONS} zoomDirection The direction to zoom
-     * @private
+     * @protected
      */
-    private static _onZoom;
+    protected static _onZoom(context: KeyboardEventContext, zoomDirection: {
+        IN: string;
+        OUT: string;
+    }): boolean;
     /**
      * Bring the chat window into view and focus the input
      * @param {KeyboardEventContext} context    The context data of the event
      * @returns {boolean}
-     * @private
+     * @protected
      */
-    private static _onFocusChat;
+    protected static _onFocusChat(context: KeyboardEventContext): boolean;
     /**
      * Registered Keybinding actions
      * @type {Map<string, KeybindingActionConfig>}
@@ -1109,15 +1112,15 @@ declare class ClientKeybindings {
     /**
      * A count of how many registered keybindings there are
      * @type {number}
-     * @private
+     * @protected
      */
-    private _registered;
+    protected _registered: number;
     /**
      * A timestamp which tracks the last time a pan operation was performed
      * @type {number}
-     * @private
+     * @protected
      */
-    private _moveTime;
+    protected _moveTime: number;
     /**
      * An alias of the movement key set tracked by the keyboard
      * @returns {Set<string>}>
@@ -1202,9 +1205,9 @@ declare class ClientKeybindings {
      * Handle keyboard movement once a small delay has elapsed to allow for multiple simultaneous key-presses.
      * @param {KeyboardEventContext} context        The context data of the event
      * @param {InteractionLayer} layer              The active InteractionLayer instance
-     * @private
+     * @protected
      */
-    private _handleMovement;
+    protected _handleMovement(context: KeyboardEventContext, layer: InteractionLayer): void;
     /**
      * Handle panning the canvas using CTRL + directional keys
      */
@@ -1213,9 +1216,9 @@ declare class ClientKeybindings {
      * Handle Pan action
      * @param {KeyboardEventContext} context          The context data of the event
      * @param {string[]} movementDirections           The Directions being panned in
-     * @private
+     * @protected
      */
-    private _onPan;
+    protected _onPan(context: KeyboardEventContext, movementDirections: string[]): boolean;
 }
 /**
  * A set of helpers and management functions for dealing with user input from keyboard events.
@@ -1296,9 +1299,9 @@ declare class KeyboardManager {
      * @param {KeyboardEventContext} context  The standardized context of the event
      * @param {boolean} includeModifiers      If True, includes modifiers in the string representation
      * @return {string}
-     * @private
+     * @protected
      */
-    private static _getContextDisplayString;
+    protected static _getContextDisplayString(context: KeyboardEventContext, includeModifiers?: boolean): string;
     /**
      * Given a standardized pressed key, find all matching registered Keybind Actions.
      * @param {KeyboardEventContext} context  A standardized keyboard event context
@@ -1311,18 +1314,18 @@ declare class KeyboardManager {
      * @param {KeybindingAction} action             The keybinding action
      * @param {KeyboardEventContext} context        The keyboard event context
      * @returns {boolean}                           Does the context match the action requirements?
-     * @private
+     * @protected
      */
-    private static _testContext;
+    protected static _testContext(action: KeybindingAction, context: KeyboardEventContext): boolean;
     /**
      * Given a registered Keybinding Action, executes the action with a given event and context
      *
      * @param {KeybindingAction} keybind         The registered Keybinding action to execute
      * @param {KeyboardEventContext} context     The gathered context of the event
      * @return {boolean}                         Returns true if the keybind was consumed
-     * @private
+     * @protected
      */
-    private static _executeKeybind;
+    protected static _executeKeybind(keybind: KeybindingAction, context: KeyboardEventContext): boolean;
     /**
      * Begin listening to keyboard events.
      * @internal
@@ -1362,9 +1365,9 @@ declare class KeyboardManager {
     }): void;
     /**
      * Reset tracking for which keys are in the down and released states
-     * @private
+     * @protected
      */
-    private _reset;
+    protected _reset(): void;
     /**
      * Emulate a key-up event for any currently down keys. When emulating, we go backwards such that combinations such as
      * "CONTROL + S" emulate the "S" first in order to capture modifiers.
@@ -1378,9 +1381,9 @@ declare class KeyboardManager {
      * Handle a key press into the down position
      * @param {KeyboardEvent} event   The originating keyboard event
      * @param {boolean} up            A flag for whether the key is down or up
-     * @private
+     * @protected
      */
-    private _handleKeyboardEvent;
+    protected _handleKeyboardEvent(event: KeyboardEvent, up: boolean): void;
     /**
      * Input events do not fire with isComposing = false at the end of a composition event in Chrome
      * See: https://github.com/w3c/uievents/issues/202
@@ -1414,9 +1417,9 @@ declare class MouseManager {
     /**
      * Master mouse-wheel event handler
      * @param {WheelEvent} event    The mouse wheel event
-     * @private
+     * @protected
      */
-    private _onWheel;
+    protected _onWheel(event: WheelEvent): any;
 }
 /**
  * Responsible for managing the New User Experience workflows.
@@ -1429,38 +1432,38 @@ declare class NewUserExperience {
     initialize(): void;
     /**
      * Show chat tips for first launch.
-     * @private
+     * @protected
      */
-    private _createInitialChatMessages;
+    protected _createInitialChatMessages(): void;
     /**
      * Create a default scene for the new world.
-     * @private
+     * @protected
      */
-    private _createDefaultScene;
+    protected _createDefaultScene(): Promise<void>;
     /**
      * Automatically show uncompleted Tours related to new worlds.
-     * @private
+     * @protected
      */
-    private _showNewWorldTour;
+    protected _showNewWorldTour(): Promise<void>;
     /**
      * Add event listeners to the chat card links.
      * @param {ChatMessage} msg  The ChatMessage being rendered.
      * @param {jQuery} html      The HTML content of the message.
-     * @private
+     * @protected
      */
-    private _activateListeners;
+    protected _activateListeners(msg: ChatMessage, html: JQueryStatic): void;
     /**
      * Perform some special action triggered by clicking on a link in a NUE chat card.
      * @param {TriggeredEvent} event  The click event.
-     * @private
+     * @protected
      */
-    private _onActionLink;
+    protected _onActionLink(event: TriggeredEvent): Application;
     /**
      * Switch to the appropriate tab when a user clicks on a link in the chat message.
      * @param {TriggeredEvent} event  The click event.
-     * @private
+     * @protected
      */
-    private _onTabLink;
+    protected _onTabLink(event: TriggeredEvent): void;
 }
 declare const Module_base: typeof import("../../common/packages/base-module.mjs").default;
 /**
@@ -1649,9 +1652,9 @@ declare class SocketInterface {
     /**
      * Handle an error returned from the database, displaying it on screen and in the console
      * @param {Error} err   The provided Error message
-     * @private
+     * @protected
      */
-    private static _handleError;
+    protected static _handleError(err: Error): Error;
 }
 /**
  * A collection of functions related to sorting objects within a parent container.
@@ -1688,8 +1691,18 @@ declare class SortingHelpers {
         sortKey?: string;
         sortBefore?: boolean;
     }): object[];
-    private static _sortBefore;
-    private static _sortAfter;
+    protected static _sortBefore(siblings: any, idx: any, sortKey: any): any[];
+    /**
+     * Given an ordered Array of siblings and a target position, return the [min,max] indices to sort before the target
+     * @protected
+     */
+    protected static _sortBefore(siblings: any, idx: any, sortKey: any): any[];
+    protected static _sortAfter(siblings: any, idx: any, sortKey: any): any[];
+    /**
+     * Given an ordered Array of siblings and a target position, return the [min,max] indices to sort after the target
+     * @protected
+     */
+    protected static _sortAfter(siblings: any, idx: any, sortKey: any): any[];
 }
 /**
  * A singleton class {@link game#time} which keeps the official Server and World time stamps.
@@ -2143,20 +2156,20 @@ declare class Tour {
      * Handle Tour Button clicks
      * @param {Event} event   A click event
      * @param {HTMLElement[]} buttons   The step buttons
-     * @private
+     * @protected
      */
-    private _onButtonClick;
+    protected _onButtonClick(event: Event, buttons: HTMLElement[]): void | Promise<any>;
     /**
      * Saves the current progress of the Tour to a world setting
-     * @private
+     * @protected
      */
-    private _saveProgress;
+    protected _saveProgress(): void;
     /**
      * Returns the User's current progress of this Tour
      * @returns {null|number}
-     * @private
+     * @protected
      */
-    private _loadProgress;
+    protected _loadProgress(): null | number;
     /**
      * Reloads the Tour's current step from the saved progress
      * @internal
@@ -2360,9 +2373,9 @@ declare class AsyncWorker extends Worker {
      * @param {WorkerTask} taskData   Data to dispatch to the Worker as part of the task.
      * @param {Array<*>} transfer     An array of transferable objects which are transferred to the worker thread.
      * @returns {Promise}             A Promise which wraps the task transaction.
-     * @private
+     * @protected
      */
-    private _dispatchTask;
+    protected _dispatchTask(taskData?: WorkerTask, transfer?: Array<any>): Promise<any>;
     #private;
 }
 /**
@@ -2462,9 +2475,9 @@ declare class Application {
     /**
      * Return the inheritance chain for this Application class up to (and including) it's base Application class.
      * @returns {Function[]}
-     * @private
+     * @protected
      */
-    private static _getInheritanceChain;
+    protected static _getInheritanceChain(): Function[];
     constructor(options?: {});
     /**
      * The options provided to this application upon initialization
@@ -2530,21 +2543,21 @@ declare class Application {
     /**
      * Create drag-and-drop workflow handlers for this Application
      * @returns {DragDrop[]}     An array of DragDrop handlers
-     * @private
+     * @protected
      */
-    private _createDragDropHandlers;
+    protected _createDragDropHandlers(): DragDrop[];
     /**
      * Create tabbed navigation handlers for this Application
      * @returns {Tabs[]}     An array of Tabs handlers
-     * @private
+     * @protected
      */
-    private _createTabHandlers;
+    protected _createTabHandlers(): Tabs[];
     /**
      * Create search filter handlers for this Application
      * @returns {SearchFilter[]}  An array of SearchFilter handlers
-     * @private
+     * @protected
      */
-    private _createSearchFilters;
+    protected _createSearchFilters(): SearchFilter[];
     /**
      * Return the CSS application ID which uniquely references this UI element
      * @type {string}
@@ -2652,37 +2665,37 @@ declare class Application {
      * Render the inner application content
      * @param {object} data         The data used to render the inner template
      * @returns {Promise<jQuery>}   A promise resolving to the constructed jQuery object
-     * @private
+     * @protected
      */
-    private _renderInner;
+    protected _renderInner(data: object): Promise<JQueryStatic>;
     /**
      * Customize how inner HTML is replaced when the application is refreshed
      * @param {jQuery} element      The original HTML processed as a jQuery object
      * @param {jQuery} html         New updated HTML as a jQuery object
-     * @private
+     * @protected
      */
-    private _replaceHTML;
+    protected _replaceHTML(element: JQueryStatic, html: JQueryStatic): void;
     /**
      * Customize how a new HTML Application is added and first appears in the DOM
      * @param {jQuery} html       The HTML element which is ready to be added to the DOM
-     * @private
+     * @protected
      */
-    private _injectHTML;
+    protected _injectHTML(html: JQueryStatic): void;
     /**
      * Specify the set of config buttons which should appear in the Application header.
      * Buttons should be returned as an Array of objects.
      * The header buttons which are added to the application can be modified by the getApplicationHeaderButtons hook.
      * @fires getApplicationHeaderButtons
      * @returns {ApplicationHeaderButton[]}
-     * @private
+     * @protected
      */
-    private _getHeaderButtons;
+    protected _getHeaderButtons(): ApplicationHeaderButton[];
     /**
      * Create a {@link ContextMenu} for this Application.
      * @param {jQuery} html  The Application's HTML.
-     * @private
+     * @protected
      */
-    private _contextMenu;
+    protected _contextMenu(html: JQueryStatic): void;
     /**
      * Activate required listeners which must be enabled on every Application.
      * These are internal interactions which should not be overridden by downstream subclasses.
@@ -2807,15 +2820,15 @@ declare class Application {
     /**
      * Handle application minimization behavior - collapsing content and reducing the size of the header
      * @param {Event} ev
-     * @private
+     * @protected
      */
-    private _onToggleMinimize;
+    protected _onToggleMinimize(ev: Event): void;
     /**
      * Additional actions to take when the application window is resized
      * @param {Event} event
-     * @private
+     * @protected
      */
-    private _onResize;
+    protected _onResize(event: Event): void;
     /**
      * Wait for any images present in the Application to load.
      * @returns {Promise<void>}  A Promise that resolves when all images have loaded.
@@ -3094,9 +3107,9 @@ declare class DocumentSheet extends FormApplication {
     /**
      * Handle requests to configure the default sheet used by this Document
      * @param event
-     * @private
+     * @protected
      */
-    private _onConfigureSheet;
+    protected _onConfigureSheet(event: any): void;
     /**
      * Handle changing a Document's image.
      * @param {MouseEvent} event  The click event.
@@ -3148,31 +3161,31 @@ declare class Localization {
     /**
      * Discover the available supported languages from the set of packages which are provided
      * @returns {object}         The resulting configuration of supported languages
-     * @private
+     * @protected
      */
-    private _discoverSupportedLanguages;
+    protected _discoverSupportedLanguages(): object;
     /**
      * Prepare the dictionary of translation strings for the requested language
      * @param {string} lang         The language for which to load translations
      * @returns {Promise<object>}   The retrieved translations object
-     * @private
+     * @protected
      */
-    private _getTranslations;
+    protected _getTranslations(lang: string): Promise<object>;
     /**
      * Reduce the languages array provided by a package to an array of file paths of translations to load
      * @param {object} pkg          The package data
      * @param {string} lang         The target language to filter on
      * @returns {string[]}           An array of translation file paths
-     * @private
+     * @protected
      */
-    private _filterLanguagePaths;
+    protected _filterLanguagePaths(pkg: object, lang: string): string[];
     /**
      * Load a single translation file and return its contents as processed JSON
      * @param {string} src        The translation file path to load
      * @returns {Promise<object>} The loaded translation dictionary
-     * @private
+     * @protected
      */
-    private _loadTranslationFile;
+    protected _loadTranslationFile(src: string): Promise<object>;
     /**
      * Return whether a certain string has a known translation defined.
      * @param {string} stringId     The string key being translated
@@ -3629,9 +3642,9 @@ declare class Game {
     /**
      * Support mousewheel control for range type input elements
      * @param {WheelEvent} event    A Mouse Wheel scroll event
-     * @private
+     * @protected
      */
-    private static _handleMouseWheelInputChange;
+    protected static _handleMouseWheelInputChange(event: WheelEvent): void;
     /**
      * @param {string} view         The named view which is active for this game instance.
      * @param {object} data         An object of all the World data vended by the server when the client first connects
@@ -3813,74 +3826,74 @@ declare class Game {
     /**
      * On left mouse clicks, check if the element is contained in a valid hyperlink and open it in a new tab.
      * @param {MouseEvent} event
-     * @private
+     * @protected
      */
-    private _onClickHyperlink;
+    protected _onClickHyperlink(event: MouseEvent): void;
     /**
      * Prevent starting a drag and drop workflow on elements within the document unless the element has the draggable
      * attribute explicitly defined or overrides the dragstart handler.
      * @param {DragEvent} event   The initiating drag start event
-     * @private
+     * @protected
      */
-    private _onPreventDragstart;
+    protected _onPreventDragstart(event: DragEvent): boolean;
     /**
      * Disallow dragging of external content onto anything but a file input element
      * @param {DragEvent} event   The requested drag event
-     * @private
+     * @protected
      */
-    private _onPreventDragover;
+    protected _onPreventDragover(event: DragEvent): void;
     /**
      * Disallow dropping of external content onto anything but a file input element
      * @param {DragEvent} event   The requested drag event
-     * @private
+     * @protected
      */
-    private _onPreventDrop;
+    protected _onPreventDrop(event: DragEvent): void;
     /**
      * On a left-click event, remove any currently displayed inline roll tooltip
      * @param {PointerEvent} event    The mousedown pointer event
-     * @private
+     * @protected
      */
-    private _onPointerDown;
+    protected _onPointerDown(event: PointerEvent): void;
     /**
      * Fallback handling for mouse-up events which aren't handled further upstream.
      * @param {PointerEvent} event    The mouseup pointer event
-     * @private
+     * @protected
      */
-    private _onPointerUp;
+    protected _onPointerUp(event: PointerEvent): void;
     /**
      * Handle resizing of the game window by adjusting the canvas and repositioning active interface applications.
      * @param {Event} event     The window resize event which has occurred
-     * @private
+     * @protected
      */
-    private _onWindowResize;
+    protected _onWindowResize(event: Event): any;
     /**
      * Handle window unload operations to clean up any data which may be pending a final save
      * @param {Event} event     The window unload event which is about to occur
-     * @private
+     * @protected
      */
-    private _onWindowBeforeUnload;
+    protected _onWindowBeforeUnload(event: Event): any;
     /**
      * Handle cases where the browser window loses focus to reset detection of currently pressed keys
      * @param {Event} event   The originating window.blur event
-     * @private
+     * @protected
      */
-    private _onWindowBlur;
+    protected _onWindowBlur(event: Event): void;
     _onWindowPopState(event: any): void;
     /**
      * Initialize elements required for the current view
-     * @private
+     * @protected
      */
-    private _initializeView;
+    protected _initializeView(): Promise<void>;
     /**
      * Initialization steps for the primary Game view
-     * @private
+     * @protected
      */
-    private _initializeGameView;
+    protected _initializeGameView(): Promise<void>;
     /**
      * Initialization steps for the Stream helper view
-     * @private
+     * @protected
      */
-    private _initializeStreamView;
+    protected _initializeStreamView(): Promise<void>;
     #private;
 }
 /**
@@ -4003,23 +4016,23 @@ declare class Roll {
      * Split a formula by identifying its outer-most parenthetical and math terms
      * @param {string} _formula      The raw formula to split
      * @returns {string[]}          An array of terms, split on parenthetical terms
-     * @private
+     * @protected
      */
-    private static _splitParentheses;
+    protected static _splitParentheses(_formula: string): string[];
     /**
      * Handle closing of a parenthetical term to create a MathTerm expression with a function and arguments
      * @param {string} expression   The expression to split
      * @returns {MathTerm[]}        An array of evaluated MathTerm instances
-     * @private
+     * @protected
      */
-    private static _splitMathArgs;
+    protected static _splitMathArgs(expression: string): MathTerm[];
     /**
      * Split a formula by identifying its outermost dice pool terms.
      * @param {string} _formula      The raw formula to split
      * @returns {string[]}          An array of terms, split on parenthetical terms
-     * @private
+     * @protected
      */
-    private static _splitPools;
+    protected static _splitPools(_formula: string): string[];
     /**
      * Split a formula by identifying its outermost groups using a certain group symbol like parentheses or brackets.
      * @param {string} _formula     The raw formula to split
@@ -4030,31 +4043,40 @@ declare class Roll {
      * @param {string} [options.closeSymbol]  The string symbol that closes a group
      * @param {Function} [options.onClose]    A callback function invoked when a group is closed
      * @returns {string[]}          An array of terms, split on dice pool terms
-     * @private
+     * @protected
      */
-    private static _splitGroup;
+    protected static _splitGroup(_formula: string, { openRegexp, closeRegexp, openSymbol, closeSymbol, onClose }?: {
+        openRegexp?: RegExp;
+        closeRegexp?: RegExp;
+        openSymbol?: string;
+        closeSymbol?: string;
+        onClose?: Function;
+    }): string[];
     /**
      * Split a formula by identifying arithmetic terms
      * @param {string} _formula                 The raw formula to split
      * @returns {Array<(string|OperatorTerm)>}  An array of terms, split on arithmetic operators
-     * @private
+     * @protected
      */
-    private static _splitOperators;
+    protected static _splitOperators(_formula: string): Array<(string | OperatorTerm)>;
     /**
      * Temporarily remove flavor text from a string formula allowing it to be accurately parsed.
      * @param {string} formula                        The formula to extract
      * @returns {{formula: string, flavors: object}}  The cleaned formula and extracted flavor mapping
-     * @private
+     * @protected
      */
-    private static _extractFlavors;
+    protected static _extractFlavors(formula: string): {
+        formula: string;
+        flavors: object;
+    };
     /**
      * Restore flavor text to a string term
      * @param {string} term             The string term possibly containing flavor symbols
      * @param {Object<string>} flavors  The extracted flavors object
      * @returns {string}                The restored term containing flavor text
-     * @private
+     * @protected
      */
-    private static _restoreFlavor;
+    protected static _restoreFlavor(term: string, flavors: any): string;
     /**
      * Classify a remaining string term into a recognized RollTerm class
      * @param {string} term         A remaining un-classified string
@@ -4143,9 +4165,9 @@ declare class Roll {
     /**
      * Cache the numeric total generated through evaluation of the Roll.
      * @type {number}
-     * @private
+     * @protected
      */
-    private _total;
+    protected _total: number;
     /**
      * Prepare the data structure used for the Roll.
      * This is factored out to allow for custom Roll classes to do special data preparation using provided input.
@@ -4220,9 +4242,12 @@ declare class Roll {
      * @param {boolean} [options.minimize]    Force the result to be minimized
      * @param {boolean} [options.maximize]    Force the result to be maximized
      * @returns {Promise<Roll>}
-     * @private
+     * @protected
      */
-    private _evaluate;
+    protected _evaluate({ minimize, maximize }?: {
+        minimize?: boolean;
+        maximize?: boolean;
+    }): Promise<Roll>;
     /**
      * Evaluate the roll synchronously.
      * A temporary helper method used to migrate behavior from 0.7.x (sync by default) to 0.9.x (async by default).
@@ -4230,15 +4255,18 @@ declare class Roll {
      * @param {boolean} [options.minimize]    Force the result to be minimized
      * @param {boolean} [options.maximize]    Force the result to be maximized
      * @returns {Roll}
-     * @private
+     * @protected
      */
-    private _evaluateSync;
+    protected _evaluateSync({ minimize, maximize }?: {
+        minimize?: boolean;
+        maximize?: boolean;
+    }): Roll;
     /**
      * Safely evaluate the final total result for the Roll using its component terms.
      * @returns {number}    The evaluated total
-     * @private
+     * @protected
      */
-    private _evaluateTotal;
+    protected _evaluateTotal(): number;
     /**
      * Alias for evaluate.
      * @param {object} options    Options passed to Roll#evaluate
@@ -4413,15 +4441,18 @@ declare class RollTerm {
      * Evaluate the term.
      * @param {object} [options={}]           Options which modify how the RollTerm is evaluated, see RollTerm#evaluate
      * @returns {Promise<RollTerm>}
-     * @private
+     * @protected
      */
-    private _evaluate;
+    protected _evaluate({ minimize, maximize }?: object): Promise<RollTerm>;
     /**
      * This method is temporarily factored out in order to provide different behaviors synchronous evaluation.
      * This will be removed in 0.10.x
-     * @private
+     * @protected
      */
-    private _evaluateSync;
+    protected _evaluateSync({ minimize, maximize }?: {
+        minimize?: boolean;
+        maximize?: boolean;
+    }): this;
     /**
      * Serialize the RollTerm to a JSON string which allows it to be saved in the database or embedded in text.
      * This method should return an object suitable for passing to the JSON.stringify function.
@@ -4738,16 +4769,16 @@ declare class DiceTerm extends RollTerm {
     /**
      * Sequentially evaluate each dice roll modifier by passing the term to its evaluation function
      * Augment or modify the results array.
-     * @private
+     * @protected
      */
-    private _evaluateModifiers;
+    protected _evaluateModifiers(): void;
     /**
      * Evaluate a single modifier command, recording it in the array of evaluated modifiers
      * @param {string} command        The parsed modifier command
      * @param {string} modifier       The full modifier request
-     * @private
+     * @protected
      */
-    private _evaluateModifier;
+    protected _evaluateModifier(command: string, modifier: string): void;
 }
 /**
  * A type of RollTerm used to apply a function from the Math library.
@@ -5464,9 +5495,9 @@ declare class DocumentCollection {
     apps: Application[];
     /**
      * Initialize the DocumentCollection by constructing any initially provided Document instances
-     * @private
+     * @protected
      */
-    private _initialize;
+    protected _initialize(): void;
     /**
      * A reference to the Document class definition which is contained within this DocumentCollection.
      * @type {Function}
@@ -5614,9 +5645,14 @@ declare class DocumentCollection {
      * @param {object[]|string[]} data  An array of creation or update objects, or an array of document IDs, depending on
      *                                  the operation.
      * @returns {{action: string, documentType: string, documents: Document[], data: object[]|string[]}}
-     * @private
+     * @protected
      */
-    private _getRenderContext;
+    protected _getRenderContext(action: string, documents: Document[], data: object[] | string[]): {
+        action: string;
+        documentType: string;
+        documents: Document[];
+        data: object[] | string[];
+    };
 }
 /**
  * A collection of world-level Document objects with a singleton instance per primary Document type.
@@ -5851,9 +5887,9 @@ declare class CompendiumCollection extends DocumentCollection {
     /**
      * A debounced function which will clear the contents of the Compendium pack if it is not accessed frequently.
      * @type {Function}
-     * @private
+     * @protected
      */
-    private _flush;
+    protected _flush: Function;
     /**
      * The canonical Compendium name - comprised of the originating package and the pack name
      * @type {string}
@@ -6068,9 +6104,9 @@ declare class CompendiumCollection extends DocumentCollection {
     _onDeleteFolder(parentFolder: any, deleteFolderId: any, deleteContents: any): any[];
     /**
      * Follow-up actions taken when Documents within this Compendium pack are modified
-     * @private
+     * @protected
      */
-    private _onModifyContents;
+    protected _onModifyContents(documents: any, options: any, userId: any): void;
     /**
      * @deprecated since v11
      * @ignore
@@ -6139,9 +6175,9 @@ declare class Folders extends WorldCollection {
     override render(force: any, context: any): any;
     /**
      * Refresh the display of any active JournalSheet instances where the folder list will change.
-     * @private
+     * @protected
      */
-    private _refreshJournalEntrySheets;
+    protected _refreshJournalEntrySheets(): void;
 }
 /**
  * The singleton collection of Item documents which exist within the active World.
@@ -6260,14 +6296,14 @@ declare class Messages extends WorldCollection {
     /**
      * If requested, dispatch a Chat Bubble UI for the newly created message
      * @param {ChatMessage} message     The ChatMessage document to say
-     * @private
+     * @protected
      */
-    private sayBubble;
+    protected sayBubble(message: ChatMessage): void;
     /**
      * Handle export of the chat log to a text file
-     * @private
+     * @protected
      */
-    private export;
+    protected export(): void;
     /**
      * Allow for bulk deletion of all chat messages, confirm first with a yes/no dialog.
      * @see {@link Dialog.confirm}
@@ -6314,9 +6350,9 @@ declare class Scenes extends WorldCollection {
     /**
      * Handle requests pulling the current User to a specific Scene
      * @param {string} sceneId
-     * @private
+     * @protected
      */
-    private static _pullToScene;
+    protected static _pullToScene(sceneId: string): void;
     /**
      * Return a reference to the Scene which is currently active
      * @type {Scene}
@@ -6394,9 +6430,80 @@ declare class Users extends WorldCollection {
      * Handle receipt of activity data from another User connected to the Game session
      * @param {string} userId               The User id who generated the activity data
      * @param {ActivityData} activityData   The object of activity data
-     * @private
+     * @protected
      */
-    private static _handleUserActivity;
+    protected static _handleUserActivity(userId: string, activityData?: {
+        /**
+         * The ID of the scene that the user is viewing.
+         */
+        sceneId?: string;
+        /**
+         * The position of the user's cursor.
+         */
+        cursor?: {
+            x: number;
+            y: number;
+        };
+        /**
+         * The state of the user's ruler, if they are currently using one.
+         */
+        ruler?: {
+            /**
+             * The ruler measurement state.
+             */
+            _state: number;
+            /**
+             * A unique name for the ruler containing the owning user's ID.
+             */
+            name: string;
+            /**
+             * The current point the ruler has been extended to.
+             */
+            destination: PIXI.Point;
+            /**
+             * The class name of this ruler instance.
+             */
+            class: string;
+            /**
+             * Additional waypoints along the ruler's length, including the starting point.
+             */
+            waypoints: PIXI.Point[];
+        };
+        /**
+         * The IDs of the tokens the user has targeted in the currently viewed
+         *               scene.
+         */
+        targets?: string[];
+        /**
+         * Whether the user has an open WS connection to the server or not.
+         */
+        active?: boolean;
+        /**
+         * Is the user emitting a ping at the cursor coordinates?
+         */
+        ping?: {
+            /**
+             * Pulls all connected clients' views to the pinged co-ordinates.
+             */
+            pull?: boolean;
+            /**
+             * The ping style, see CONFIG.Canvas.pings.
+             */
+            style: string;
+            /**
+             * The ID of the scene that was pinged.
+             */
+            scene: string;
+            /**
+             * The zoom level at which the ping was made.
+             */
+            zoom: number;
+        };
+        /**
+         * The state of the user's AV settings.
+         */
+        av?: AVSettingsData;
+    }): void;
     constructor(...args: any[]);
     /**
      * The User document of the currently connected user
@@ -6521,17 +6628,17 @@ declare class ActiveEffect {
      * @param {number} turn     The turn number
      * @param {number} [nTurns] The maximum number of turns in the encounter
      * @returns {number}        The decimal representation
-     * @private
+     * @protected
      */
-    private _getCombatTime;
+    protected _getCombatTime(round: number, turn: number, nTurns?: number): number;
     /**
      * Format a number of rounds and turns into a human-readable duration label
      * @param {number} rounds   The number of rounds
      * @param {number} turns    The number of turns
      * @returns {string}        The formatted label
-     * @private
+     * @protected
      */
-    private _getDurationLabel;
+    protected _getDurationLabel(rounds: number, turns: number): string;
     /**
      * Describe whether the ActiveEffect has a temporary duration based on combat turns or rounds.
      * @type {boolean}
@@ -6558,24 +6665,24 @@ declare class ActiveEffect {
      * @param {string} raw      The raw string value
      * @param {string} type     The target data type that the raw value should be cast to match
      * @returns {*}             The parsed delta cast to the target data type
-     * @private
+     * @protected
      */
-    private _castDelta;
+    protected _castDelta(raw: string, type: string): any;
     /**
      * Cast a raw EffectChangeData change string to an Array of an inner type.
      * @param {string} raw      The raw string value
      * @param {string} type     The target data type of inner array elements
      * @returns {Array<*>}      The parsed delta cast as a typed array
-     * @private
+     * @protected
      */
-    private _castArray;
+    protected _castArray(raw: string, type: string): Array<any>;
     /**
      * Parse serialized JSON, or retain the raw string.
      * @param {string} raw      A raw serialized string
      * @returns {*}             The parsed value, or the original value if parsing failed
-     * @private
+     * @protected
      */
-    private _parseOrString;
+    protected _parseOrString(raw: string): any;
     /**
      * Apply an ActiveEffect that uses an ADD application mode.
      * The way that effects are added depends on the data type of the current value.
@@ -6590,9 +6697,9 @@ declare class ActiveEffect {
      * @param {*} current                     The current value being modified
      * @param {*} delta                       The parsed value of the change object
      * @param {object} changes                An object which accumulates changes to be applied
-     * @private
+     * @protected
      */
-    private _applyAdd;
+    protected _applyAdd(actor: Actor, change: EffectChangeData, current: any, delta: any, changes: object): void;
     /**
      * Apply an ActiveEffect that uses a MULTIPLY application mode.
      * Changes which MULTIPLY must be numeric to allow for multiplication.
@@ -6601,9 +6708,9 @@ declare class ActiveEffect {
      * @param {*} current                     The current value being modified
      * @param {*} delta                       The parsed value of the change object
      * @param {object} changes                An object which accumulates changes to be applied
-     * @private
+     * @protected
      */
-    private _applyMultiply;
+    protected _applyMultiply(actor: Actor, change: EffectChangeData, current: any, delta: any, changes: object): void;
     /**
      * Apply an ActiveEffect that uses an OVERRIDE application mode.
      * Numeric data is overridden by numbers, while other data types are overridden by any value
@@ -6612,9 +6719,9 @@ declare class ActiveEffect {
      * @param {*} current                     The current value being modified
      * @param {*} delta                       The parsed value of the change object
      * @param {object} changes                An object which accumulates changes to be applied
-     * @private
+     * @protected
      */
-    private _applyOverride;
+    protected _applyOverride(actor: Actor, change: EffectChangeData, current: any, delta: any, changes: object): any;
     /**
      * Apply an ActiveEffect that uses an UPGRADE, or DOWNGRADE application mode.
      * Changes which UPGRADE or DOWNGRADE must be numeric to allow for comparison.
@@ -6623,9 +6730,9 @@ declare class ActiveEffect {
      * @param {*} current                     The current value being modified
      * @param {*} delta                       The parsed value of the change object
      * @param {object} changes                An object which accumulates changes to be applied
-     * @private
+     * @protected
      */
-    private _applyUpgrade;
+    protected _applyUpgrade(actor: Actor, change: EffectChangeData, current: any, delta: any, changes: object): void;
     /**
      * Apply an ActiveEffect that uses a CUSTOM application mode.
      * @param {Actor} actor                   The Actor to whom this effect should be applied
@@ -6633,9 +6740,9 @@ declare class ActiveEffect {
      * @param {*} current                     The current value being modified
      * @param {*} delta                       The parsed value of the change object
      * @param {object} changes                An object which accumulates changes to be applied
-     * @private
+     * @protected
      */
-    private _applyCustom;
+    protected _applyCustom(actor: Actor, change: EffectChangeData, current: any, delta: any, changes: object): void;
     /** @inheritdoc */
     getFlag(scope: any, key: any): any;
     /** @inheritdoc */
@@ -6753,9 +6860,11 @@ declare class Actor extends Actor_base {
      * @param {object} [options]
      * @param {string} [options.pack]  The name of the compendium the actor is in.
      * @returns {Promise<string[]>}    The list of filenames to token images that match the wildcard search.
-     * @private
+     * @protected
      */
-    private static _requestTokenImages;
+    protected static _requestTokenImages(actorId: string, options?: {
+        pack?: string;
+    }): Promise<string[]>;
     /** @inheritdoc */
     _configure(options?: {}): void;
     /**
@@ -6772,9 +6881,9 @@ declare class Actor extends Actor_base {
      * A cached array of image paths which can be used for this Actor's token.
      * Null if the list has not yet been populated.
      * @type {string[]|null}
-     * @private
+     * @protected
      */
-    private _tokenImages;
+    protected _tokenImages: string[] | null;
     /**
      * Cache the last drawn wildcard token to avoid repeat draws
      * @type {string|null}
@@ -7251,18 +7360,24 @@ declare class Cards {
      * @param {object} [options.updateData={}]           Modifications to make to each Card as part of the reset operation
      * @param {boolean} [options.chatNotification=true]  Create a ChatMessage which notifies that this action has occurred
      * @returns {Promise<Cards>}                 The Cards document after the reset operation has completed.
-     * @private
+     * @protected
      */
-    private _resetDeck;
+    protected _resetDeck({ updateData, chatNotification }?: {
+        updateData?: object;
+        chatNotification?: boolean;
+    }): Promise<Cards>;
     /**
      * Return all cards in this stack to their original decks.
      * @param {object} [options={}]              Options which modify the return operation.
      * @param {object} [options.updateData={}]          Modifications to make to each Card as part of the return operation
      * @param {boolean} [options.chatNotification=true] Create a ChatMessage which notifies that this action has occurred
      * @returns {Promise<Cards>}                 The Cards document after the return operation has completed.
-     * @private
+     * @protected
      */
-    private _resetStack;
+    protected _resetStack({ updateData, chatNotification }?: {
+        updateData?: object;
+        chatNotification?: boolean;
+    }): Promise<Cards>;
     /**
      * A sorting function that is used to determine the standard order of Card documents within an un-shuffled stack.
      * @param {Card} a     The card being sorted
@@ -7294,9 +7409,9 @@ declare class Cards {
      * @param {string} action       The localization key which formats the chat message notification
      * @param {object} context      Data passed to the Localization#format method for the localization key
      * @returns {ChatMessage}       A created ChatMessage document
-     * @private
+     * @protected
      */
-    private _postChatNotification;
+    protected _postChatNotification(source: Cards, action: string, context: object): ChatMessage;
     /** @override */
     override _onUpdate(data: any, options: any, userId: any): void;
     _sheet: any;
@@ -7378,9 +7493,12 @@ declare class ChatMessage {
      * @param {TokenDocument} options.token        The TokenDocument of the speaker
      * @param {string} [options.alias]             The name of the speaker to display
      * @returns {object}                  The identified speaker data
-     * @private
+     * @protected
      */
-    private static _getSpeakerFromToken;
+    protected static _getSpeakerFromToken({ token, alias }?: {
+        token: TokenDocument;
+        alias?: string;
+    }): object;
     /**
      * A helper to prepare the speaker object based on a target Actor
      * @param {object} [options={}]       Options which affect speaker identification
@@ -7388,9 +7506,13 @@ declare class ChatMessage {
      * @param {Actor} [options.actor]             The Actor that is speaking
      * @param {string} [options.alias]            The name of the speaker to display
      * @returns {Object}                  The identified speaker data
-     * @private
+     * @protected
      */
-    private static _getSpeakerFromActor;
+    protected static _getSpeakerFromActor({ scene, actor, alias }?: {
+        scene?: Scene;
+        actor?: Actor;
+        alias?: string;
+    }): any;
     /**
      * A helper to prepare the speaker object based on a target User
      * @param {object} [options={}]       Options which affect speaker identification
@@ -7398,9 +7520,13 @@ declare class ChatMessage {
      * @param {User} [options.user]               The User who is speaking
      * @param {string} [options.alias]            The name of the speaker to display
      * @returns {Object}                  The identified speaker data
-     * @private
+     * @protected
      */
-    private static _getSpeakerFromUser;
+    protected static _getSpeakerFromUser({ scene, user, alias }?: {
+        scene?: Scene;
+        user?: User;
+        alias?: string;
+    }): any;
     /**
      * Obtain an Actor instance which represents the speaker of this message (if any)
      * @param {Object} speaker    The speaker data object
@@ -7417,9 +7543,9 @@ declare class ChatMessage {
     /**
      * Is the display of dice rolls in this message collapsed (false) or expanded (true)
      * @type {boolean}
-     * @private
+     * @protected
      */
-    private _rollExpanded;
+    protected _rollExpanded: boolean;
     /**
      * Is this ChatMessage currently displayed in the sidebar ChatLog?
      * @type {boolean}
@@ -7476,16 +7602,16 @@ declare class ChatMessage {
      * Render the inner HTML content for ROLL type messages.
      * @param {object} messageData      The chat message data used to render the message HTML
      * @returns {Promise}
-     * @private
+     * @protected
      */
-    private _renderRollContent;
+    protected _renderRollContent(messageData: object): Promise<any>;
     /**
      * Render HTML for the array of Roll objects included in this message.
      * @param {boolean} isPrivate   Is the chat message private?
      * @returns {Promise<string>}   The rendered HTML string
-     * @private
+     * @protected
      */
-    private _renderRollHTML;
+    protected _renderRollHTML(isPrivate: boolean): Promise<string>;
     /** @override */
     override _preCreate(data: any, options: any, user: any): Promise<void>;
     /** @override */
@@ -8359,9 +8485,9 @@ declare class PlaylistSound {
     /**
      * Create a Sound used to play this PlaylistSound document
      * @returns {Sound|null}
-     * @private
+     * @protected
      */
-    private _createSound;
+    protected _createSound(): Sound | null;
     /**
      * The effective volume at which this playlist sound is played, incorporating the global playlist volume setting.
      * @type {number}
@@ -8391,31 +8517,31 @@ declare class PlaylistSound {
     playing: boolean;
     /**
      * Special handling that occurs when a PlaylistSound reaches the natural conclusion of its playback.
-     * @private
+     * @protected
      */
-    private _onEnd;
+    protected _onEnd(): Promise<any>;
     /**
      * Special handling that occurs when playback of a PlaylistSound is started.
-     * @private
+     * @protected
      */
-    private _onStart;
+    protected _onStart(): Promise<any>;
     /**
      * Special handling that occurs when a PlaylistSound is manually stopped before its natural conclusion.
-     * @private
+     * @protected
      */
-    private _onStop;
+    protected _onStop(): Promise<void>;
     /**
      * Handle fading in the volume for this sound when it begins to play (or loop)
      * @param {Sound} sound     The sound fading-in
-     * @private
+     * @protected
      */
-    private _fadeIn;
+    protected _fadeIn(sound: Sound): void;
     /**
      * Handle fading out the volume for this sound when it begins to play (or loop)
      * @param {Sound} sound     The sound fading-out
-     * @private
+     * @protected
      */
-    private _fadeOut;
+    protected _fadeOut(sound: Sound): void;
 }
 /**
  * The client-side Playlist document which extends the common BasePlaylist model.
@@ -8491,19 +8617,19 @@ declare class Playlist {
     cycleMode(): Promise<Playlist>;
     /**
      * Get the next sound in the cached playback order. For internal use.
-     * @private
+     * @protected
      */
-    private _getNextSound;
+    protected _getNextSound(soundId: any): any;
     /**
      * Get the previous sound in the cached playback order. For internal use.
-     * @private
+     * @protected
      */
-    private _getPreviousSound;
+    protected _getPreviousSound(soundId: any): any;
     /**
      * Define the sorting order for the Sounds within this Playlist. For internal use.
-     * @private
+     * @protected
      */
-    private _sortSounds;
+    protected _sortSounds(a: any, b: any): any;
     /** @inheritdoc */
     toAnchor({ classes, ...options }?: {
         classes?: any[];
@@ -8525,22 +8651,22 @@ declare class Playlist {
     /**
      * Handle callback logic when an individual sound within the Playlist concludes playback naturally
      * @param {PlaylistSound} sound
-     * @private
+     * @protected
      */
-    private _onSoundEnd;
+    protected _onSoundEnd(sound: PlaylistSound): Promise<any>;
     /**
      * Handle callback logic when playback for an individual sound within the Playlist is started.
      * Schedule auto-preload of next track
      * @param {PlaylistSound} sound
-     * @private
+     * @protected
      */
-    private _onSoundStart;
+    protected _onSoundStart(sound: PlaylistSound): Promise<void>;
     /**
      * Update the playing status of this Playlist in content links.
      * @param {object} changed  The data changes.
-     * @private
+     * @protected
      */
-    private _updateContentLinkPlaying;
+    protected _updateContentLinkPlaying(changed: object): void;
     /** @inheritdoc */
     toCompendium(pack: any, options?: {}): any;
 }
@@ -8696,9 +8822,9 @@ declare class Scene {
     override _preUpdate(data: any, options: any, user: any): Promise<any>;
     /**
      * Handle repositioning of placed objects when the Scene dimensions change
-     * @private
+     * @protected
      */
-    private _repositionObjects;
+    protected _repositionObjects(sceneUpdateData: any): any;
     /** @override */
     override _onUpdate(data: any, options: any, userId: any): any;
     thumb: any;
@@ -9418,22 +9544,22 @@ declare class Canvas {
     /**
      * Configure the usage of WebGL for the PIXI.Application that will be created.
      * @throws an Error if WebGL is not supported by this browser environment.
-     * @private
+     * @protected
      */
-    private static "__#128@#configureWebGL";
+    protected static "__#128@#configureWebGL"(): void;
     /**
      * Create the Canvas element which will be the render target for the PIXI.Application instance.
      * Replace the template element which serves as a placeholder in the initially served HTML response.
      * @returns {HTMLCanvasElement}
-     * @private
+     * @protected
      */
-    private static "__#128@#createHTMLCanvas";
+    protected static "__#128@#createHTMLCanvas"(): HTMLCanvasElement;
     /**
      * Configure the settings used to initialize the PIXI.Application instance.
      * @returns {object}    Options passed to the PIXI.Application constructor.
-     * @private
+     * @protected
      */
-    private static "__#128@#configureCanvasSettings";
+    protected static "__#128@#configureCanvasSettings"(): object;
     /**
      * Remove all children of the display object and call one cleaning method:
      * clean first, then tearDown, and destroy if no cleaning method is found.
@@ -9475,9 +9601,9 @@ declare class Canvas {
     /**
      * Track the last automatic pan time to throttle
      * @type {number}
-     * @private
+     * @protected
      */
-    private _panTime;
+    protected _panTime: number;
     /**
      * A set of blur filter instances which are modified by the zoom level and the "soft shadows" setting
      * @type {Set<PIXI.filters>}
@@ -9688,9 +9814,9 @@ declare class Canvas {
     /**
      * The singleton Fog of War manager instance.
      * @type {FogManager}
-     * @private
+     * @protected
      */
-    private _fog;
+    protected _fog: FogManager;
     /**
      * The singleton PIXI.Application instance rendered on the Canvas.
      * @type {PIXI.Application}
@@ -9801,9 +9927,9 @@ declare class Canvas {
      * TODO: Add a quality parameter
      * Compute the blur parameters according to grid size and performance mode.
      * @param options            Blur options.
-     * @private
+     * @protected
      */
-    private _initializeBlur;
+    protected _initializeBlur(options?: {}): void;
     blur: {
         enabled: any;
         blurClass: any;
@@ -10038,9 +10164,9 @@ declare class Canvas {
      * Update the blur strength depending on the scale of the canvas stage.
      * This number is zero if "soft shadows" are disabled
      * @param {number} [strength]      Optional blur strength to apply
-     * @private
+     * @protected
      */
-    private updateBlur;
+    protected updateBlur(strength?: number): void;
     /**
      * Convert canvas co-ordinates to the client's viewport.
      * @param {Point} origin  The canvas coordinates.
@@ -10063,16 +10189,16 @@ declare class Canvas {
      * Handle mouse movement on the game canvas.
      * This handler fires on both a throttle and a debounce, ensuring that the final update is always recorded.
      * @param {PIXI.FederatedEvent} event
-     * @private
+     * @protected
      */
-    private _onMouseMove;
+    protected _onMouseMove(event: PIXI.FederatedEvent): void;
     /**
      * Handle left mouse-click events occurring on the Canvas.
      * @see {MouseInteractionManager##handleClickLeft}
      * @param {PIXI.FederatedEvent} event
-     * @private
+     * @protected
      */
-    private _onClickLeft;
+    protected _onClickLeft(event: PIXI.FederatedEvent): void;
     /**
      * Handle double left-click events occurring on the Canvas.
      * @see {MouseInteractionManager##handleClickLeft2}
@@ -10084,9 +10210,9 @@ declare class Canvas {
      * @see {MouseInteractionManager##handleLongPress}
      * @param {PIXI.FederatedEvent}   event   The triggering canvas interaction event.
      * @param {PIXI.Point}            origin  The local canvas coordinates of the mousepress.
-     * @private
+     * @protected
      */
-    private _onLongPress;
+    protected _onLongPress(event: PIXI.FederatedEvent, origin: PIXI.Point): void;
     /**
      * Handle the beginning of a left-mouse drag workflow on the Canvas stage or its active Layer.
      * @see {MouseInteractionManager##handleDragStart}
@@ -10119,36 +10245,36 @@ declare class Canvas {
      * Handle right mouse-click events occurring on the Canvas.
      * @see {MouseInteractionManager##handleClickRight}
      * @param {PIXI.FederatedEvent} event
-     * @private
+     * @protected
      */
-    private _onClickRight;
+    protected _onClickRight(event: PIXI.FederatedEvent): any;
     /**
      * Handle double right-click events occurring on the Canvas.
      * @see {MouseInteractionManager##handleClickRight}
      * @param {PIXI.FederatedEvent} event
-     * @private
+     * @protected
      */
-    private _onClickRight2;
+    protected _onClickRight2(event: PIXI.FederatedEvent): void;
     /**
      * Handle right-mouse drag events occurring on the Canvas.
      * @see {MouseInteractionManager##handleDragMove}
      * @param {PIXI.FederatedEvent} event
-     * @private
+     * @protected
      */
-    private _onDragRightMove;
+    protected _onDragRightMove(event: PIXI.FederatedEvent): void;
     /**
      * Handle the conclusion of a right-mouse drag workflow the Canvas stage.
      * @see {MouseInteractionManager##handleDragDrop}
      * @param {PIXI.FederatedEvent} event
-     * @private
+     * @protected
      */
-    private _onDragRightDrop;
+    protected _onDragRightDrop(event: PIXI.FederatedEvent): void;
     /**
      * Determine selection coordinate rectangle during a mouse-drag workflow
      * @param {PIXI.FederatedEvent} event
-     * @private
+     * @protected
      */
-    private _onDragSelect;
+    protected _onDragSelect(event: PIXI.FederatedEvent): void;
     /**
      * Pan the canvas view when the cursor position gets close to the edge of the frame
      * @param {MouseEvent} event    The originating mouse movement event
@@ -10157,21 +10283,21 @@ declare class Canvas {
     /**
      * Handle window resizing with the dimensions of the window viewport change
      * @param {Event} event     The Window resize event
-     * @private
+     * @protected
      */
-    private _onResize;
+    protected _onResize(event?: Event): boolean;
     /**
      * Handle mousewheel events which adjust the scale of the canvas
      * @param {WheelEvent} event    The mousewheel event that zooms the canvas
-     * @private
+     * @protected
      */
-    private _onMouseWheel;
+    protected _onMouseWheel(event: WheelEvent): void;
     /**
      * Event handler for the drop portion of a drag-and-drop event.
      * @param {DragEvent} event  The drag event being dropped onto the canvas
-     * @private
+     * @protected
      */
-    private _onDrop;
+    protected _onDrop(event: DragEvent): any;
     /**
      * Track objects which have pending render flags.
      * @enum {Set<RenderFlagObject>}
@@ -10770,17 +10896,17 @@ declare class TextureLoader {
      * Log texture loading progress in the console and in the Scene loading bar
      * @param {string} src          The source URL being loaded
      * @param {object} progress     Loading progress
-     * @private
+     * @protected
      */
-    private static "__#130@#onProgress";
+    protected static "__#130@#onProgress"(src: string, progress: object): void;
     /**
      * Log failed texture loading
      * @param {string} src          The source URL being loaded
      * @param {object} progress     Loading progress
      * @param {Error} error         The error which occurred
-     * @private
+     * @protected
      */
-    private static "__#130@#onError";
+    protected static "__#130@#onError"(src: string, progress: object, error: Error): void;
     /**
      * Return a URL with a cache-busting query parameter appended.
      * @param {string} src        The source URL being attempted
@@ -11183,9 +11309,9 @@ declare class Quadtree {
     /**
      * Visualize the nodes and objects in the quadtree
      * @param {boolean} [objects]    Visualize the rectangular bounds of objects in the Quadtree. Default is false.
-     * @private
+     * @protected
      */
-    private visualize;
+    protected visualize({ objects }?: boolean): void;
 }
 /**
  * A subclass of Quadtree specifically intended for classifying the location of objects on the game canvas.
@@ -11932,7 +12058,7 @@ declare class LimitedAnglePolygon extends PIXI.Polygon {
 }
 /**
  * An internal data structure for polygon vertices
- * @private
+ * @protected
  * @ignore
  */
 declare class PolygonVertex {
@@ -12041,7 +12167,7 @@ declare class PolygonVertex {
 }
 /**
  * An internal data structure for polygon edges
- * @private
+ * @protected
  * @ignore
  */
 declare class PolygonEdge {
@@ -12071,7 +12197,7 @@ declare class PolygonEdge {
 }
 /**
  * An object containing the result of a collision test.
- * @private
+ * @protected
  * @ignore
  */
 declare class CollisionResult {
@@ -12308,15 +12434,15 @@ declare class Ray {
     /**
      * The cached angle, computed lazily in Ray#angle
      * @type {number}
-     * @private
+     * @protected
      */
-    private _angle;
+    protected _angle: number;
     /**
      * The cached distance, computed lazily in Ray#distance
      * @type {number}
-     * @private
+     * @protected
      */
-    private _distance;
+    protected _distance: number;
     set angle(arg: number);
     /**
      * The normalized angle of the ray in radians on the range (-PI, PI).
@@ -12587,9 +12713,9 @@ declare class ChevronPing extends Ping {
     /**
      * The path to the chevron texture.
      * @type {string}
-     * @private
+     * @protected
      */
-    private static _CHEVRON_PATH;
+    protected static _CHEVRON_PATH: string;
     _r: number;
     _rInner: number;
     _t14: number;
@@ -12601,23 +12727,23 @@ declare class ChevronPing extends Ping {
     /**
      * Draw the outer and inner rings.
      * @param {number} a  The alpha.
-     * @private
+     * @protected
      */
-    private _drawRings;
+    protected _drawRings(a: number): void;
     /**
      * Load the chevron texture.
      * @returns {Promise<PIXI.Sprite>}
-     * @private
+     * @protected
      */
-    private _loadChevron;
+    protected _loadChevron(): Promise<PIXI.Sprite>;
     _h2: number;
     _y: number;
     /**
      * Draw the two rings that are used as part of the ping animation.
      * @returns {PIXI.Graphics[]}
-     * @private
+     * @protected
      */
-    private _createRings;
+    protected _createRings(): any[];
     _outer: any;
     _inner: any;
 }
@@ -12651,9 +12777,9 @@ declare class PulsePing extends Ping {
      *  Stage 2.2: Fade out.
      * 1/5th of the animation time is allocated to Stage 1. 4/5ths are allocated to Stage 2. Of those 4/5ths, 2/5ths
      * are allocated to Stage 2.1, and 2/5ths are allocated to Stage 2.2.
-     * @private
+     * @protected
      */
-    private _computeTimeSlices;
+    protected _computeTimeSlices(): void;
     _timeSlice: number;
     _timeSlice2: number;
     _timeSlice15: number;
@@ -12669,9 +12795,9 @@ declare class PulsePing extends Ping {
      * @param {number} duration  The length of the transition in milliseconds.
      * @param {number} t         The current time along the duration.
      * @returns {number}         The incremental color between from and to.
-     * @private
+     * @protected
      */
-    private _colorTransition;
+    protected _colorTransition(from: typeof import("../../common/utils/color.mjs").default, to: typeof import("../../common/utils/color.mjs").default, duration: number, t: number): number;
     /**
      * Draw the shape for this ping.
      * @param {PIXI.Graphics} g  The graphics object to draw to.
@@ -13468,15 +13594,19 @@ declare class ControlsLayer extends InteractionLayer {
     /**
      * A mapping of user IDs to Ruler instances for quick access
      * @type {Object<string, Ruler>}
-     * @private
+     * @protected
      */
-    private _rulers;
+    protected _rulers: {
+        [x: string]: Ruler;
+    };
     /**
      * The positions of any offscreen pings we are tracking.
      * @type {Object<string, Point>}
-     * @private
+     * @protected
      */
-    private _offscreenPings;
+    protected _offscreenPings: {
+        [x: string]: Point;
+    };
     /**
      * A convenience accessor to the Ruler for the active game user
      * @type {Ruler}
@@ -13589,9 +13719,12 @@ declare class ControlsLayer extends InteractionLayer {
      * @returns {{ray: Ray, intersection: LineIntersection|null}}  The closest point at the edge of the viewport to that
      *                                                             co-ordinate and a ray cast from the centre of the
      *                                                             screen towards it.
-     * @private
+     * @protected
      */
-    private _findViewportIntersection;
+    protected _findViewportIntersection(position: Point): {
+        ray: Ray;
+        intersection: LineIntersection | null;
+    };
 }
 /**
  * @typedef {Object} RulerMeasurementSegment
@@ -13820,21 +13953,21 @@ declare class Ruler {
     /**
      * Handle the addition of a new waypoint in the Ruler measurement path
      * @param {PIXI.Point} point
-     * @private
+     * @protected
      */
-    private _addWaypoint;
+    protected _addWaypoint(point: PIXI.Point): void;
     /**
      * Handle the removal of a waypoint in the Ruler measurement path
      * @param {PIXI.Point} point      The current cursor position to snap to
      * @param {boolean} [snap]        Snap exactly to grid spaces?
-     * @private
+     * @protected
      */
-    private _removeWaypoint;
+    protected _removeWaypoint(point: PIXI.Point, { snap }?: boolean): void;
     /**
      * Handle the conclusion of a Ruler measurement workflow
-     * @private
+     * @protected
      */
-    private _endMeasurement;
+    protected _endMeasurement(): void;
     /**
      * @typedef {object} RulerData
      * @property {number} _state           The ruler measurement state.
@@ -14341,9 +14474,9 @@ declare class BaseGrid {
      * @param {number} y            The Y co-ordinate.
      * @param {PIXI.Polygon} shape  The shape.
      * @returns {boolean}
-     * @private
+     * @protected
      */
-    private _testShape;
+    protected _testShape(x: number, y: number, shape: PIXI.Polygon): boolean;
     /**
      * Given a pair of coordinates (x, y) - return the top-left of the grid square which contains that point
      * @return {number[]}    An Array [x, y] of the top-left coordinate of the square which contains (x, y)
@@ -14670,9 +14803,12 @@ declare class HexagonalGrid extends BaseGrid {
      * @param {string|null} [preview.color=null]  The grid color.
      * @param {number|null} [preview.alpha=null]  The grid transparency.
      * @returns {Graphics}
-     * @private
+     * @protected
      */
-    private _drawGrid;
+    protected _drawGrid({ color, alpha }?: {
+        color?: string | null;
+        alpha?: number | null;
+    }): Graphics;
     /**
      * Compute and draw row style hexagons.
      * @param {PIXI.Graphics} grid    Reference to the grid graphics.
@@ -15159,9 +15295,9 @@ declare class DrawingsLayer extends PlaceablesLayer {
     /**
      * Handling of mouse-up events which conclude a new object creation after dragging
      * @param {PIXI.FederatedEvent} event       The drag drop event
-     * @private
+     * @protected
      */
-    private _onDragLeftDrop;
+    protected _onDragLeftDrop(event: PIXI.FederatedEvent): Promise<any>;
     /** @inheritdoc */
     _onDragLeftCancel(event: any): any;
     /** @inheritdoc */
@@ -15327,16 +15463,16 @@ declare class SoundsLayer extends PlaceablesLayer {
      * Sync the playing state and volume of all AmbientSound objects based on the position of listener points
      * @param {Point[]} listeners     Locations of listeners which have the capability to hear
      * @param {object} [options={}]   Additional options forwarded to AmbientSound synchronization
-     * @private
+     * @protected
      */
-    private _syncPositions;
+    protected _syncPositions(listeners: Point[], options?: object): void;
     /**
      * Define the easing function used to map radial distance to volume.
      * Uses cosine easing which graduates from volume 1 at distance 0 to volume 0 at distance 1
      * @returns {number}            The target volume level
-     * @private
+     * @protected
      */
-    private _getEasingVolume;
+    protected _getEasingVolume(distance: any, radius: any): number;
     /**
      * Actions to take when the darkness level of the Scene is changed
      * @param {number} darkness   The new darkness level
@@ -15415,9 +15551,9 @@ declare class TilesLayer extends PlaceablesLayer {
      * Handle drop events for Tile data on the Tiles Layer
      * @param {DragEvent} event     The concluding drag event
      * @param {object} data         The extracted Tile data
-     * @private
+     * @protected
      */
-    private _onDropData;
+    protected _onDropData(event: DragEvent, data: object): Promise<any>;
     /**
      * Prepare the data object when a new Tile is dropped onto the canvas
      * @param {DragEvent} event     The concluding drag event
@@ -15439,9 +15575,9 @@ declare class TokenLayer extends PlaceablesLayer {
     /**
      * The current index position in the tab cycle
      * @type {number|null}
-     * @private
+     * @protected
      */
-    private _tabIndex;
+    protected _tabIndex: number | null;
     /**
      * Token objects on this layer utilize the TokenHUD
      */
@@ -15493,18 +15629,18 @@ declare class TokenLayer extends PlaceablesLayer {
     /**
      * Get the tab cycle order for tokens by sorting observable tokens based on their distance from top-left.
      * @returns {Token[]}
-     * @private
+     * @protected
      */
-    private _getCycleOrder;
+    protected _getCycleOrder(): Function[];
     /**
      * Immediately conclude the animation of any/all tokens
      */
     concludeAnimation(): void;
     /**
      * Animate targeting arrows on targeted tokens.
-     * @private
+     * @protected
      */
-    private _animateTargets;
+    protected _animateTargets(): void;
     _t: number;
     /**
      * Provide an array of Tokens which are eligible subjects for overhead tile occlusion.
@@ -15516,9 +15652,9 @@ declare class TokenLayer extends PlaceablesLayer {
     storeHistory(type: any, data: any): void;
     /**
      * Handle dropping of Actor data onto the Scene canvas
-     * @private
+     * @protected
      */
-    private _onDropActorData;
+    protected _onDropActorData(event: any, data: any): Promise<any>;
     /** @inheritDoc */
     _onClickLeft(event: any): any;
     /**
@@ -15566,15 +15702,17 @@ declare class WallsLayer extends PlaceablesLayer {
     /**
      * Track the most recently created or updated wall data for use with the clone tool
      * @type {Object|null}
-     * @private
+     * @protected
      */
-    private _cloneType;
+    protected _cloneType: any | null;
     /**
      * Reference the last interacted wall endpoint for the purposes of chaining
      * @type {{point: PointArray}}
-     * @private
+     * @protected
      */
-    private last;
+    protected last: {
+        point: PointArray;
+    };
     /**
      * An Array of Wall instances in the current Scene which act as Doors.
      * @type {Wall[]}
@@ -15601,25 +15739,25 @@ declare class WallsLayer extends PlaceablesLayer {
      * @param {MouseEvent} event    The originating mouse movement event
      * @param {number} x            The x-coordinate
      * @param {number} y            The y-coordinate
-     * @private
+     * @protected
      */
-    private _panCanvasEdge;
+    protected _panCanvasEdge(event: MouseEvent, x: number, y: number): any;
     /**
      * Get the endpoint coordinates for a wall placement, snapping to grid at a specified precision
      * Require snap-to-grid until a redesign of the wall chaining system can occur.
      * @param {Object} point          The initial candidate point
      * @param {boolean} [snap=true]   Whether to snap to grid
      * @returns {number[]}             The endpoint coordinates [x,y]
-     * @private
+     * @protected
      */
-    private _getWallEndpointCoordinates;
+    protected _getWallEndpointCoordinates(point: any, { snap }?: boolean): number[];
     /**
      * The Scene Controls tools provide several different types of prototypical Walls to choose from
      * This method helps to translate each tool into a default wall data configuration for that type
      * @param {string} tool     The active canvas tool
-     * @private
+     * @protected
      */
-    private _getWallDataFromActiveTool;
+    protected _getWallDataFromActiveTool(tool: string): any;
     /** @inheritdoc */
     _onDragLeftStart(event: any): any;
     /**
@@ -16053,9 +16191,13 @@ declare class RenderedPointSource extends PointSource {
      *  coloration: AdaptiveLightingShader,
      *  illumination: AdaptiveLightingShader
      * }}
-     * @private
+     * @protected
      */
-    private _configureShaders;
+    protected _configureShaders(): {
+        background: AdaptiveLightingShader;
+        coloration: AdaptiveLightingShader;
+        illumination: AdaptiveLightingShader;
+    };
     /**
      * Specific configuration for a layer.
      * @param {object} layer
@@ -16170,9 +16312,9 @@ declare class LightSource extends RenderedPointSource {
      * luminosity[ 0.5, 1  ] => Light    => map to exposure [   0, 1]
      * @param {number} lum        The luminosity value
      * @returns {number}           The exposure value
-     * @private
+     * @protected
      */
-    private _mapLuminosity;
+    protected _mapLuminosity(lum: number): number;
     /**
      * An animation with flickering ratio and light intensity.
      * @param {number} dt                       Delta time
@@ -16325,16 +16467,16 @@ declare class VisionSource extends RenderedPointSource {
     /**
      * Update shader uniforms shared by all shader types
      * @param {AdaptiveVisionShader} shader        The shader being updated
-     * @private
+     * @protected
      */
-    private _updateCommonUniforms;
+    protected _updateCommonUniforms(shader: AdaptiveVisionShader): void;
     /**
      * Update layer uniforms according to vision mode uniforms, if any.
      * @param {AdaptiveVisionShader} shader        The shader being updated.
      * @param {Array} vmUniforms                   The targeted layer.
-     * @private
+     * @protected
      */
-    private _updateVisionModeUniforms;
+    protected _updateVisionModeUniforms(shader: AdaptiveVisionShader, vmUniforms: any[]): void;
 }
 /**
  * A batch renderer with a customizable data transfer function to packed geometries.
@@ -16460,9 +16602,9 @@ declare class AbstractBaseShader {
     _defaults: object;
     /**
      * Reset the shader uniforms back to their provided default values
-     * @private
+     * @protected
      */
-    private reset;
+    protected reset(): void;
 }
 /**
  * An abstract filter which provides a framework for reusable definition
@@ -17044,9 +17186,9 @@ declare class PrimaryCanvasGroup {
      * @param {PrimaryCanvasObject|PIXI.DisplayObject} a     An object to display
      * @param {PrimaryCanvasObject|PIXI.DisplayObject} b     Some other object to display
      * @returns {number}
-     * @private
+     * @protected
      */
-    private static _sortObjects;
+    protected static _sortObjects(a: PrimaryCanvasObject | PIXI.DisplayObject, b: PrimaryCanvasObject | PIXI.DisplayObject): number;
     constructor(sprite: any);
     eventMode: string;
     tokensRenderTexture: any;
@@ -17090,9 +17232,9 @@ declare class PrimaryCanvasGroup {
     /**
      * Render all tokens in their own render texture.
      * @param {PIXI.Renderer} renderer    The renderer to use.
-     * @private
+     * @protected
      */
-    private _renderTokens;
+    protected _renderTokens(renderer: PIXI.Renderer): void;
     /**
      * Return the base HTML image or video element which provides the background texture.
      * @type {HTMLImageElement|HTMLVideoElement}
@@ -17223,45 +17365,45 @@ declare class ClockwiseSweepPolygon extends PointSourcePolygon {
     initialize(origin: any, config: any): void;
     /**
      * Translate walls and other obstacles into edges which limit visibility
-     * @private
+     * @protected
      */
-    private _identifyEdges;
+    protected _identifyEdges(): void;
     /**
      * Consolidate all vertices from identified edges and register them as part of the vertex mapping.
-     * @private
+     * @protected
      */
-    private _identifyVertices;
+    protected _identifyVertices(): void;
     /**
      * Add additional vertices for intersections between edges.
      * @param {Map<string,PolygonEdge>} wallEdgeMap    A mapping of wall IDs to PolygonEdge instances
-     * @private
+     * @protected
      */
-    private _identifyIntersections;
+    protected _identifyIntersections(wallEdgeMap: Map<string, PolygonEdge>): void;
     /**
      * Execute the sweep over wall vertices
-     * @private
+     * @protected
      */
-    private _executeSweep;
+    protected _executeSweep(): void;
     /**
      * Update active edges at a given vertex
      * Must delete first, in case the edge is in both sets.
      * @param {PolygonVertex} vertex   The current vertex
      * @param {EdgeSet} activeEdges    A set of currently active edges
-     * @private
+     * @protected
      */
-    private _updateActiveEdges;
+    protected _updateActiveEdges(vertex: PolygonVertex, activeEdges: EdgeSet): void;
     /**
      * Determine the initial set of active edges as those which intersect with the initial ray
      * @returns {EdgeSet}             A set of initially active edges
-     * @private
+     * @protected
      */
-    private _initializeActiveEdges;
+    protected _initializeActiveEdges(): EdgeSet;
     /**
      * Sort vertices clockwise from the initial ray (due west).
      * @returns {PolygonVertex[]}             The array of sorted vertices
-     * @private
+     * @protected
      */
-    private _sortVertices;
+    protected _sortVertices(): PolygonVertex[];
     /**
      * Test whether a target vertex is behind some closer active edge.
      * If the vertex is to the left of the edge, is must be behind the edge relative to origin.
@@ -17270,17 +17412,20 @@ declare class ClockwiseSweepPolygon extends PointSourcePolygon {
      * @param {PolygonVertex} vertex      The target vertex
      * @param {EdgeSet} activeEdges       The set of active edges
      * @returns {{isBehind: boolean, wasLimited: boolean}} Is the target vertex behind some closer edge?
-     * @private
+     * @protected
      */
-    private _isVertexBehindActiveEdges;
+    protected _isVertexBehindActiveEdges(vertex: PolygonVertex, activeEdges: EdgeSet): {
+        isBehind: boolean;
+        wasLimited: boolean;
+    };
     /**
      * Determine the result for the sweep at a given vertex
      * @param {PolygonVertex} vertex      The target vertex
      * @param {EdgeSet} activeEdges       The set of active edges
      * @param {boolean} hasCollinear      Are there collinear vertices behind the target vertex?
-     * @private
+     * @protected
      */
-    private _determineSweepResult;
+    protected _determineSweepResult(vertex: PolygonVertex, activeEdges: EdgeSet, hasCollinear?: boolean): void;
     /**
      * Switch to a new active edge.
      * Moving from the origin, a collision that first blocks a side must be stored as a polygon point.
@@ -17290,29 +17435,29 @@ declare class ClockwiseSweepPolygon extends PointSourcePolygon {
      *
      * If neither side is blocked and the ray internally collides with a non-limited edge, n skip without adding polygon
      * endpoints. Sight is unaffected before this edge, and the internal collision can be ignored.
-     * @private
+     * @protected
      *
      * @param {CollisionResult} result    The pending collision result
      * @param {EdgeSet} activeEdges       The set of currently active edges
      */
-    private _switchEdge;
+    protected _switchEdge(result: CollisionResult, activeEdges: EdgeSet): void;
     /**
      * Identify the collision points between an emitted Ray and a set of active edges.
      * @param {PolygonRay} ray            The candidate ray to test
      * @param {EdgeSet} internalEdges     The set of edges to check for collisions against the ray
      * @returns {PolygonVertex[]}         A sorted array of collision points
-     * @private
+     * @protected
      */
-    private _getInternalEdgeCollisions;
+    protected _getInternalEdgeCollisions(ray: PolygonRay, internalEdges: EdgeSet): PolygonVertex[];
     /** @override */
     override _testCollision(ray: any, mode: any): any;
     /**
      * Visualize the polygon, displaying its computed area, rays, and collision points
      * @param {Ray} ray
      * @param {PolygonVertex[]} collisions
-     * @private
+     * @protected
      */
-    private _visualizeCollision;
+    protected _visualizeCollision(ray: Ray, collisions: PolygonVertex[]): void;
     #private;
 }
 /**
@@ -19785,9 +19930,12 @@ declare class DrawingShape {
      * @param {number[]} point      The current point
      * @param {number[]} next       The next point
      * @returns {{cp1: Point, nextCP: Point}} The bezier control points
-     * @private
+     * @protected
      */
-    private static "__#175@#getBezierControlPoints";
+    protected static "__#175@#getBezierControlPoints"(factor: number, previous: number[], point: number[], next: number[]): {
+        cp1: Point;
+        nextCP: Point;
+    };
     /** @inheritDoc */
     refresh(): void;
     alpha: number;
@@ -21539,9 +21687,9 @@ declare class ContextMenu {
     render(target: JQueryStatic): Promise<any>;
     /**
      * Set the position of the context menu, taking into consideration whether the menu should expand upward or downward
-     * @private
+     * @protected
      */
-    private _setPosition;
+    protected _setPosition(html: any, target: any): void;
     /**
      * Local listeners which apply to each ContextMenu instance which is created.
      * @param {jQuery} html
@@ -21659,22 +21807,22 @@ declare class Dialog extends Application {
     /**
      * Handle a left-mouse click on one of the dialog choice buttons
      * @param {MouseEvent} event    The left-mouse click event
-     * @private
+     * @protected
      */
-    private _onClickButton;
+    protected _onClickButton(event: MouseEvent): void;
     /**
      * Handle a keydown event while the dialog is active
      * @param {KeyboardEvent} event   The keydown event
-     * @private
+     * @protected
      */
-    private _onKeyDown;
+    protected _onKeyDown(event: KeyboardEvent): void | Promise<void>;
     /**
      * Submit the Dialog by selecting one of its buttons
      * @param {Object} button         The configuration of the chosen button
      * @param {PointerEvent} event    The originating click event
-     * @private
+     * @protected
      */
-    private submit;
+    protected submit(button: any, event: PointerEvent): void;
     /** @inheritdoc */
     close(options?: {}): Promise<void>;
     #private;
@@ -21729,9 +21877,9 @@ declare class Draggable {
     protected _activateResizeListeners(): void;
     /**
      * Handle the initial mouse click which activates dragging behavior for the application
-     * @private
+     * @protected
      */
-    private _onDragMouseDown;
+    protected _onDragMouseDown(event: any): void;
     _initial: {
         x: any;
         y: any;
@@ -21741,29 +21889,29 @@ declare class Draggable {
     };
     /**
      * Move the window with the mouse, bounding the movement to ensure the window stays within bounds of the viewport
-     * @private
+     * @protected
      */
-    private _onDragMouseMove;
+    protected _onDragMouseMove(event: any): void;
     /**
      * Conclude the dragging behavior when the mouse is release, setting the final position and removing listeners
-     * @private
+     * @protected
      */
-    private _onDragMouseUp;
+    protected _onDragMouseUp(event: any): void;
     /**
      * Handle the initial mouse click which activates dragging behavior for the application
-     * @private
+     * @protected
      */
-    private _onResizeMouseDown;
+    protected _onResizeMouseDown(event: any): void;
     /**
      * Move the window with the mouse, bounding the movement to ensure the window stays within bounds of the viewport
-     * @private
+     * @protected
      */
-    private _onResizeMouseMove;
+    protected _onResizeMouseMove(event: any): void;
     /**
      * Conclude the dragging behavior when the mouse is release, setting the final position and removing listeners
-     * @private
+     * @protected
      */
-    private _onResizeMouseUp;
+    protected _onResizeMouseUp(event: any): void;
 }
 /**
  * @typedef {object} DragDropConfiguration
@@ -21838,21 +21986,21 @@ declare class DragDrop {
     /**
      * Handle the start of a drag workflow
      * @param {DragEvent} event   The drag event being handled
-     * @private
+     * @protected
      */
-    private _handleDragStart;
+    protected _handleDragStart(event: DragEvent): void;
     /**
      * Handle a dragged element over a droppable target
      * @param {DragEvent} event   The drag event being handled
-     * @private
+     * @protected
      */
-    private _handleDragOver;
+    protected _handleDragOver(event: DragEvent): boolean;
     /**
      * Handle a dragged element dropped on a droppable target
      * @param {DragEvent} event   The drag event being handled
-     * @private
+     * @protected
      */
-    private _handleDrop;
+    protected _handleDrop(event: DragEvent): any;
 }
 /**
  * A collection of helper functions and utility methods related to the rich text editor
@@ -21873,7 +22021,7 @@ declare class TextEditor {
     static create({ engine, ...options }?: {
         engine?: string;
     }, content?: string): Promise<TinyMCE.Editor | ProseMirrorEditor>;
-    private static _PARAGRAPH_ELEMENTS;
+    protected static _PARAGRAPH_ELEMENTS: Set<string>;
     protected static _createTinyMCE(options?: any, content?: string): Promise<TinyMCE.Editor>;
     /**
      * Create a TinyMCE editor instance.
@@ -22359,9 +22507,32 @@ declare class TextEditor {
         splitWords?: boolean;
         suffix?: string | null;
     }): string;
-    private static _getTextNodes;
-    private static _replaceTextContent;
-    private static _replaceTextNode;
+    protected static _getTextNodes(parent: HTMLElement): Text[];
+    /**
+     * Recursively identify the text nodes within a parent HTML node for potential content replacement.
+     * @param {HTMLElement} parent    The parent HTML Element
+     * @returns {Text[]}              An array of contained Text nodes
+     * @protected
+     */
+    protected static _getTextNodes(parent: HTMLElement): Text[];
+    protected static _replaceTextContent(text: Text, rgx: RegExp, func: (arg0: RegExpMatchArray) => HTMLElement | Promise<HTMLElement>): boolean | Promise<boolean>;
+    /**
+     * Facilitate the replacement of text node content using a matching regex rule and a provided replacement function.
+     * @param {Text} text             The target text to replace
+     * @param {RegExp} rgx            The provided regular expression for matching and replacement
+     * @param {function(RegExpMatchArray): HTMLElement|Promise<HTMLElement>} func   The replacement function
+     * @protected
+     */
+    protected static _replaceTextContent(text: Text, rgx: RegExp, func: (arg0: RegExpMatchArray) => HTMLElement | Promise<HTMLElement>): boolean | Promise<boolean>;
+    protected static _replaceTextNode(text: Text, match: RegExpMatchArray, replacement: Node): void;
+    /**
+     * Replace a matched portion of a Text node with a replacement Node
+     * @param {Text} text
+     * @param {RegExpMatchArray} match
+     * @param {Node} replacement
+     * @protected
+     */
+    protected static _replaceTextNode(text: Text, match: RegExpMatchArray, replacement: Node): void;
     protected static _createContentLink(match: RegExpMatchArray, { async, relativeTo }?: {
         async?: boolean;
         relativeTo?: ClientDocument;
@@ -22383,8 +22554,26 @@ declare class TextEditor {
         async?: boolean;
         relativeTo?: ClientDocument;
     }): HTMLAnchorElement | Promise<HTMLAnchorElement>;
-    private static _createLegacyContentLink;
-    private static _createHyperlink;
+    protected static _createLegacyContentLink(type: string, target: string, name: string, data: any): boolean;
+    /**
+     * Create a dynamic document link from an old-form document link expression.
+     * @param {string} type    The matched document type, or "Compendium".
+     * @param {string} target  The requested match target (_id or name).
+     * @param {string} name    A customized or overridden display name for the link.
+     * @param {object} data    Data containing the properties of the resulting link element.
+     * @returns {boolean}      Whether the resulting link is broken or not.
+     * @protected
+     */
+    protected static _createLegacyContentLink(type: string, target: string, name: string, data: object): boolean;
+    protected static _createHyperlink(match: RegExpMatchArray, options?: any): HTMLAnchorElement;
+    /**
+     * Replace a hyperlink-like string with an actual HTML &lt;a> tag
+     * @param {RegExpMatchArray} match  The regular expression match
+     * @param {object} [options]        Additional options to configure enrichment behaviour
+     * @returns {HTMLAnchorElement}     An HTML element for the document link
+     * @protected
+     */
+    protected static _createHyperlink(match: RegExpMatchArray, options?: object): HTMLAnchorElement;
     static _createInlineRoll(match: RegExpMatchArray, rollData: any, options?: any): HTMLAnchorElement | Promise<HTMLAnchorElement>;
     /**
      * Replace an inline roll formula with a rollable &lt;a> element or an eagerly evaluated roll result
@@ -22401,8 +22590,21 @@ declare class TextEditor {
      * Activate interaction listeners for the interior content of the editor frame.
      */
     static activateListeners(): void;
-    private static _onClickContentLink;
-    private static _onClickInlineRoll; /**
+    protected static _onClickContentLink(event: Event): Promise<any>;
+    /**
+     * Handle click events on Document Links
+     * @param {Event} event
+     * @protected
+     */
+    protected static _onClickContentLink(event: Event): Promise<any>;
+    protected static _onClickInlineRoll(event: MouseEvent): Promise<any>;
+    /**
+     * Handle left-mouse clicks on an inline roll, dispatching the formula or displaying the tooltip
+     * @param {MouseEvent} event    The initiating click event
+     * @protected
+     */
+    protected static _onClickInlineRoll(event: MouseEvent): Promise<any>;
+    /**
      * Composite a canvas object by rendering it to a single texture
      *
      * @param {PIXI.DisplayObject} object   The object to render to a texture
@@ -22415,8 +22617,21 @@ declare class TextEditor {
      *
      * @returns {PIXI.Texture}              The composite Texture object
      */
-    private static _onDragContentLink;
-    private static _onDropEditorData;
+    protected static _onDragContentLink(event: Event): boolean;
+    /**
+     * Begin a Drag+Drop workflow for a dynamic content link
+     * @param {Event} event   The originating drag event
+     * @protected
+     */
+    protected static _onDragContentLink(event: Event): boolean;
+    protected static _onDropEditorData(event: DragEvent, editor: TinyMCE): Promise<void>;
+    /**
+     * Handle dropping of transferred data onto the active rich text editor
+     * @param {DragEvent} event     The originating drop event which triggered the data transfer
+     * @param {TinyMCE} editor      The TinyMCE editor instance being dropped on
+     * @protected
+     */
+    protected static _onDropEditorData(event: DragEvent, editor: TinyMCE): Promise<void>;
     static getDragEventData(event: DragEvent): any;
     /**
      * Extract JSON data from a drag/drop event.
@@ -22581,9 +22796,9 @@ declare class FilePicker extends Application {
      * @param {object} data         Request data dispatched to the server
      * @param {object} options      Options dispatched to the server
      * @returns {Promise<object>}   The server response
-     * @private
+     * @protected
      */
-    private static _manageFiles;
+    protected static _manageFiles(data: object, options: object): Promise<object>;
     /**
      * Dispatch a POST request to the server containing a directory path and a file to upload
      * @param {string} source   The data source to which the file should be uploaded
@@ -22688,9 +22903,9 @@ declare class FilePicker extends Application {
      * Get the valid file extensions for a given named file picker type
      * @param {string} type
      * @returns {string[]}
-     * @private
+     * @protected
      */
-    private _getExtensions;
+    protected _getExtensions(type: string): string[];
     /** @override */
     override get title(): any;
     /**
@@ -22752,9 +22967,9 @@ declare class FilePicker extends Application {
     /**
      * Handle a click event to change the display mode of the File Picker
      * @param {MouseEvent} event    The triggering click event
-     * @private
+     * @protected
      */
-    private _onChangeDisplayMode;
+    protected _onChangeDisplayMode(event: MouseEvent): void;
     /** @override */
     override _onChangeTab(event: any, tabs: any, active: any): void;
     /** @override */
@@ -22768,45 +22983,45 @@ declare class FilePicker extends Application {
     /**
      * Handle user submission of the address bar to request an explicit target
      * @param {KeyboardEvent} event     The originating keydown event
-     * @private
+     * @protected
      */
-    private _onRequestTarget;
+    protected _onRequestTarget(event: KeyboardEvent): Promise<any>;
     /**
      * Handle user interaction with the favorites
      * @param {MouseEvent} event     The originating click event
-     * @private
+     * @protected
      */
-    private _onClickFavorite;
+    protected _onClickFavorite(event: MouseEvent): Promise<void>;
     /**
      * Handle requests from the IntersectionObserver to lazily load an image file
      * @param {...any} args
-     * @private
+     * @protected
      */
-    private _onLazyLoadImages;
+    protected _onLazyLoadImages(...args: any[]): any;
     /**
      * Handle file or folder selection within the file picker
      * @param {Event} event     The originating click event
-     * @private
+     * @protected
      */
-    private _onPick;
+    protected _onPick(event: Event): Promise<any>;
     /**
      * Handle backwards navigation of the folder structure.
      * @param {PointerEvent} event    The triggering click event
-     * @private
+     * @protected
      */
-    private _onClickDirectoryControl;
+    protected _onClickDirectoryControl(event: PointerEvent): any;
     /**
      * Present the user with a dialog to create a subdirectory within their currently browsed file storage location.
      * @param {object} source     The data source being browsed
-     * @private
+     * @protected
      */
-    private _createDirectoryDialog;
+    protected _createDirectoryDialog(source: object): Promise<any>;
     /**
      * Handle changes to the bucket selector
      * @param {Event} event     The S3 bucket select change event
-     * @private
+     * @protected
      */
-    private _onChangeBucket;
+    protected _onChangeBucket(event: Event): Promise<any>;
     /**
      * Handle changes to the tile size.
      * @param {Event} event  The triggering event.
@@ -22820,9 +23035,9 @@ declare class FilePicker extends Application {
     /**
      * Handle file upload
      * @param {Event} ev      The file upload event
-     * @private
+     * @protected
      */
-    private _onUpload;
+    protected _onUpload(ev: Event): Promise<any>;
 }
 /**
  * @typedef {object} SearchFilterConfiguration
@@ -23141,10 +23356,10 @@ declare class Notifications extends Application {
     clear(): void;
     /**
      * Retrieve a pending notification from the queue and display it
-     * @private
+     * @protected
      * @returns {void}
      */
-    private fetch;
+    protected fetch(): void;
     #private;
 }
 /**
@@ -23436,9 +23651,9 @@ declare class Tabs {
     /**
      * Handle click events on the tab navigation entries
      * @param {MouseEvent} event    A left click event
-     * @private
+     * @protected
      */
-    private _onClickNav;
+    protected _onClickNav(event: MouseEvent): void;
 }
 declare const TabsV2: typeof Tabs;
 /**
@@ -23600,9 +23815,12 @@ declare class DocumentDirectory extends SidebarTab {
      * @param {Folder} folder                  The Folder being dropped
      * @param {Folder} targetFolder            The Folder to which the Folder should be added
      * @returns {Promise<{foldersToCreate: Array<Folder>, documentsToCreate: Array<Document>}>}
-     * @private
+     * @protected
      */
-    private _organizeDroppedFoldersAndDocuments;
+    protected _organizeDroppedFoldersAndDocuments(folder: Folder, targetFolder: Folder): Promise<{
+        foldersToCreate: Array<Folder>;
+        documentsToCreate: Array<Document>;
+    }>;
     /**
      * Create a list of documents in a dropped Folder
      * @param {Folder} folder                  The Folder being dropped
@@ -23789,21 +24007,21 @@ declare class Sidebar extends Application {
     /**
      * Handle the special case of left-clicking a tab when the sidebar is collapsed.
      * @param {MouseEvent} event  The originating click event
-     * @private
+     * @protected
      */
-    private _onLeftClickTab;
+    protected _onLeftClickTab(event: MouseEvent): void;
     /**
      * Handle right-click events on tab controls to trigger pop-out containers for each tab
      * @param {Event} event     The originating contextmenu event
-     * @private
+     * @protected
      */
-    private _onRightClickTab;
+    protected _onRightClickTab(event: Event): void;
     /**
      * Handle toggling of the Sidebar container's collapsed or expanded state
      * @param {Event} event
-     * @private
+     * @protected
      */
-    private _onToggleCollapse;
+    protected _onToggleCollapse(event: Event): void;
 }
 /**
  * The Application responsible for displaying and editing a single Actor document.
@@ -23835,9 +24053,9 @@ declare class ActorSheet extends DocumentSheet {
     /**
      * Handle requests to configure the Token for the Actor
      * @param {PointerEvent} event      The originating click event
-     * @private
+     * @protected
      */
-    private _onConfigureToken;
+    protected _onConfigureToken(event: PointerEvent): any;
     /** @inheritdoc */
     _canDragStart(selector: any): any;
     /** @inheritdoc */
@@ -23885,16 +24103,16 @@ declare class ActorSheet extends DocumentSheet {
      * This method is factored out to allow downstream classes the opportunity to override item creation behavior.
      * @param {object[]|object} itemData     The item data requested for creation
      * @returns {Promise<Item[]>}
-     * @private
+     * @protected
      */
-    private _onDropItemCreate;
+    protected _onDropItemCreate(itemData: object[] | object): Promise<Item[]>;
     /**
      * Handle a drop event for an existing embedded Item to sort that Item relative to its siblings
      * @param {Event} event
      * @param {Object} itemData
-     * @private
+     * @protected
      */
-    private _onSortItem;
+    protected _onSortItem(event: Event, itemData: any): any;
 }
 /**
  * An interface for packaging Adventure content and loading it to a compendium pack.
@@ -24099,9 +24317,9 @@ declare class CardsConfig extends DocumentSheet {
      * Handle sorting a Card relative to other siblings within this document
      * @param {Event} event     The drag drop event
      * @param {Card} card       The card being dragged
-     * @private
+     * @protected
      */
-    private _onSortCard;
+    protected _onSortCard(event: Event, card: Card): any;
 }
 /**
  * A subclass of CardsConfig which provides a sheet representation for Cards documents with the "hand" type.
@@ -24180,14 +24398,14 @@ declare class ActiveEffectConfig extends DocumentSheet {
      * Provide centralized handling of mouse clicks on control buttons.
      * Delegate responsibility out to action-specific handlers depending on the button action.
      * @param {MouseEvent} event      The originating click event
-     * @private
+     * @protected
      */
-    private _onEffectControl;
+    protected _onEffectControl(event: MouseEvent): any;
     /**
      * Handle adding a new change to the changes array.
-     * @private
+     * @protected
      */
-    private _addEffectChange;
+    protected _addEffectChange(): Promise<FormApplication>;
     /** @inheritdoc */
     _getSubmitData(updateData?: {}): any;
 }
@@ -24246,9 +24464,9 @@ declare class FontConfig extends FormApplication {
     /**
      * A list of fonts that were correctly loaded and are available for use.
      * @type {Set<string>}
-     * @private
+     * @protected
      */
-    private static "__#191@#available";
+    protected static "__#191@#available": Set<string>;
     /**
      * Get the list of fonts that successfully loaded.
      * @returns {string[]}
@@ -24305,9 +24523,9 @@ declare class FontConfig extends FormApplication {
      * @param {string} family              The font family.
      * @param {FontDefinition} definition  The font definition.
      * @returns {string}                   The formatted definition.
-     * @private
+     * @protected
      */
-    private static _formatFont;
+    protected static _formatFont(family: string, definition: FontFaceDescriptors): string;
     /**
      * An application for configuring custom world fonts.
      * @param {NewFontDefinition} [object]  The default settings for new font definition creation.
@@ -24404,15 +24622,15 @@ declare class GridConfig extends FormApplication {
     /**
      * Handle keyboard events.
      * @param {KeyboardEvent} event    The original keydown event
-     * @private
+     * @protected
      */
-    private _onKeyDown;
+    protected _onKeyDown(event: KeyboardEvent): void;
     /**
      * Handle mousewheel events.
      * @param {WheelEvent} event    The original wheel event
-     * @private
+     * @protected
      */
-    private _onWheel;
+    protected _onWheel(event: WheelEvent): void;
     /** @override */
     override _onChangeInput(event: any): Promise<void>;
     /** @override */
@@ -24422,35 +24640,41 @@ declare class GridConfig extends FormApplication {
      * @param {object} options          Options which define how the refresh is performed
      * @param {boolean} [options.background]      Refresh the background display?
      * @param {object} [options.grid]             Refresh the grid display?
-     * @private
+     * @protected
      */
-    private _refresh;
+    protected _refresh({ background, grid }: {
+        background?: boolean;
+        grid?: object;
+    }): void;
     /**
      * Reset the scene back to its original settings
-     * @private
+     * @protected
      */
-    private _reset;
+    protected _reset(): Promise<void>;
     /**
      * Scale the background size relative to the grid size
      * @param {number} delta          The directional change in background size
-     * @private
+     * @protected
      */
-    private _scaleBackgroundSize;
+    protected _scaleBackgroundSize(delta: number): void;
     /**
      * Scale the grid size relative to the background image.
      * When scaling the grid size in this way, constrain the allowed values between 50px and 300px.
      * @param {number} delta          The grid size in pixels
-     * @private
+     * @protected
      */
-    private _scaleGridSize;
+    protected _scaleGridSize(delta: number): void;
     /**
      * Shift the background image relative to the grid layer
      * @param {object} position       The position configuration to preview
      * @param {number} position.deltaX    The number of pixels to shift in the x-direction
      * @param {number} position.deltaY    The number of pixels to shift in the y-direction
-     * @private
+     * @protected
      */
-    private _shiftBackground;
+    protected _shiftBackground({ deltaX, deltaY }?: {
+        deltaX: number;
+        deltaY: number;
+    }): void;
     #private;
 }
 /**
@@ -25035,9 +25259,9 @@ declare class MacroConfig extends DocumentSheet {
      * Save and execute the macro using the button on the configuration sheet
      * @param {MouseEvent} event      The originating click event
      * @return {Promise<void>}
-     * @private
+     * @protected
      */
-    private _onExecute;
+    protected _onExecute(event: MouseEvent): Promise<void>;
 }
 /**
  * The Application responsible for configuring a single MeasuredTemplate document within a parent Scene.
@@ -25104,9 +25328,9 @@ declare class PlaylistSoundConfig extends DocumentSheet {
     /**
      * Auto-populate the track name using the provided filename, if a name is not already set
      * @param {Event} event
-     * @private
+     * @protected
      */
-    private _onSourceChange;
+    protected _onSourceChange(event: Event): void;
 }
 /**
  * The Application responsible for displaying and editing a single RollTable document.
@@ -25123,63 +25347,63 @@ declare class RollTableConfig extends DocumentSheet {
      * @param {MouseEvent} event        The originating mouse event
      * @param {object} [resultData]     An optional object of result data to use
      * @returns {Promise}
-     * @private
+     * @protected
      */
-    private _onCreateResult;
+    protected _onCreateResult(event: MouseEvent, resultData?: object): Promise<any>;
     /**
      * Submit the entire form when a table result type is changed, in case there are other active changes
      * @param {Event} event
-     * @private
+     * @protected
      */
-    private _onChangeResultType;
+    protected _onChangeResultType(event: Event): Promise<any>;
     /**
      * Handle deleting a TableResult from the RollTable document
      * @param {MouseEvent} event        The originating click event
      * @returns {Promise<TableResult>}   The deleted TableResult document
-     * @private
+     * @protected
      */
-    private _onDeleteResult;
+    protected _onDeleteResult(event: MouseEvent): Promise<TableResult>;
     /** @inheritdoc */
     _onDrop(event: any): Promise<any>;
     /**
      * Handle changing the actor profile image by opening a FilePicker
      * @param {Event} event
-     * @private
+     * @protected
      */
-    private _onEditImage;
+    protected _onEditImage(event: Event): Promise<any>;
     /**
      * Handle a button click to re-normalize dice result ranges across all RollTable results
      * @param {Event} event
-     * @private
+     * @protected
      */
-    private _onNormalizeResults;
+    protected _onNormalizeResults(event: Event): Promise<any>;
     /**
      * Handle toggling the drawn status of the result in the table
      * @param {Event} event
-     * @private
+     * @protected
      */
-    private _onLockResult;
+    protected _onLockResult(event: Event): any;
     /**
      * Reset the Table to it's original composition with all options unlocked
      * @param {Event} event
-     * @private
+     * @protected
      */
-    private _onResetTable;
+    protected _onResetTable(event: Event): any;
     /**
      * Handle drawing a result from the RollTable
      * @param {Event} event
-     * @private
+     * @protected
      */
-    private _onRollTable;
+    protected _onRollTable(event: Event): Promise<void>;
     /**
      * Configure the update object workflow for the Roll Table configuration sheet
      * Additional logic is needed here to reconstruct the results array from the editable fields on the sheet
      * @param {Event} event            The form submission event
      * @param {Object} formData        The validated FormData translated into an Object for submission
      * @returns {Promise}
-     * @private
+     * @protected
      */
-    private _updateObject;
+    protected _updateObject(event: Event, formData: any): Promise<any>;
     /**
      * Display a roulette style animation when a Roll Table result is drawn from the sheet
      * @param {TableResult[]} results     An Array of drawn table results to highlight
@@ -25231,35 +25455,35 @@ declare class SceneConfig extends DocumentSheet {
     /**
      * Get the available weather effect types which can be applied to this Scene
      * @returns {object}
-     * @private
+     * @protected
      */
-    private _getWeatherTypes;
+    protected _getWeatherTypes(): object;
     /**
      * Get the alphabetized Documents which can be chosen as a configuration for the Scene
      * @param {WorldCollection} collection
      * @returns {object[]}
-     * @private
+     * @protected
      */
-    private _getDocuments;
+    protected _getDocuments(collection: WorldCollection): object[];
     /**
      * Capture the current Scene position and zoom level as the initial view in the Scene config
      * @param {Event} event   The originating click event
-     * @private
+     * @protected
      */
-    private _onCapturePosition;
+    protected _onCapturePosition(event: Event): void;
     /**
      * Handle click events to open the grid configuration application
      * @param {Event} event   The originating click event
-     * @private
+     * @protected
      */
-    private _onGridConfig;
+    protected _onGridConfig(event: Event): Promise<void>;
     /**
      * Handle click events to link or unlink the scene dimensions
      * @param {Event} event
      * @returns {Promise<void>}
-     * @private
+     * @protected
      */
-    private _onLinkDimensions;
+    protected _onLinkDimensions(event: Event): Promise<void>;
     /** @override */
     override _onChangeInput(event: any): Promise<any>;
     /** @override */
@@ -25269,20 +25493,20 @@ declare class SceneConfig extends DocumentSheet {
     /**
      * Live update the scene as certain properties are changed.
      * @param {string} changed  The changed property.
-     * @private
+     * @protected
      */
-    private _previewScene;
+    protected _previewScene(changed: string): void;
     /**
      * Reset the previewed darkness level, background color, grid alpha, and grid color back to their true values.
-     * @private
+     * @protected
      */
-    private _resetScenePreview;
+    protected _resetScenePreview(): void;
     /**
      * Handle updating the select menu of PlaylistSound options when the Playlist is changed
      * @param {Event} event   The initiating select change event
-     * @private
+     * @protected
      */
-    private _onChangePlaylist;
+    protected _onChangePlaylist(event: Event): void;
     /**
      * Handle updating the select menu of JournalEntryPage options when the JournalEntry is changed.
      * @param {Event} event  The initiating select change event.
@@ -25292,9 +25516,9 @@ declare class SceneConfig extends DocumentSheet {
     /**
      * Handle updating the select menu of JournalEntryPage options when the JournalEntry is changed.
      * @param event
-     * @private
+     * @protected
      */
-    private _onChangeDimensions;
+    protected _onChangeDimensions(event: any): void;
 }
 /**
  * Document Sheet Configuration Application
@@ -25305,9 +25529,9 @@ declare class DocumentSheetConfig extends FormApplication {
     /**
      * An array of pending sheet assignments which are submitted before other elements of the framework are ready.
      * @type {object[]}
-     * @private
+     * @protected
      */
-    private static "__#196@#pending";
+    protected static "__#196@#pending": object[];
     /**
      * Marshal information on the available sheet classes for a given document type and sub-type, and format it for
      * display.
@@ -25402,9 +25626,9 @@ declare class DocumentSheetConfig extends FormApplication {
     static updateDefaultSheets(setting?: object): void;
     /**
      * Initialize default sheet configurations for all document types.
-     * @private
+     * @protected
      */
-    private static _registerDefaultSheets;
+    protected static _registerDefaultSheets(): void;
     /** @inheritDoc */
     getData(options?: {}): {
         isGM: any;
@@ -25437,9 +25661,9 @@ declare class UserConfig extends DocumentSheet {
     };
     /**
      * Handle changing the user avatar image by opening a FilePicker
-     * @private
+     * @protected
      */
-    private _onEditAvatar;
+    protected _onEditAvatar(event: any): Promise<any>;
 }
 /**
  * @typedef {Option} ChatBubbleOptions
@@ -25469,9 +25693,9 @@ declare class ChatBubbles {
      * Track which Token was most recently panned to highlight
      * Use this to avoid repeat panning
      * @type {Token}
-     * @private
+     * @protected
      */
-    private _panned;
+    protected _panned: Function;
     /**
      * A reference to the chat bubbles HTML container in which rendered bubbles should live
      * @returns {jQuery}
@@ -25496,31 +25720,31 @@ declare class ChatBubbles {
     /**
      * Clear any existing chat bubble for a certain Token
      * @param {Token} token
-     * @private
+     * @protected
      */
-    private _clearBubble;
+    protected _clearBubble(token: Function): Promise<any>;
     /**
      * Render the HTML template for the chat bubble
      * @param {object} data         Template data
      * @returns {Promise<string>}   The rendered HTML
-     * @private
+     * @protected
      */
-    private _renderHTML;
+    protected _renderHTML(data: object): Promise<string>;
     /**
      * Before displaying the chat message, determine it's constrained and unconstrained dimensions
      * @param {string} message    The message content
      * @returns {object}          The rendered message dimensions
-     * @private
+     * @protected
      */
-    private _getMessageDimensions;
+    protected _getMessageDimensions(message: string): object;
     /**
      * Assign styling parameters to the chat bubble, toggling either a left or right display (randomly)
      * @param {Token} token             The speaking Token
      * @param {JQuery} html             Chat bubble content
      * @param {Rectangle} dimensions    Positioning data
-     * @private
+     * @protected
      */
-    private _setPosition;
+    protected _setPosition(token: Function, html: JQuery, dimensions: Rectangle): void;
     /**
      * Determine the length of time for which to display a chat bubble.
      * Research suggests that average reading speed is 200 words per minute.
@@ -25662,22 +25886,22 @@ declare class SceneControls extends Application {
     /**
      * Handle click events on a Control set
      * @param {Event} event   A click event on a tool control
-     * @private
+     * @protected
      */
-    private _onClickLayer;
+    protected _onClickLayer(event: Event): void;
     /**
      * Handle click events on Tool controls
      * @param {Event} event   A click event on a tool control
-     * @private
+     * @protected
      */
-    private _onClickTool;
+    protected _onClickTool(event: Event): void;
     /**
      * Get the set of Control sets and tools that are rendered as the Scene Controls.
      * These controls may be extended using the "getSceneControlButtons" Hook.
      * @returns {SceneControl[]}
-     * @private
+     * @protected
      */
-    private _getControlButtons;
+    protected _getControlButtons(): SceneControl[];
     /**
      * @deprecated since v10
      * @ignore
@@ -25744,9 +25968,9 @@ declare class Hotbar extends Application {
      * Get the Array of Macro (or null) values that should be displayed on a numbered page of the bar
      * @param {number} page
      * @returns {Macro[]}
-     * @private
+     * @protected
      */
-    private _getMacrosByPage;
+    protected _getMacrosByPage(page: number): Macro[];
     /**
      * Collapse the Hotbar, minimizing its display.
      * @returns {Promise}    A promise which resolves once the collapse animation completes
@@ -25774,9 +25998,9 @@ declare class Hotbar extends Application {
     /**
      * Get the Macro entry context options
      * @returns {object[]}  The Macro entry context options
-     * @private
+     * @protected
      */
-    private _getEntryContextOptions;
+    protected _getEntryContextOptions(): object[];
     /**
      * Handle left-click events to
      * @param {MouseEvent} event    The originating click event
@@ -25786,9 +26010,9 @@ declare class Hotbar extends Application {
     /**
      * Handle pagination controls
      * @param {Event} event   The originating click event
-     * @private
+     * @protected
      */
-    private _onClickPageControl;
+    protected _onClickPageControl(event: Event): void;
     /** @override */
     override _canDragStart(selector: any): boolean;
     /** @override */
@@ -25801,9 +26025,9 @@ declare class Hotbar extends Application {
      * Create a Macro which rolls a RollTable when executed
      * @param {Document} table    The RollTable document
      * @returns {Promise<Macro>}  A created Macro document to add to the bar
-     * @private
+     * @protected
      */
-    private _createRollTableRollMacro;
+    protected _createRollTableRollMacro(table: Document): Promise<Macro>;
     /**
      * Create a Macro document which can be used to toggle display of a Journal Entry.
      * @param {Document} doc          A Document which should be toggled
@@ -25814,9 +26038,9 @@ declare class Hotbar extends Application {
     /**
      * Handle click events to toggle display of the macro bar
      * @param {Event} event
-     * @private
+     * @protected
      */
-    private _onToggleBar;
+    protected _onToggleBar(event: Event): Promise<any>;
     /**
      * Toggle the hotbar's lock state.
      * @returns {Promise<Hotbar>}
@@ -25877,15 +26101,15 @@ declare class BasePlaceableHUD extends Application {
     /**
      * Toggle the visible state of all controlled objects in the Layer
      * @param {PointerEvent} event    The originating click event
-     * @private
+     * @protected
      */
-    private _onToggleVisibility;
+    protected _onToggleVisibility(event: PointerEvent): Promise<any>;
     /**
      * Toggle locked state of all controlled objects in the Layer
      * @param {PointerEvent} event    The originating click event
-     * @private
+     * @protected
      */
-    private _onToggleLocked;
+    protected _onToggleLocked(event: PointerEvent): Promise<any>;
     /**
      * Handle sorting the z-order of the object
      * @param {boolean} up            Move the object upwards in the vertical stack?
@@ -25983,15 +26207,15 @@ declare class SceneNavigation extends Application {
     /**
      * Get the set of ContextMenu options which should be applied for Scenes in the menu
      * @returns {object[]}   The Array of context options passed to the ContextMenu instance
-     * @private
+     * @protected
      */
-    private _getContextMenuOptions;
+    protected _getContextMenuOptions(): object[];
     /**
      * Handle left-click events on the scenes in the navigation menu
      * @param {PointerEvent} event
-     * @private
+     * @protected
      */
-    private _onClickScene;
+    protected _onClickScene(event: PointerEvent): void;
     /** @override */
     override _onDragStart(event: any): void;
     /** @override */
@@ -25999,9 +26223,9 @@ declare class SceneNavigation extends Application {
     /**
      * Handle navigation menu toggle click events
      * @param {Event} event
-     * @private
+     * @protected
      */
-    private _onToggleNav;
+    protected _onToggleNav(event: Event): true | Promise<any>;
 }
 /**
  * Pause notification in the HUD
@@ -26024,9 +26248,9 @@ declare class PlayerList extends Application {
     /**
      * An internal toggle for whether to show offline players or hide them
      * @type {boolean}
-     * @private
+     * @protected
      */
-    private _showOffline;
+    protected _showOffline: boolean;
     /**
      * Whether the players list is in a configuration where it is hidden.
      * @returns {boolean}
@@ -26056,15 +26280,15 @@ declare class PlayerList extends Application {
     /**
      * Return the default context options available for the Players application
      * @returns {object[]}
-     * @private
+     * @protected
      */
-    private _getUserContextOptions;
+    protected _getUserContextOptions(): object[];
     /**
      * Toggle display of the Players hud setting for whether to display offline players
      * @param {Event} event   The originating click event
-     * @private
+     * @protected
      */
-    private _onToggleOfflinePlayers;
+    protected _onToggleOfflinePlayers(event: Event): void;
     #private;
 }
 /**
@@ -26116,24 +26340,24 @@ declare class AVConfig extends FormApplication {
      * Set a section's input to enabled or disabled
      * @param {string} selector    Selector for the section to enable or disable
      * @param {boolean} enabled    Whether to enable or disable this section
-     * @private
+     * @protected
      */
-    private _setConfigSectionEnabled;
+    protected _setConfigSectionEnabled(selector: string, enabled?: boolean): void;
     /**
      * Determine whether a given video or audio source, or audio sink has become
      * unavailable since the last time it was set.
      * @param {object} sources The available devices
      * @param {string} source  The selected device
-     * @private
+     * @protected
      */
-    private _isSourceUnavailable;
+    protected _isSourceUnavailable(sources: object, source: string): boolean;
     /**
      * Callback when the turn server type changes
      * Will enable or disable the turn section based on whether the user selected a custom turn or not
      * @param {Event} event   The event that triggered the turn server type change
-     * @private
+     * @protected
      */
-    private _onTurnTypeChanged;
+    protected _onTurnTypeChanged(event: Event): void;
     /** @override */
     override _updateObject(event: any, formData: any): Promise<void>;
 }
@@ -26174,9 +26398,9 @@ declare class CameraViews extends Application {
     /**
      * A custom sorting function that orders/arranges the user display frames
      * @return {number}
-     * @private
+     * @protected
      */
-    private static _sortUsers;
+    protected static _sortUsers(a: any, b: any): number;
     /**
      * A reference to the master AV orchestrator instance
      * @type {AVMaster}
@@ -26244,29 +26468,36 @@ declare class CameraViews extends Application {
     maxZ: number;
     /**
      * Prepare rendering data for a single user
-     * @private
+     * @protected
      */
-    private _getDataForUser;
+    protected _getDataForUser(userId: any, settings: any): {
+        user: any;
+        settings: any;
+        local: any;
+        charname: any;
+        volume: number;
+        cameraViewClass: any;
+    };
     /** @override */
     override activateListeners(html: any): void;
     /**
      * On hover in a camera container, show/hide the controls.
      * @event {Event} event   The original mouseover or mouseout hover event
-     * @private
+     * @protected
      */
-    private _onCameraViewHover;
+    protected _onCameraViewHover(event: any): void;
     /**
      * On clicking on a toggle, disable/enable the audio or video stream.
      * @event {MouseEvent} event   The originating click event
-     * @private
+     * @protected
      */
-    private _onClickControl;
+    protected _onClickControl(event: any): Promise<any>;
     /**
      * Change volume control for a stream
      * @param {Event} event   The originating change event from interaction with the range input
-     * @private
+     * @protected
      */
-    private _onVolumeChange;
+    protected _onVolumeChange(event: Event): void;
     /**
      * Dynamically refresh the state of a single camera view
      * @param {string} userId  The ID of the user whose view we want to refresh.
@@ -26276,9 +26507,9 @@ declare class CameraViews extends Application {
     /**
      * Render changes needed to the PlayerList ui.
      * Show/Hide players depending on option.
-     * @private
+     * @protected
      */
-    private _setPlayerListVisibility;
+    protected _setPlayerListVisibility(): void;
     /**
      * Get the icon class that should be used for various action buttons with different toggled states.
      * The returned icon should represent the visual status of the NEXT state (not the CURRENT state).
@@ -26308,9 +26539,9 @@ declare class CameraViews extends Application {
      * @param {jQuery} container    The container for which to show/hide control elements
      * @param {boolean} show        Whether to show or hide the controls
      * @param {string} selector     Override selector to specify which controls to show or hide
-     * @private
+     * @protected
      */
-    private _toggleControlVisibility;
+    protected _toggleControlVisibility(container: JQueryStatic, show: boolean, selector: string): void;
 }
 /**
  * An abstract base class designed to standardize the behavior for a multi-select UI component.
@@ -26535,9 +26766,9 @@ declare class AmbientLightConfig extends DocumentSheet {
     /**
      * Reset the values of advanced attributes to their default state.
      * @param {PointerEvent} event    The originating click event
-     * @private
+     * @protected
      */
-    private _onResetForm;
+    protected _onResetForm(event: PointerEvent): void;
     /**
      * Preview changes to the AmbientLight document as if they were true document updates.
      * @param {object} [change]  A change to preview.
@@ -26625,15 +26856,15 @@ declare class TileHUD extends BasePlaceableHUD {
      * Handle toggling the overhead state of the Tile.
      * @param {PointerEvent} event      The triggering click event
      * @param {boolean} overhead        Should the Tile be overhead?
-     * @private
+     * @protected
      */
-    private _onToggleOverhead;
+    protected _onToggleOverhead(event: PointerEvent, overhead: boolean): Promise<Application>;
     /**
      * Control video playback by toggling play or paused state for a video Tile.
      * @param {object} event
-     * @private
+     * @protected
      */
-    private _onControlVideo;
+    protected _onControlVideo(event: object): any;
 }
 /**
  * The Application responsible for configuring a single Token document within a parent Scene.
@@ -26710,9 +26941,9 @@ declare class TokenConfig extends DocumentSheet {
     /**
      * Get an Object of image paths and filenames to display in the Token sheet
      * @returns {Promise<object>}
-     * @private
+     * @protected
      */
-    private _getAlternateTokenImages;
+    protected _getAlternateTokenImages(): Promise<object>;
     /** @inheritDoc */
     _getSubmitData(updateData?: {}): any;
     /** @inheritDoc */
@@ -26731,15 +26962,15 @@ declare class TokenConfig extends DocumentSheet {
     /**
      * Handle Token assignment requests to update the default prototype Token
      * @param {MouseEvent} event  The left-click event on the assign token button
-     * @private
+     * @protected
      */
-    private _onAssignToken;
+    protected _onAssignToken(event: MouseEvent): Promise<void>;
     /**
      * Handle changing the attribute bar in the drop-down selector to update the default current and max value
      * @param {Event} event  The select input change event
-     * @private
+     * @protected
      */
-    private _onBarChange;
+    protected _onBarChange(event: Event): Promise<void>;
     /**
      * Handle click events on a token configuration sheet action button
      * @param {PointerEvent} event    The originating click event
@@ -26762,9 +26993,9 @@ declare class TokenConfig extends DocumentSheet {
     /**
      * Disable the user's ability to edit the token image field if wildcard images are enabled and that user does not have
      * file browser permissions.
-     * @private
+     * @protected
      */
-    private _disableEditImage;
+    protected _disableEditImage(): void;
 }
 /**
  * A sheet that alters the values of the default Token configuration used when new Token documents are created.
@@ -26845,9 +27076,9 @@ declare class TokenHUD extends BasePlaceableHUD {
     /**
      * Track whether the status effects control palette is currently expanded or hidden
      * @type {boolean}
-     * @private
+     * @protected
      */
-    private _statusEffects;
+    protected _statusEffects: boolean;
     /** @override */
     override bind(object: any): void;
     /**
@@ -26858,64 +27089,66 @@ declare class TokenHUD extends BasePlaceableHUD {
     override setPosition(_position: any): void;
     /**
      * Get an array of icon paths which represent valid status effect choices
-     * @private
+     * @protected
      */
-    private _getStatusEffectChoices;
+    protected _getStatusEffectChoices(): any;
     /** @inheritdoc */
     _onClickControl(event: any): void | Promise<any>;
     /**
      * Handle initial click to focus an attribute update field
-     * @private
+     * @protected
      */
-    private _onAttributeClick;
+    protected _onAttributeClick(event: any): void;
     /**
      * Force field handling on an Enter keypress even if the value of the field did not change.
      * This is important to suppose use cases with negative number values.
      * @param {KeyboardEvent} event     The originating keydown event
-     * @private
+     * @protected
      */
-    private _onAttributeKeydown;
+    protected _onAttributeKeydown(event: KeyboardEvent): void;
     /**
      * Handle attribute bar update
-     * @private
+     * @protected
      */
-    private _onAttributeUpdate;
+    protected _onAttributeUpdate(event: any): void;
     /**
      * Toggle Token combat state
-     * @private
+     * @protected
      */
-    private _onToggleCombat;
+    protected _onToggleCombat(event: any): Promise<any>;
     /**
      * Handle Token configuration button click
-     * @private
+     * @protected
      */
-    private _onTokenConfig;
+    protected _onTokenConfig(event: any): void;
     /**
      * Handle left-click events to toggle the displayed state of the status effect selection palette
      * @param {MouseEvent }event
-     * @private
+     * @protected
      */
-    private _onToggleStatusEffects;
+    protected _onToggleStatusEffects(event: MouseEvent): void;
     /**
      * Assign css selectors for the active state of the status effects selection palette
      * @param {boolean} active      Should the effects menu be active?
-     * @private
+     * @protected
      */
-    private _toggleStatusEffects;
+    protected _toggleStatusEffects(active: boolean): void;
     /**
      * Handle toggling a token status effect icon
      * @param {PointerEvent} event      The click event to toggle the effect
      * @param {object} [options]        Options which modify the toggle
      * @param {boolean} [options.overlay]   Toggle the overlay effect?
-     * @private
+     * @protected
      */
-    private _onToggleEffect;
+    protected _onToggleEffect(event: PointerEvent, { overlay }?: {
+        overlay?: boolean;
+    }): any;
     /**
      * Handle toggling the target state for this Token
      * @param {PointerEvent} event      The click event to toggle the target
-     * @private
+     * @protected
      */
-    private _onToggleTarget;
+    protected _onToggleTarget(event: PointerEvent): void;
     #private;
 }
 /**
@@ -26982,15 +27215,15 @@ declare class SettingsConfig extends PackageConfiguration {
     /**
      * Handle activating the button to configure User Role permissions
      * @param {Event} event   The initial button click event
-     * @private
+     * @protected
      */
-    private _onClickSubmenu;
+    protected _onClickSubmenu(event: Event): any;
     /**
      * Preview font scaling as the setting is changed.
      * @param {Event} event  The triggering event.
-     * @private
+     * @protected
      */
-    private _previewFontScaling;
+    protected _previewFontScaling(event: Event): void;
     /** @override */
     override _updateObject(event: any, formData: any): Promise<void>;
 }
@@ -27026,9 +27259,9 @@ declare class Compendium extends DocumentDirectory {
     /**
      * Handle clicks on a footer button
      * @param {PointerEvent} event    The originating pointer event
-     * @private
+     * @protected
      */
-    private _onClickFooterButton;
+    protected _onClickFooterButton(event: PointerEvent): any;
     /** @override */
     override _getDocumentDragData(documentId: any): {
         type: any;
@@ -27067,9 +27300,9 @@ declare class KeybindingsConfig extends PackageConfiguration {
      * Transforms a Binding into a human-readable string representation
      * @param {KeybindingActionBinding} binding   The Binding
      * @returns {string}                           A human readable string
-     * @private
+     * @protected
      */
-    private static _humanizeBinding;
+    protected static _humanizeBinding(binding: KeybindingActionBinding): string;
     /** @inheritDoc */
     _categorizeEntry(namespace: any): {
         id: string;
@@ -27087,91 +27320,98 @@ declare class KeybindingsConfig extends PackageConfiguration {
      * Add faux-keybind actions that represent the possible Mouse Controls
      * @param {Map} categories    The current Map of Categories to add to
      * @returns {number}           The number of Actions added
-     * @private
+     * @protected
      */
-    private _addMouseControlsReference;
+    protected _addMouseControlsReference(categories: Map<any, any>): number;
     /**
      * Given an Binding and its parent Action, detects other Actions that might conflict with that binding
      * @param {string} actionId                   The namespaced Action ID the Binding belongs to
      * @param {KeybindingActionConfig} action     The Action config
      * @param {KeybindingActionBinding} binding   The Binding
      * @returns {KeybindingAction[]}
-     * @private
+     * @protected
      */
-    private _detectConflictingActions;
+    protected _detectConflictingActions(actionId: string, action: KeybindingActionConfig, binding: KeybindingActionBinding): KeybindingAction[];
     /** @override */
     override _onResetDefaults(event: any): Promise<any>;
     /**
      * Handle Control clicks
      * @param {MouseEvent} event
-     * @private
+     * @protected
      */
-    private _onClickBindingControl;
+    protected _onClickBindingControl(event: MouseEvent): void | Promise<void>;
     /**
      * Handle left-click events to show / hide a certain category
      * @param {MouseEvent} event
-     * @private
+     * @protected
      */
-    private _onClickAdd;
+    protected _onClickAdd(event: MouseEvent): Promise<void>;
     /**
      * Handle left-click events to show / hide a certain category
      * @param {MouseEvent} event
-     * @private
+     * @protected
      */
-    private _onClickDelete;
+    protected _onClickDelete(event: MouseEvent): Promise<void>;
     /**
      * Inserts a Binding into the Pending Edits object, creating a new Map entry as needed
      * @param {string} namespace
      * @param {string} action
      * @param {number} bindingIndex
      * @param {KeybindingActionBinding} binding
-     * @private
+     * @protected
      */
-    private _addPendingEdit;
+    protected _addPendingEdit(namespace: string, action: string, bindingIndex: number, binding: KeybindingActionBinding): void;
     /**
      * Toggle visibility of the Edit / Save UI
      * @param {MouseEvent} event
-     * @private
+     * @protected
      */
-    private _onClickEditableBinding;
+    protected _onClickEditableBinding(event: MouseEvent): void;
     /**
      * Toggle visibility of the Edit UI
      * @param {MouseEvent} event
-     * @private
+     * @protected
      */
-    private _onDoubleClickKey;
+    protected _onDoubleClickKey(event: MouseEvent): void;
     /**
      * Save the new Binding value and update the display of the UI
      * @param {MouseEvent} event
-     * @private
+     * @protected
      */
-    private _onClickSaveBinding;
+    protected _onClickSaveBinding(event: MouseEvent): Promise<void>;
     /**
      * Given a clicked Action element, finds the parent Action
      * @param {MouseEvent|KeyboardEvent} event
      * @returns {{namespace: string, action: string, actionHtml: *}}
-     * @private
+     * @protected
      */
-    private _getParentAction;
+    protected _getParentAction(event: MouseEvent | KeyboardEvent): {
+        namespace: string;
+        action: string;
+        actionHtml: any;
+    };
     /**
      * Given a Clicked binding control element, finds the parent Binding
      * @param {MouseEvent|KeyboardEvent} event
      * @returns {{bindingHtml: *, bindingId: string}}
-     * @private
+     * @protected
      */
-    private _getParentBinding;
+    protected _getParentBinding(event: MouseEvent | KeyboardEvent): {
+        bindingHtml: any;
+        bindingId: string;
+    };
     /**
      * Iterates over all Pending edits, merging them in with unedited Bindings and then saving and resetting the UI
      * @returns {Promise<void>}
-     * @private
+     * @protected
      */
-    private _savePendingEdits;
+    protected _savePendingEdits(): Promise<void>;
     /**
      * Processes input from the keyboard to form a list of pending Binding edits
      * @param {KeyboardEvent} event   The keyboard event
-     * @private
+     * @protected
      */
-    private _onKeydownBindingInput;
+    protected _onKeydownBindingInput(event: KeyboardEvent): void;
     #private;
 }
 /**
@@ -27237,19 +27477,19 @@ declare class ModuleManagement extends FormApplication {
     protected _confirmDocumentsUnavailable(module: Module): Promise<boolean>;
     /**
      * Handle a button-click to deactivate all modules
-     * @private
+     * @protected
      */
-    private _onDeactivateAll;
+    protected _onDeactivateAll(event: any): void;
     /**
      * Handle expanding or collapsing the display of descriptive elements
-     * @private
+     * @protected
      */
-    private _onExpandCollapse;
+    protected _onExpandCollapse(event: any): void;
     /**
      * Handle switching the module list filter.
-     * @private
+     * @protected
      */
-    private _onFilterList;
+    protected _onFilterList(event: any): void;
     /** @inheritdoc */
     _onSearchFilter(event: any, query: any, rgx: any, html: any): void;
     /**
@@ -27276,15 +27516,15 @@ declare class PermissionConfig extends FormApplication {
      * Prepare the permissions object used to render the configuration template
      * @param {object} current      The current permission configuration
      * @returns {object[]}          Permission data for sheet rendering
-     * @private
+     * @protected
      */
-    private _getPermissions;
+    protected _getPermissions(current: object): object[];
     /**
      * Handle button click to reset default settings
      * @param {Event} event   The initial button click event
-     * @private
+     * @protected
      */
-    private _onResetDefaults;
+    protected _onResetDefaults(event: Event): Promise<Application>;
     /** @override */
     override _onSubmit(event: any, options: any): Promise<any>;
     /** @override */
@@ -27401,9 +27641,9 @@ declare class ToursManagement extends PackageConfiguration {
     /**
      * Handle Control clicks
      * @param {MouseEvent} event
-     * @private
+     * @protected
      */
-    private _onClickControl;
+    protected _onClickControl(event: MouseEvent): any;
 }
 /**
  * @typedef {FormApplicationOptions} WorldConfigOptions
@@ -27418,9 +27658,9 @@ declare class WorldConfig extends FormApplication {
     /**
      * The website knowledge base URL.
      * @type {string}
-     * @private
+     * @protected
      */
-    private static "__#206@#WORLD_KB_URL";
+    protected static "__#206@#WORLD_KB_URL": string;
     /**
      * A semantic alias for the World object which is being configured by this form.
      * @type {World}
@@ -27525,9 +27765,9 @@ declare class ChatLog extends SidebarTab {
     /**
      * Handle dropping of transferred data onto the chat editor
      * @param {DragEvent} event     The originating drop event which triggered the data transfer
-     * @private
+     * @protected
      */
-    private static _onDropTextAreaData;
+    protected static _onDropTextAreaData(event: DragEvent): Promise<void>;
     /**
      * Update roll mode select dropdowns when the setting is changed
      * @param {string} mode     The new roll mode setting
@@ -27537,45 +27777,45 @@ declare class ChatLog extends SidebarTab {
     /**
      * Track any pending text which the user has submitted in the chat log textarea
      * @type {string}
-     * @private
+     * @protected
      */
-    private _pendingText;
+    protected _pendingText: string;
     /**
      * Track the history of the past 5 sent messages which can be accessed using the arrow keys
      * @type {object[]}
-     * @private
+     * @protected
      */
-    private _sentMessages;
+    protected _sentMessages: object[];
     /**
      * Track which remembered message is being currently displayed to cycle properly
      * @type {number}
-     * @private
+     * @protected
      */
-    private _sentMessageIndex;
+    protected _sentMessageIndex: number;
     /**
      * Track the time when the last message was sent to avoid flooding notifications
      * @type {number}
-     * @private
+     * @protected
      */
-    private _lastMessageTime;
+    protected _lastMessageTime: number;
     /**
      * Track the id of the last message displayed in the log
      * @type {string|null}
-     * @private
+     * @protected
      */
-    private _lastId;
+    protected _lastId: string | null;
     /**
      * Track the last received message which included the user as a whisper recipient.
      * @type {ChatMessage|null}
-     * @private
+     * @protected
      */
-    private _lastWhisper;
+    protected _lastWhisper: ChatMessage | null;
     /**
      * A reference to the chat text entry bound key method
      * @type {Function|null}
-     * @private
+     * @protected
      */
-    private _onChatKeyDownBinding;
+    protected _onChatKeyDownBinding: Function | null;
     /**
      * Returns if the chat log is currently scrolled to the bottom
      * @returns {boolean}
@@ -27595,9 +27835,9 @@ declare class ChatLog extends SidebarTab {
      * @param {jQuery} html     The rendered jQuery HTML object
      * @param {number} size     The batch size to include
      * @returns {Promise<void>}
-     * @private
+     * @protected
      */
-    private _renderBatch;
+    protected _renderBatch(html: JQueryStatic, size: number): Promise<void>;
     /**
      * Delete a single message from the chat log
      * @param {string} messageId    The ChatMessage document to remove from the log
@@ -27660,97 +27900,97 @@ declare class ChatLog extends SidebarTab {
      * @param {RegExpMatchArray[]} matches Multi-line matched roll expressions
      * @param {Object} chatData         The initial chat data
      * @param {Object} createOptions    Options used to create the message
-     * @private
+     * @protected
      */
-    private _processDiceCommand;
+    protected _processDiceCommand(command: string, matches: RegExpMatchArray[], chatData: any, createOptions: any): Promise<void>;
     /**
      * Process messages which are posted using a chat whisper command
      * @param {string} command          The chat command type
      * @param {RegExpMatchArray} match  The matched RegExp expressions
      * @param {Object} chatData         The initial chat data
      * @param {Object} createOptions    Options used to create the message
-     * @private
+     * @protected
      */
-    private _processWhisperCommand;
+    protected _processWhisperCommand(command: string, match: RegExpMatchArray, chatData: any, createOptions: any): void;
     /**
      * Process messages which are posted using a chat whisper command
      * @param {string} command          The chat command type
      * @param {RegExpMatchArray} match  The matched RegExp expressions
      * @param {Object} chatData         The initial chat data
      * @param {Object} createOptions    Options used to create the message
-     * @private
+     * @protected
      */
-    private _processChatCommand;
+    protected _processChatCommand(command: string, match: RegExpMatchArray, chatData: any, createOptions: any): void;
     /**
      * Process messages which execute a macro.
      * @param {string} command  The chat command typed.
      * @param {RegExpMatchArray} match  The RegExp matches.
-     * @private
+     * @protected
      */
-    private _processMacroCommand;
+    protected _processMacroCommand(command: string, match: RegExpMatchArray): any;
     /**
      * Add a sent message to an array of remembered messages to be re-sent if the user pages up with the up arrow key
      * @param {string} message    The message text being remembered
-     * @private
+     * @protected
      */
-    private _remember;
+    protected _remember(message: string): void;
     /**
      * Recall a previously sent message by incrementing up (1) or down (-1) through the sent messages array
      * @param {number} direction    The direction to recall, positive for older, negative for more recent
      * @return {string}             The recalled message, or an empty string
-     * @private
+     * @protected
      */
-    private _recall;
+    protected _recall(direction: number): string;
     /** @inheritdoc */
     _contextMenu(html: any): void;
     /**
      * Get the ChatLog entry context options
      * @return {object[]}   The ChatLog entry context options
-     * @private
+     * @protected
      */
-    private _getEntryContextOptions;
+    protected _getEntryContextOptions(): object[];
     /**
      * Handle keydown events in the chat entry textarea
      * @param {KeyboardEvent} event
-     * @private
+     * @protected
      */
-    private _onChatKeyDown;
+    protected _onChatKeyDown(event: KeyboardEvent): Promise<void>;
     /**
      * Handle setting the preferred roll mode
      * @param {Event} event
-     * @private
+     * @protected
      */
-    private _onChangeRollMode;
+    protected _onChangeRollMode(event: Event): void;
     /**
      * Handle single message deletion workflow
      * @param {Event} event
-     * @private
+     * @protected
      */
-    private _onDeleteMessage;
+    protected _onDeleteMessage(event: Event): any;
     /**
      * Handle clicking of dice tooltip buttons
      * @param {Event} event
-     * @private
+     * @protected
      */
-    private _onDiceRollClick;
+    protected _onDiceRollClick(event: Event): void;
     /**
      * Handle click events to export the chat log
      * @param {Event} event
-     * @private
+     * @protected
      */
-    private _onExportLog;
+    protected _onExportLog(event: Event): void;
     /**
      * Handle click events to flush the chat log
      * @param {Event} event
-     * @private
+     * @protected
      */
-    private _onFlushLog;
+    protected _onFlushLog(event: Event): void;
     /**
      * Handle scroll events within the chat log container
      * @param {UIEvent} event   The initial scroll event
-     * @private
+     * @protected
      */
-    private _onScrollLog;
+    protected _onScrollLog(event: UIEvent): Promise<void>;
     #private;
 }
 /**
@@ -27761,9 +28001,9 @@ declare class CombatTracker extends SidebarTab {
     /**
      * Record a reference to the currently highlighted Token
      * @type {Token|null}
-     * @private
+     * @protected
      */
-    private _highlighted;
+    protected _highlighted: Function;
     /**
      * Record the currently tracked Combat encounter
      * @type {Combat|null}
@@ -27803,34 +28043,34 @@ declare class CombatTracker extends SidebarTab {
     /**
      * Handle new Combat creation request
      * @param {Event} event
-     * @private
+     * @protected
      */
-    private _onCombatCreate;
+    protected _onCombatCreate(event: Event): Promise<void>;
     /**
      * Handle a Combat cycle request
      * @param {Event} event
-     * @private
+     * @protected
      */
-    private _onCombatCycle;
+    protected _onCombatCycle(event: Event): Promise<void>;
     /**
      * Handle click events on Combat control buttons
-     * @private
+     * @protected
      * @param {Event} event   The originating mousedown event
      */
-    private _onCombatControl;
+    protected _onCombatControl(event: Event): Promise<void>;
     /**
      * Handle a Combatant control toggle
-     * @private
+     * @protected
      * @param {Event} event   The originating mousedown event
      */
-    private _onCombatantControl;
+    protected _onCombatantControl(event: Event): Promise<any>;
     /**
      * Handle toggling the defeated status effect on a combatant Token
      * @param {Combatant} combatant     The combatant data being modified
      * @returns {Promise}                A Promise that resolves after all operations are complete
-     * @private
+     * @protected
      */
-    private _onToggleDefeatedStatus;
+    protected _onToggleDefeatedStatus(combatant: Function): Promise<any>;
     /**
      * Handle pinging a combatant Token
      * @param {Combatant} combatant     The combatant data
@@ -27842,20 +28082,20 @@ declare class CombatTracker extends SidebarTab {
      * Handle mouse-down event on a combatant name in the tracker
      * @param {Event} event   The originating mousedown event
      * @returns {Promise}     A Promise that resolves once the pan is complete
-     * @private
+     * @protected
      */
-    private _onCombatantMouseDown;
+    protected _onCombatantMouseDown(event: Event): Promise<any>;
     _clickTime: number;
     /**
      * Handle mouse-hover events on a combatant in the tracker
-     * @private
+     * @protected
      */
-    private _onCombatantHoverIn;
+    protected _onCombatantHoverIn(event: any): void;
     /**
      * Handle mouse-unhover events for a combatant in the tracker
-     * @private
+     * @protected
      */
-    private _onCombatantHoverOut;
+    protected _onCombatantHoverOut(event: any): void;
     /**
      * Highlight a hovered combatant in the tracker.
      * @param {Combatant} combatant The Combatant
@@ -27867,15 +28107,15 @@ declare class CombatTracker extends SidebarTab {
     /**
      * Get the Combatant entry context options
      * @returns {object[]}   The Combatant entry context options
-     * @private
+     * @protected
      */
-    private _getEntryContextOptions;
+    protected _getEntryContextOptions(): object[];
     /**
      * Display a dialog which prompts the user to enter a new initiative value for a Combatant
      * @param {jQuery} li
-     * @private
+     * @protected
      */
-    private _onConfigureCombatant;
+    protected _onConfigureCombatant(li: JQueryStatic): void;
 }
 /**
  * A compendium of knowledge arcane and mystical!
@@ -27955,9 +28195,9 @@ declare class CompendiumDirectory extends SidebarTab {
     /**
      * Handle a Compendium Pack deletion request
      * @param {object} pack   The pack object requested for deletion
-     * @private
+     * @protected
      */
-    private _onDeleteCompendium;
+    protected _onDeleteCompendium(pack: object): Promise<any>;
     #private;
 }
 /**
@@ -28010,9 +28250,9 @@ declare class PlaylistDirectory extends DocumentDirectory {
     /**
      * Are the global volume controls currently expanded?
      * @type {boolean}
-     * @private
+     * @protected
      */
-    private _volumeExpanded;
+    protected _volumeExpanded: boolean;
     /**
      * Cache the set of Playlist documents that are displayed as playing when the directory is rendered
      * @type {Playlist[]}
@@ -28026,9 +28266,9 @@ declare class PlaylistDirectory extends DocumentDirectory {
     /**
      * Initialize the set of Playlists which should be displayed in an expanded form
      * @returns {Set<string>}
-     * @private
+     * @protected
      */
-    private _createExpandedSet;
+    protected _createExpandedSet(): Set<string>;
     /**
      * Return an Array of the Playlist documents which are currently playing
      * @type {Playlist[]}
@@ -28037,57 +28277,57 @@ declare class PlaylistDirectory extends DocumentDirectory {
     /**
      * Whether the 'currently playing' element is pinned to the top or bottom of the display.
      * @type {string}
-     * @private
+     * @protected
      */
-    private get _playingLocation();
+    protected get _playingLocation(): string;
     _playingSoundsData: any[];
     /**
      * Augment the tree directory structure with playlist-level data objects for rendering
      * @param {object} node   The tree leaf node being prepared
-     * @private
+     * @protected
      */
-    private _prepareTreeData;
+    protected _prepareTreeData(node: object): void;
     /**
      * Create an object of rendering data for each Playlist document being displayed
      * @param {Playlist} playlist   The playlist to display
      * @returns {object}            The data for rendering
-     * @private
+     * @protected
      */
-    private _preparePlaylistData;
+    protected _preparePlaylistData(playlist: Playlist): object;
     /**
      * Get the icon used to represent the "play/stop" icon for the PlaylistSound
      * @param {PlaylistSound} sound   The sound being rendered
      * @returns {string}              The icon that should be used
-     * @private
+     * @protected
      */
-    private _getPlayIcon;
+    protected _getPlayIcon(sound: PlaylistSound): string;
     /**
      * Get the icon used to represent the pause/loading icon for the PlaylistSound
      * @param {PlaylistSound} sound   The sound being rendered
      * @returns {string}              The icon that should be used
-     * @private
+     * @protected
      */
-    private _getPauseIcon;
+    protected _getPauseIcon(sound: PlaylistSound): string;
     /**
      * Given a constant playback mode, provide the FontAwesome icon used to display it
      * @param {number} mode
      * @returns {string}
-     * @private
+     * @protected
      */
-    private _getModeIcon;
+    protected _getModeIcon(mode: number): string;
     /**
      * Given a constant playback mode, provide the string tooltip used to describe it
      * @param {number} mode
      * @returns {string}
-     * @private
+     * @protected
      */
-    private _getModeTooltip;
+    protected _getModeTooltip(mode: number): string;
     /**
      * Handle global volume change for the playlist sidebar
      * @param {MouseEvent} event   The initial click event
-     * @private
+     * @protected
      */
-    private _onGlobalVolume;
+    protected _onGlobalVolume(event: MouseEvent): any;
     /** @inheritdoc */
     collapseAll(): void;
     /** @override */
@@ -28095,83 +28335,83 @@ declare class PlaylistDirectory extends DocumentDirectory {
     /**
      * Handle global volume control collapse toggle
      * @param {MouseEvent} event   The initial click event
-     * @private
+     * @protected
      */
-    private _onVolumeCollapse;
+    protected _onVolumeCollapse(event: MouseEvent): void;
     /**
      * Helper method to render the expansion or collapse of playlists
-     * @private
+     * @protected
      */
-    private _collapse;
+    protected _collapse(el: any, collapse: any, speed?: number): void;
     /**
      * Handle Playlist playback state changes
      * @param {MouseEvent} event    The initial click event
      * @param {boolean} playing     Is the playlist now playing?
-     * @private
+     * @protected
      */
-    private _onPlaylistPlay;
+    protected _onPlaylistPlay(event: MouseEvent, playing: boolean): any;
     /**
      * Handle advancing the playlist to the next (or previous) sound
      * @param {MouseEvent} event    The initial click event
      * @param {string} action       The control action requested
-     * @private
+     * @protected
      */
-    private _onPlaylistSkip;
+    protected _onPlaylistSkip(event: MouseEvent, action: string): any;
     /**
      * Handle cycling the playback mode for a Playlist
      * @param {MouseEvent} event   The initial click event
-     * @private
+     * @protected
      */
-    private _onPlaylistToggleMode;
+    protected _onPlaylistToggleMode(event: MouseEvent): any;
     /**
      * Handle Playlist track addition request
      * @param {MouseEvent} event   The initial click event
-     * @private
+     * @protected
      */
-    private _onSoundCreate;
+    protected _onSoundCreate(event: MouseEvent): void;
     /**
      * Modify the playback state of a Sound within a Playlist
      * @param {MouseEvent} event    The initial click event
      * @param {string} action       The sound control action performed
-     * @private
+     * @protected
      */
-    private _onSoundPlay;
+    protected _onSoundPlay(event: MouseEvent, action: string): any;
     /**
      * Handle volume adjustments to sounds within a Playlist
      * @param {Event} event   The initial change event
-     * @private
+     * @protected
      */
-    private _onSoundVolume;
+    protected _onSoundVolume(event: Event): void;
     /**
      * Handle changes to the sound playback mode
      * @param {Event} event   The initial click event
-     * @private
+     * @protected
      */
-    private _onSoundToggleMode;
+    protected _onSoundToggleMode(event: Event): any;
     _onPlayingPin(): any;
     /** @inheritdoc */
     _onSearchFilter(event: any, query: any, rgx: any, html: any): void;
     /**
      * Update the displayed timestamps for all currently playing audio sources.
      * Runs on an interval every 1000ms.
-     * @private
+     * @protected
      */
-    private _updateTimestamps;
+    protected _updateTimestamps(): void;
     /**
      * Format the displayed timestamp given a number of seconds as input
      * @param {number} seconds    The current playback time in seconds
      * @returns {string}          The formatted timestamp
-     * @private
+     * @protected
      */
-    private _formatTimestamp;
+    protected _formatTimestamp(seconds: number): string;
     /** @inheritdoc */
     _contextMenu(html: any): void;
     /**
      * Get context menu options for individual sound effects
      * @returns {Object}   The context options for each sound
-     * @private
+     * @protected
      */
-    private _getSoundContextOptions;
+    protected _getSoundContextOptions(): any;
     /** @inheritdoc */
     _onDragStart(event: any): void;
     /** @inheritdoc */
@@ -28204,15 +28444,15 @@ declare class Settings extends SidebarTab {
     /**
      * Delegate different actions for different settings buttons
      * @param {MouseEvent} event    The originating click event
-     * @private
+     * @protected
      */
-    private _onSettingsButton;
+    protected _onSettingsButton(event: MouseEvent): any;
     /**
      * Executes with the update notification pip is clicked
      * @param {MouseEvent} event    The originating click event
-     * @private
+     * @protected
      */
-    private _onUpdateNotificationClick;
+    protected _onUpdateNotificationClick(event: MouseEvent): void;
 }
 /**
  * A simple window application which shows the built documentation pages within an iframe
@@ -28311,9 +28551,11 @@ declare class AVClient {
      * Obtain a mapping of available device sources for a given type.
      * @param {string} kind       The type of device source being requested
      * @returns {Promise<{object}>}
-     * @private
+     * @protected
      */
-    private _getSourcesOfType;
+    protected _getSourcesOfType(kind: string): Promise<{
+        object;
+    }>;
     /**
      * Return an array of Foundry User IDs which are currently connected to A/V.
      * The current user should also be included as a connected user in addition to all peers.
@@ -28405,16 +28647,16 @@ declare class AVMaster {
      * The cached connection promise.
      * This is required to prevent re-triggering a connection while one is already in progress.
      * @type {Promise<boolean>|null}
-     * @private
+     * @protected
      */
-    private _connecting;
+    protected _connecting: Promise<boolean> | null;
     /**
      * A flag to track whether the A/V system is currently in the process of reconnecting.
      * This occurs if the connection is lost or interrupted.
      * @type {boolean}
-     * @private
+     * @protected
      */
-    private _reconnecting;
+    protected _reconnecting: boolean;
     _speakingData: {
         speaking: boolean;
         volumeHistories: any[];
@@ -28438,9 +28680,9 @@ declare class AVMaster {
     reestablish(): Promise<void>;
     /**
      * Initialize the local broadcast state.
-     * @private
+     * @protected
      */
-    private _initialize;
+    protected _initialize(): void;
     /**
      * A user can broadcast audio if the AV mode is compatible and if they are allowed to broadcast.
      * @param {string} userId
@@ -28474,9 +28716,9 @@ declare class AVMaster {
     /**
      * Set up audio level listeners to handle voice activation detection workflow.
      * @param {string} mode           The currently selected voice broadcasting mode
-     * @private
+     * @protected
      */
-    private _initializeUserVoiceDetection;
+    protected _initializeUserVoiceDetection(mode: string): void;
     /**
      * Activate voice detection tracking for a userId on a provided MediaStream.
      * Currently only a MediaStream is supported because MediaStreamTrack processing is not yet supported cross-browser.
@@ -28502,9 +28744,9 @@ declare class AVMaster {
      * or not, in order to eliminate short bursts of audio (coughing for example).
      *
      * @param {number} dbLevel         The audio level in decibels of the user within the last 50ms
-     * @private
+     * @protected
      */
-    private _onAudioLevel;
+    protected _onAudioLevel(dbLevel: number): any;
     /**
      * Resets the speaking history of a user
      * If the user was considered speaking, then mark them as not speaking
@@ -28624,14 +28866,14 @@ declare class AVSettings {
     get verticalDock(): boolean;
     /**
      * Prepare a standardized object of user settings data for a single User
-     * @private
+     * @protected
      */
-    private _getUserSettings;
+    protected _getUserSettings(user: any): any;
     /**
      * Handle setting changes to either rctClientSettings or rtcWorldSettings.
-     * @private
+     * @protected
      */
-    private _onSettingsChanged;
+    protected _onSettingsChanged(): void;
     /**
      * Handle another connected user changing their AV settings.
      * @param {string} userId
@@ -28668,9 +28910,9 @@ declare class SimplePeerAVClient extends AVClient {
     /**
      * Has the client been successfully initialized?
      * @type {boolean}
-     * @private
+     * @protected
      */
-    private _initialized;
+    protected _initialized: boolean;
     /**
      * Is outbound broadcast of local audio enabled?
      * @type {boolean}
@@ -28683,9 +28925,9 @@ declare class SimplePeerAVClient extends AVClient {
     _connectionPoll: number | null;
     /**
      * Try to establish a peer connection with each user connected to the server.
-     * @private
+     * @protected
      */
-    private _connect;
+    protected _connect(): Promise<any[]>;
     /** @override */
     override getConnectedUsers(): any[];
     /** @override */
@@ -28709,9 +28951,12 @@ declare class SimplePeerAVClient extends AVClient {
      * Attempt to create local media streams.
      * @param {{video: object, audio: object}} params       Parameters for the getUserMedia request.
      * @returns {Promise<MediaStream|Error>}                The created MediaStream or an error.
-     * @private
+     * @protected
      */
-    private _createMediaStream;
+    protected _createMediaStream(params: {
+        video: object;
+        audio: object;
+    }): Promise<MediaStream | Error>;
     /**
      * Listen for Audio/Video updates on the av socket to broker connections between peers
      */
@@ -28740,16 +28985,16 @@ declare class SimplePeerAVClient extends AVClient {
      * Modules may implement more advanced connection strategies by overriding this method.
      * @param {string} userId           The Foundry user ID with whom we are connecting
      * @param {boolean} isInitiator     Is the current user initiating the connection, or responding to it?
-     * @private
+     * @protected
      */
-    private _createPeerConnection;
+    protected _createPeerConnection(userId: string, isInitiator: boolean): any;
     /**
      * Setup the custom TURN relay to be used in subsequent calls if there is one configured.
      * TURN credentials are mandatory in WebRTC.
      * @param {object} options The SimplePeer configuration object.
-     * @private
+     * @protected
      */
-    private _setupCustomTURN;
+    protected _setupCustomTURN(options: object): void;
     /**
      * Disconnect from a peer by stopping current stream tracks and destroying the SimplePeer instance
      * @param {string} userId           The Foundry user ID from whom we are disconnecting
@@ -28905,9 +29150,9 @@ declare class AudioHelper {
      * Only created if necessary to listen to audio streams.
      *
      * @type {AudioContext}
-     * @private
+     * @protected
      */
-    private _audioContext;
+    protected _audioContext: AudioContext;
     /**
      * Map of all streams that we listen to for determining the decibel levels.
      * Used for analyzing audio levels of each stream.
@@ -28922,25 +29167,25 @@ declare class AudioHelper {
      * }
      *
      * @type {Object}
-     * @private
+     * @protected
      */
-    private _analyserStreams;
+    protected _analyserStreams: any;
     /**
      * Interval ID as returned by setInterval for analysing the volume of streams
      * When set to 0, means no timer is set.
      * @type {number}
-     * @private
+     * @protected
      */
-    private _analyserInterval;
+    protected _analyserInterval: number;
     /**
      * Fast Fourier Transform Array.
      * Used for analysing the decibel level of streams. The array is allocated only once
      * then filled by the analyser repeatedly. We only generate it when we need to listen to
      * a stream's level, so we initialize it to null.
      * @type {Float32Array}
-     * @private
+     * @protected
      */
-    private _fftArray;
+    protected _fftArray: Float32Array;
     /**
      * A Promise which resolves once the game audio API is unlocked and ready to use.
      * @type {Promise<AudioContext>}
@@ -29037,36 +29282,36 @@ declare class AudioHelper {
      * I don't know if it actually helps much with performance but it's expected that limiting the number of timers
      * running at the same time is good practice and with JS itself, there's a potential for a timer congestion
      * phenomenon if too many are created.
-     * @private
+     * @protected
      */
-    private _ensureAnalyserTimer;
+    protected _ensureAnalyserTimer(): void;
     /**
      * Cancel the global analyser timer
      * If the timer is running and has become unnecessary, stops it.
-     * @private
+     * @protected
      */
-    private _cancelAnalyserTimer;
+    protected _cancelAnalyserTimer(): void;
     /**
      * Capture audio level for all speakers and emit a webrtcVolumes custom event with all the volume levels
      * detected since the last emit.
      * The event's detail is in the form of {userId: decibelLevel}
-     * @private
+     * @protected
      */
-    private _emitVolumes;
+    protected _emitVolumes(): void;
     /**
      * Handle the first observed user gesture
      * @param {Event} event         The mouse-move event which enables playback
      * @param {Function} resolve    The Promise resolution function
-     * @private
+     * @protected
      */
-    private _onFirstGesture;
+    protected _onFirstGesture(event: Event, resolve: Function): any;
     /**
      * Additional standard callback events that occur whenever a global volume slider is adjusted
      * @param {string} key        The setting key
      * @param {number} volume     The new volume level
-     * @private
+     * @protected
      */
-    private _onChangeGlobalVolume;
+    protected _onChangeGlobalVolume(key: string, volume: number): void;
     #private;
 }
 /**
@@ -29126,9 +29371,9 @@ declare class AudioContainer {
     /**
      * Should the audio source loop?
      * @type {boolean}
-     * @private
+     * @protected
      */
-    private _loop;
+    protected _loop: boolean;
     set loop(arg: boolean);
     get loop(): boolean;
     /**
@@ -29170,9 +29415,9 @@ declare class AudioContainer {
      * Create the initial audio node used for playback.
      * Determine the node type to use based on cached state and sound duration.
      * @returns {AudioBufferSourceNode|MediaElementAudioSourceNode}
-     * @private
+     * @protected
      */
-    private _createNode;
+    protected _createNode(): AudioBufferSourceNode | MediaElementAudioSourceNode;
     /**
      * Create an Audio source node using a buffered array.
      * @param {string} src                The source URL from which to create the buffer
@@ -29181,20 +29426,20 @@ declare class AudioContainer {
     createAudioBuffer(src: string): Promise<AudioBuffer>;
     /**
      * Create a AudioBufferSourceNode using a provided AudioBuffer
-     * @private
+     * @protected
      */
-    private _createAudioBufferSourceNode;
+    protected _createAudioBufferSourceNode(buffer: any): AudioBufferSourceNode;
     /**
      * Create an HTML5 Audio element which has loaded the metadata for the provided source.
      * @returns {Promise<HTMLAudioElement>}
-     * @private
+     * @protected
      */
-    private _createAudioElement;
+    protected _createAudioElement(): Promise<HTMLAudioElement>;
     /**
      * Create a MediaElementAudioSourceNode using a provided HTMLAudioElement
-     * @private
+     * @protected
      */
-    private _createMediaElementAudioSourceNode;
+    protected _createMediaElementAudioSourceNode(element: any): MediaElementAudioSourceNode;
     /**
      * Begin playback for the source node.
      * @param {number} [offset]       The desired start time
@@ -29210,15 +29455,15 @@ declare class AudioContainer {
      * MediaElementAudioSourceNodes, this also means optionally restarting if
      * the sound is supposed to loop.
      * @param {Function} onended A callback provided by the owner of the container that gets fired when the sound ends.
-     * @private
+     * @protected
      */
-    private _onEnd;
+    protected _onEnd(onended: Function): void;
     /**
      * Unload the MediaElementAudioSourceNode to terminate any ongoing
      * connections.
-     * @private
+     * @protected
      */
-    private _unloadMediaNode;
+    protected _unloadMediaNode(): void;
 }
 /**
  * The Sound class is used to control the playback of audio sources using the Web Audio API.
@@ -29227,9 +29472,9 @@ declare class Sound {
     /**
      * A global audio node ID used to quickly reference a specific audio node
      * @type {number}
-     * @private
+     * @protected
      */
-    private static _nodeId;
+    protected static _nodeId: number;
     constructor(src: any, { container }?: {
         container: any;
     });
@@ -29273,9 +29518,9 @@ declare class Sound {
      * The registered event handler id for this Sound.
      * Incremented each time a callback is registered.
      * @type {number}
-     * @private
+     * @protected
      */
-    private _eventHandlerId;
+    protected _eventHandlerId: number;
     /**
      * If this Sound source is currently in the process of loading, this attribute contains a Promise that will resolve
      * when the loading process completes.
@@ -29285,9 +29530,9 @@ declare class Sound {
     /**
      * A collection of scheduled events recorded as window timeout IDs
      * @type {Set<number>}
-     * @private
+     * @protected
      */
-    private _scheduledEvents;
+    protected _scheduledEvents: Set<number>;
     /**
      * A convenience reference to the sound context used by the application
      * @returns {AudioContext}
@@ -29425,14 +29670,14 @@ declare class Sound {
     }): number;
     /**
      * Register a new callback function for a certain event. For internal use only.
-     * @private
+     * @protected
      */
-    private _registerForEvent;
+    protected _registerForEvent(eventName: any, callback: any): number;
     /**
      * Cancel all pending scheduled events.
-     * @private
+     * @protected
      */
-    private _clearEvents;
+    protected _clearEvents(): void;
     /**
      * Called when playback concludes naturally
      * @protected
@@ -29480,15 +29725,15 @@ declare class SetupTour extends Tour {
     /**
      * Handle Step setup for the Installing a System Tour
      * @returns {Promise<void>}
-     * @private
+     * @protected
      */
-    private _installingASystem;
+    protected _installingASystem(): Promise<void>;
     /**
      * Handle Step setup for the Creating a World Tour
      * @returns {Promise<void>}
-     * @private
+     * @protected
      */
-    private _creatingAWorld;
+    protected _creatingAWorld(): Promise<void>;
 }
 /**
  * A Tour subclass for the Sidebar Tour

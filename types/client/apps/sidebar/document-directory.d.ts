@@ -101,9 +101,12 @@ declare class DocumentDirectory extends SidebarTab {
      * @param {Folder} folder                  The Folder being dropped
      * @param {Folder} targetFolder            The Folder to which the Folder should be added
      * @returns {Promise<{foldersToCreate: Array<Folder>, documentsToCreate: Array<Document>}>}
-     * @private
+     * @protected
      */
-    private _organizeDroppedFoldersAndDocuments;
+    protected _organizeDroppedFoldersAndDocuments(folder: Folder, targetFolder: Folder): Promise<{
+        foldersToCreate: Array<Folder>;
+        documentsToCreate: Array<Document>;
+    }>;
     /**
      * Create a list of documents in a dropped Folder
      * @param {Folder} folder                  The Folder being dropped

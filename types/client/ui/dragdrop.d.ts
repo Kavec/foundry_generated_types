@@ -71,21 +71,21 @@ declare class DragDrop {
     /**
      * Handle the start of a drag workflow
      * @param {DragEvent} event   The drag event being handled
-     * @private
+     * @protected
      */
-    private _handleDragStart;
+    protected _handleDragStart(event: DragEvent): void;
     /**
      * Handle a dragged element over a droppable target
      * @param {DragEvent} event   The drag event being handled
-     * @private
+     * @protected
      */
-    private _handleDragOver;
+    protected _handleDragOver(event: DragEvent): boolean;
     /**
      * Handle a dragged element dropped on a droppable target
      * @param {DragEvent} event   The drag event being handled
-     * @private
+     * @protected
      */
-    private _handleDrop;
+    protected _handleDrop(event: DragEvent): any;
 }
 type DragDropConfiguration = {
     /**

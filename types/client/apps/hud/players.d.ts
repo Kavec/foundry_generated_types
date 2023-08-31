@@ -9,9 +9,9 @@ declare class PlayerList extends Application {
     /**
      * An internal toggle for whether to show offline players or hide them
      * @type {boolean}
-     * @private
+     * @protected
      */
-    private _showOffline;
+    protected _showOffline: boolean;
     /**
      * Whether the players list is in a configuration where it is hidden.
      * @returns {boolean}
@@ -41,14 +41,14 @@ declare class PlayerList extends Application {
     /**
      * Return the default context options available for the Players application
      * @returns {object[]}
-     * @private
+     * @protected
      */
-    private _getUserContextOptions;
+    protected _getUserContextOptions(): object[];
     /**
      * Toggle display of the Players hud setting for whether to display offline players
      * @param {Event} event   The originating click event
-     * @private
+     * @protected
      */
-    private _onToggleOfflinePlayers;
+    protected _onToggleOfflinePlayers(event: Event): void;
     #private;
 }

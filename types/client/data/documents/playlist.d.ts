@@ -72,19 +72,19 @@ declare class Playlist {
     cycleMode(): Promise<Playlist>;
     /**
      * Get the next sound in the cached playback order. For internal use.
-     * @private
+     * @protected
      */
-    private _getNextSound;
+    protected _getNextSound(soundId: any): any;
     /**
      * Get the previous sound in the cached playback order. For internal use.
-     * @private
+     * @protected
      */
-    private _getPreviousSound;
+    protected _getPreviousSound(soundId: any): any;
     /**
      * Define the sorting order for the Sounds within this Playlist. For internal use.
-     * @private
+     * @protected
      */
-    private _sortSounds;
+    protected _sortSounds(a: any, b: any): any;
     /** @inheritdoc */
     toAnchor({ classes, ...options }?: {
         classes?: any[];
@@ -106,22 +106,22 @@ declare class Playlist {
     /**
      * Handle callback logic when an individual sound within the Playlist concludes playback naturally
      * @param {PlaylistSound} sound
-     * @private
+     * @protected
      */
-    private _onSoundEnd;
+    protected _onSoundEnd(sound: PlaylistSound): Promise<any>;
     /**
      * Handle callback logic when playback for an individual sound within the Playlist is started.
      * Schedule auto-preload of next track
      * @param {PlaylistSound} sound
-     * @private
+     * @protected
      */
-    private _onSoundStart;
+    protected _onSoundStart(sound: PlaylistSound): Promise<void>;
     /**
      * Update the playing status of this Playlist in content links.
      * @param {object} changed  The data changes.
-     * @private
+     * @protected
      */
-    private _updateContentLinkPlaying;
+    protected _updateContentLinkPlaying(changed: object): void;
     /** @inheritdoc */
     toCompendium(pack: any, options?: {}): any;
 }

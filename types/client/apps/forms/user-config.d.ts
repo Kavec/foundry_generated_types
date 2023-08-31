@@ -16,7 +16,7 @@ declare class UserConfig extends DocumentSheet {
     };
     /**
      * Handle changing the user avatar image by opening a FilePicker
-     * @private
+     * @protected
      */
-    private _onEditAvatar;
+    protected _onEditAvatar(event: any): Promise<any>;
 }

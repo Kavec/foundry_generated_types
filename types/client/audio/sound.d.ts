@@ -5,9 +5,9 @@ declare class Sound {
     /**
      * A global audio node ID used to quickly reference a specific audio node
      * @type {number}
-     * @private
+     * @protected
      */
-    private static _nodeId;
+    protected static _nodeId: number;
     constructor(src: any, { container }?: {
         container: any;
     });
@@ -51,9 +51,9 @@ declare class Sound {
      * The registered event handler id for this Sound.
      * Incremented each time a callback is registered.
      * @type {number}
-     * @private
+     * @protected
      */
-    private _eventHandlerId;
+    protected _eventHandlerId: number;
     /**
      * If this Sound source is currently in the process of loading, this attribute contains a Promise that will resolve
      * when the loading process completes.
@@ -63,9 +63,9 @@ declare class Sound {
     /**
      * A collection of scheduled events recorded as window timeout IDs
      * @type {Set<number>}
-     * @private
+     * @protected
      */
-    private _scheduledEvents;
+    protected _scheduledEvents: Set<number>;
     /**
      * A convenience reference to the sound context used by the application
      * @returns {AudioContext}
@@ -203,14 +203,14 @@ declare class Sound {
     }): number;
     /**
      * Register a new callback function for a certain event. For internal use only.
-     * @private
+     * @protected
      */
-    private _registerForEvent;
+    protected _registerForEvent(eventName: any, callback: any): number;
     /**
      * Cancel all pending scheduled events.
-     * @private
+     * @protected
      */
-    private _clearEvents;
+    protected _clearEvents(): void;
     /**
      * Called when playback concludes naturally
      * @protected

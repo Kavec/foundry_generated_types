@@ -23,35 +23,35 @@ declare class SceneConfig extends DocumentSheet {
     /**
      * Get the available weather effect types which can be applied to this Scene
      * @returns {object}
-     * @private
+     * @protected
      */
-    private _getWeatherTypes;
+    protected _getWeatherTypes(): object;
     /**
      * Get the alphabetized Documents which can be chosen as a configuration for the Scene
      * @param {WorldCollection} collection
      * @returns {object[]}
-     * @private
+     * @protected
      */
-    private _getDocuments;
+    protected _getDocuments(collection: WorldCollection): object[];
     /**
      * Capture the current Scene position and zoom level as the initial view in the Scene config
      * @param {Event} event   The originating click event
-     * @private
+     * @protected
      */
-    private _onCapturePosition;
+    protected _onCapturePosition(event: Event): void;
     /**
      * Handle click events to open the grid configuration application
      * @param {Event} event   The originating click event
-     * @private
+     * @protected
      */
-    private _onGridConfig;
+    protected _onGridConfig(event: Event): Promise<void>;
     /**
      * Handle click events to link or unlink the scene dimensions
      * @param {Event} event
      * @returns {Promise<void>}
-     * @private
+     * @protected
      */
-    private _onLinkDimensions;
+    protected _onLinkDimensions(event: Event): Promise<void>;
     /** @override */
     override _onChangeInput(event: any): Promise<any>;
     /** @override */
@@ -61,20 +61,20 @@ declare class SceneConfig extends DocumentSheet {
     /**
      * Live update the scene as certain properties are changed.
      * @param {string} changed  The changed property.
-     * @private
+     * @protected
      */
-    private _previewScene;
+    protected _previewScene(changed: string): void;
     /**
      * Reset the previewed darkness level, background color, grid alpha, and grid color back to their true values.
-     * @private
+     * @protected
      */
-    private _resetScenePreview;
+    protected _resetScenePreview(): void;
     /**
      * Handle updating the select menu of PlaylistSound options when the Playlist is changed
      * @param {Event} event   The initiating select change event
-     * @private
+     * @protected
      */
-    private _onChangePlaylist;
+    protected _onChangePlaylist(event: Event): void;
     /**
      * Handle updating the select menu of JournalEntryPage options when the JournalEntry is changed.
      * @param {Event} event  The initiating select change event.
@@ -84,7 +84,7 @@ declare class SceneConfig extends DocumentSheet {
     /**
      * Handle updating the select menu of JournalEntryPage options when the JournalEntry is changed.
      * @param event
-     * @private
+     * @protected
      */
-    private _onChangeDimensions;
+    protected _onChangeDimensions(event: any): void;
 }

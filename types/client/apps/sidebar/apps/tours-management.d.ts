@@ -12,7 +12,7 @@ declare class ToursManagement extends PackageConfiguration {
     /**
      * Handle Control clicks
      * @param {MouseEvent} event
-     * @private
+     * @protected
      */
-    private _onClickControl;
+    protected _onClickControl(event: MouseEvent): any;
 }

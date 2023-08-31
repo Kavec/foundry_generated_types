@@ -103,15 +103,18 @@ declare class RollTerm {
      * Evaluate the term.
      * @param {object} [options={}]           Options which modify how the RollTerm is evaluated, see RollTerm#evaluate
      * @returns {Promise<RollTerm>}
-     * @private
+     * @protected
      */
-    private _evaluate;
+    protected _evaluate({ minimize, maximize }?: object): Promise<RollTerm>;
     /**
      * This method is temporarily factored out in order to provide different behaviors synchronous evaluation.
      * This will be removed in 0.10.x
-     * @private
+     * @protected
      */
-    private _evaluateSync;
+    protected _evaluateSync({ minimize, maximize }?: {
+        minimize?: boolean;
+        maximize?: boolean;
+    }): this;
     /**
      * Serialize the RollTerm to a JSON string which allows it to be saved in the database or embedded in text.
      * This method should return an object suitable for passing to the JSON.stringify function.

@@ -150,9 +150,9 @@ declare class Scene {
     override _preUpdate(data: any, options: any, user: any): Promise<any>;
     /**
      * Handle repositioning of placed objects when the Scene dimensions change
-     * @private
+     * @protected
      */
-    private _repositionObjects;
+    protected _repositionObjects(sceneUpdateData: any): any;
     /** @override */
     override _onUpdate(data: any, options: any, userId: any): any;
     thumb: any;

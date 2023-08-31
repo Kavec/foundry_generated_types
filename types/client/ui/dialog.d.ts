@@ -108,22 +108,22 @@ declare class Dialog extends Application {
     /**
      * Handle a left-mouse click on one of the dialog choice buttons
      * @param {MouseEvent} event    The left-mouse click event
-     * @private
+     * @protected
      */
-    private _onClickButton;
+    protected _onClickButton(event: MouseEvent): void;
     /**
      * Handle a keydown event while the dialog is active
      * @param {KeyboardEvent} event   The keydown event
-     * @private
+     * @protected
      */
-    private _onKeyDown;
+    protected _onKeyDown(event: KeyboardEvent): void | Promise<void>;
     /**
      * Submit the Dialog by selecting one of its buttons
      * @param {Object} button         The configuration of the chosen button
      * @param {PointerEvent} event    The originating click event
-     * @private
+     * @protected
      */
-    private submit;
+    protected submit(button: any, event: PointerEvent): void;
     /** @inheritdoc */
     close(options?: {}): Promise<void>;
     #private;

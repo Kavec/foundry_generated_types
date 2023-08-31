@@ -77,9 +77,9 @@ declare class KeyboardManager {
      * @param {KeyboardEventContext} context  The standardized context of the event
      * @param {boolean} includeModifiers      If True, includes modifiers in the string representation
      * @return {string}
-     * @private
+     * @protected
      */
-    private static _getContextDisplayString;
+    protected static _getContextDisplayString(context: KeyboardEventContext, includeModifiers?: boolean): string;
     /**
      * Given a standardized pressed key, find all matching registered Keybind Actions.
      * @param {KeyboardEventContext} context  A standardized keyboard event context
@@ -92,18 +92,18 @@ declare class KeyboardManager {
      * @param {KeybindingAction} action             The keybinding action
      * @param {KeyboardEventContext} context        The keyboard event context
      * @returns {boolean}                           Does the context match the action requirements?
-     * @private
+     * @protected
      */
-    private static _testContext;
+    protected static _testContext(action: KeybindingAction, context: KeyboardEventContext): boolean;
     /**
      * Given a registered Keybinding Action, executes the action with a given event and context
      *
      * @param {KeybindingAction} keybind         The registered Keybinding action to execute
      * @param {KeyboardEventContext} context     The gathered context of the event
      * @return {boolean}                         Returns true if the keybind was consumed
-     * @private
+     * @protected
      */
-    private static _executeKeybind;
+    protected static _executeKeybind(keybind: KeybindingAction, context: KeyboardEventContext): boolean;
     /**
      * Begin listening to keyboard events.
      * @internal
@@ -143,9 +143,9 @@ declare class KeyboardManager {
     }): void;
     /**
      * Reset tracking for which keys are in the down and released states
-     * @private
+     * @protected
      */
-    private _reset;
+    protected _reset(): void;
     /**
      * Emulate a key-up event for any currently down keys. When emulating, we go backwards such that combinations such as
      * "CONTROL + S" emulate the "S" first in order to capture modifiers.
@@ -159,9 +159,9 @@ declare class KeyboardManager {
      * Handle a key press into the down position
      * @param {KeyboardEvent} event   The originating keyboard event
      * @param {boolean} up            A flag for whether the key is down or up
-     * @private
+     * @protected
      */
-    private _handleKeyboardEvent;
+    protected _handleKeyboardEvent(event: KeyboardEvent, up: boolean): void;
     /**
      * Input events do not fire with isComposing = false at the end of a composition event in Chrome
      * See: https://github.com/w3c/uievents/issues/202

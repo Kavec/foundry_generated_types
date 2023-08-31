@@ -9,36 +9,36 @@ declare class NewUserExperience {
     initialize(): void;
     /**
      * Show chat tips for first launch.
-     * @private
+     * @protected
      */
-    private _createInitialChatMessages;
+    protected _createInitialChatMessages(): void;
     /**
      * Create a default scene for the new world.
-     * @private
+     * @protected
      */
-    private _createDefaultScene;
+    protected _createDefaultScene(): Promise<void>;
     /**
      * Automatically show uncompleted Tours related to new worlds.
-     * @private
+     * @protected
      */
-    private _showNewWorldTour;
+    protected _showNewWorldTour(): Promise<void>;
     /**
      * Add event listeners to the chat card links.
      * @param {ChatMessage} msg  The ChatMessage being rendered.
      * @param {jQuery} html      The HTML content of the message.
-     * @private
+     * @protected
      */
-    private _activateListeners;
+    protected _activateListeners(msg: ChatMessage, html: JQueryStatic): void;
     /**
      * Perform some special action triggered by clicking on a link in a NUE chat card.
      * @param {TriggeredEvent} event  The click event.
-     * @private
+     * @protected
      */
-    private _onActionLink;
+    protected _onActionLink(event: TriggeredEvent): Application;
     /**
      * Switch to the appropriate tab when a user clicks on a link in the chat message.
      * @param {TriggeredEvent} event  The click event.
-     * @private
+     * @protected
      */
-    private _onTabLink;
+    protected _onTabLink(event: TriggeredEvent): void;
 }

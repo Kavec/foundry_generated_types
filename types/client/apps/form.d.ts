@@ -269,9 +269,9 @@ declare class DocumentSheet extends FormApplication {
     /**
      * Handle requests to configure the default sheet used by this Document
      * @param event
-     * @private
+     * @protected
      */
-    private _onConfigureSheet;
+    protected _onConfigureSheet(event: any): void;
     /**
      * Handle changing a Document's image.
      * @param {MouseEvent} event  The click event.

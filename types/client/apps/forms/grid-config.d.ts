@@ -24,15 +24,15 @@ declare class GridConfig extends FormApplication {
     /**
      * Handle keyboard events.
      * @param {KeyboardEvent} event    The original keydown event
-     * @private
+     * @protected
      */
-    private _onKeyDown;
+    protected _onKeyDown(event: KeyboardEvent): void;
     /**
      * Handle mousewheel events.
      * @param {WheelEvent} event    The original wheel event
-     * @private
+     * @protected
      */
-    private _onWheel;
+    protected _onWheel(event: WheelEvent): void;
     /** @override */
     override _onChangeInput(event: any): Promise<void>;
     /** @override */
@@ -42,34 +42,40 @@ declare class GridConfig extends FormApplication {
      * @param {object} options          Options which define how the refresh is performed
      * @param {boolean} [options.background]      Refresh the background display?
      * @param {object} [options.grid]             Refresh the grid display?
-     * @private
+     * @protected
      */
-    private _refresh;
+    protected _refresh({ background, grid }: {
+        background?: boolean;
+        grid?: object;
+    }): void;
     /**
      * Reset the scene back to its original settings
-     * @private
+     * @protected
      */
-    private _reset;
+    protected _reset(): Promise<void>;
     /**
      * Scale the background size relative to the grid size
      * @param {number} delta          The directional change in background size
-     * @private
+     * @protected
      */
-    private _scaleBackgroundSize;
+    protected _scaleBackgroundSize(delta: number): void;
     /**
      * Scale the grid size relative to the background image.
      * When scaling the grid size in this way, constrain the allowed values between 50px and 300px.
      * @param {number} delta          The grid size in pixels
-     * @private
+     * @protected
      */
-    private _scaleGridSize;
+    protected _scaleGridSize(delta: number): void;
     /**
      * Shift the background image relative to the grid layer
      * @param {object} position       The position configuration to preview
      * @param {number} position.deltaX    The number of pixels to shift in the x-direction
      * @param {number} position.deltaY    The number of pixels to shift in the y-direction
-     * @private
+     * @protected
      */
-    private _shiftBackground;
+    protected _shiftBackground({ deltaX, deltaY }?: {
+        deltaX: number;
+        deltaY: number;
+    }): void;
     #private;
 }

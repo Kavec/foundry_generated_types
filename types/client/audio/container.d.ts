@@ -55,9 +55,9 @@ declare class AudioContainer {
     /**
      * Should the audio source loop?
      * @type {boolean}
-     * @private
+     * @protected
      */
-    private _loop;
+    protected _loop: boolean;
     set loop(arg: boolean);
     get loop(): boolean;
     /**
@@ -99,9 +99,9 @@ declare class AudioContainer {
      * Create the initial audio node used for playback.
      * Determine the node type to use based on cached state and sound duration.
      * @returns {AudioBufferSourceNode|MediaElementAudioSourceNode}
-     * @private
+     * @protected
      */
-    private _createNode;
+    protected _createNode(): AudioBufferSourceNode | MediaElementAudioSourceNode;
     /**
      * Create an Audio source node using a buffered array.
      * @param {string} src                The source URL from which to create the buffer
@@ -110,20 +110,20 @@ declare class AudioContainer {
     createAudioBuffer(src: string): Promise<AudioBuffer>;
     /**
      * Create a AudioBufferSourceNode using a provided AudioBuffer
-     * @private
+     * @protected
      */
-    private _createAudioBufferSourceNode;
+    protected _createAudioBufferSourceNode(buffer: any): AudioBufferSourceNode;
     /**
      * Create an HTML5 Audio element which has loaded the metadata for the provided source.
      * @returns {Promise<HTMLAudioElement>}
-     * @private
+     * @protected
      */
-    private _createAudioElement;
+    protected _createAudioElement(): Promise<HTMLAudioElement>;
     /**
      * Create a MediaElementAudioSourceNode using a provided HTMLAudioElement
-     * @private
+     * @protected
      */
-    private _createMediaElementAudioSourceNode;
+    protected _createMediaElementAudioSourceNode(element: any): MediaElementAudioSourceNode;
     /**
      * Begin playback for the source node.
      * @param {number} [offset]       The desired start time
@@ -139,15 +139,15 @@ declare class AudioContainer {
      * MediaElementAudioSourceNodes, this also means optionally restarting if
      * the sound is supposed to loop.
      * @param {Function} onended A callback provided by the owner of the container that gets fired when the sound ends.
-     * @private
+     * @protected
      */
-    private _onEnd;
+    protected _onEnd(onended: Function): void;
     /**
      * Unload the MediaElementAudioSourceNode to terminate any ongoing
      * connections.
-     * @private
+     * @protected
      */
-    private _unloadMediaNode;
+    protected _unloadMediaNode(): void;
 }
 /**
  * The sequence of container loading states.

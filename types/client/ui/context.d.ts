@@ -115,9 +115,9 @@ declare class ContextMenu {
     render(target: JQueryStatic): Promise<any>;
     /**
      * Set the position of the context menu, taking into consideration whether the menu should expand upward or downward
-     * @private
+     * @protected
      */
-    private _setPosition;
+    protected _setPosition(html: any, target: any): void;
     /**
      * Local listeners which apply to each ContextMenu instance which is created.
      * @param {jQuery} html

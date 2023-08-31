@@ -88,22 +88,22 @@ declare class SceneControls extends Application {
     /**
      * Handle click events on a Control set
      * @param {Event} event   A click event on a tool control
-     * @private
+     * @protected
      */
-    private _onClickLayer;
+    protected _onClickLayer(event: Event): void;
     /**
      * Handle click events on Tool controls
      * @param {Event} event   A click event on a tool control
-     * @private
+     * @protected
      */
-    private _onClickTool;
+    protected _onClickTool(event: Event): void;
     /**
      * Get the set of Control sets and tools that are rendered as the Scene Controls.
      * These controls may be extended using the "getSceneControlButtons" Hook.
      * @returns {SceneControl[]}
-     * @private
+     * @protected
      */
-    private _getControlButtons;
+    protected _getControlButtons(): SceneControl[];
     /**
      * @deprecated since v10
      * @ignore
